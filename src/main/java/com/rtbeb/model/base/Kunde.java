@@ -95,7 +95,10 @@ public class Kunde {
     public void setForsikringsnummer(int forsikringsnummer) {
         this.forsikringsnummer.set(forsikringsnummer);
     }
-/*
+
+
+    /*TODO Implementer disse
+
     public ObservableList<Forsikring> getForsikringer() {
         return forsikringer;
     }
@@ -118,7 +121,8 @@ public class Kunde {
 
     public void setUbetalteErstatninger(ObservableList<UbetaltErstatning> ubetalteErstatninger) {
         this.ubetalteErstatninger = ubetalteErstatninger;
-    }*/
+    }
+    ----------------------------------------------------------------------------------------------*/
 
     public LocalDate getKundeOpprettelsesDato() {
         return kundeOpprettelsesDato.get();
