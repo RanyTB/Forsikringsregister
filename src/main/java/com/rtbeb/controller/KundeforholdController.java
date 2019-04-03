@@ -12,12 +12,16 @@ import java.io.IOException;
 
 public class KundeforholdController {
 
-    //Kontrolleren har en tilbakeknapp, og holder på forrige Scene i denne variabelen.
+/* TODO finn ut om dette er en god måte å gå tilbake til forrige scene på
+
+    Kontrolleren har en tilbakeknapp, og holder på forrige Scene i denne variabelen.
     Scene previousScene;
 
+    Variabelen settes ved at kontrolleren i forrige scene kaller på denne metoden.
     void setPreviousScene(Scene scene){
         this.previousScene = scene;
     }
+    */
 
     @FXML
     Button backButton;
