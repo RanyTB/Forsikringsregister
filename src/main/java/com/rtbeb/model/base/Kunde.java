@@ -3,20 +3,22 @@ package com.rtbeb.model.base;
 import javafx.beans.property.*;
 import javafx.collections.ObservableList;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Kunde {
 
     /*Kundeklassen bruker properties, som fungerer som en wrapper for klassene med muligheten
     for å binde listeners. Dette gjør at en TableView automatisk vil oppdatere properties
-     som får nye verdier, da dette vil trigge */
+     som får nye verdier.*/
     private StringProperty fornavn;
     private StringProperty etternavn;
     private StringProperty fakturaadresse;
     private StringProperty postnummer;
     private IntegerProperty forsikringsnummer;
-    private ObjectProperty<Date> kundeOpprettelsesDato;
+    private ObjectProperty<LocalDate> kundeOpprettelsesDato;
 
+    //TODO Implementer disse
     //Observable lister over forsikringer, skademeldinger og ubetalte erstatninger.
     //private ObservableList<Forsikring> forsikringer;
     //private ObservableList<Skademelding> skademeldinger;
@@ -24,14 +26,14 @@ public class Kunde {
 
 
     public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer,
-                 Integer forsikringnummer,
-                 Date kundeOpprettelsesDato) {
+                 Integer forsikringsnummer,
+                 LocalDate kundeOpprettelsesDato) {
         this.fornavn = new SimpleStringProperty(this,"fornavn",fornavn);
         this.etternavn = new SimpleStringProperty(this,"etternavn",etternavn);
         this.fakturaadresse = new SimpleStringProperty(this,"fakturaadresse",fakturaadresse);
         this.postnummer = new SimpleStringProperty(this, "postnummer", postnummer);
-        this.forsikringsnummer = new SimpleIntegerProperty(this,"forsikringsnummer", forsikringnummer);
-        this.kundeOpprettelsesDato = new SimpleObjectProperty<Date>(this,"kundeOpprettelsesDato", kundeOpprettelsesDato);
+        this.forsikringsnummer = new SimpleIntegerProperty(this,"forsikringsnummer", forsikringsnummer);
+        this.kundeOpprettelsesDato = new SimpleObjectProperty<>(this,"kundeOpprettelsesDato", kundeOpprettelsesDato);
     }
 
     public String getFornavn() {
@@ -82,16 +84,16 @@ public class Kunde {
         this.postnummer.set(postnummer);
     }
 
-    public int getForsikringnummer() {
+    public int getForsikringsnummer() {
         return forsikringsnummer.get();
     }
 
-    public IntegerProperty forsikringnummerProperty() {
+    public IntegerProperty forsikringsnummerProperty() {
         return forsikringsnummer;
     }
 
-    public void setForsikringnummer(int forsikringnummer) {
-        this.forsikringsnummer.set(forsikringnummer);
+    public void setForsikringsnummer(int forsikringsnummer) {
+        this.forsikringsnummer.set(forsikringsnummer);
     }
 /*
     public ObservableList<Forsikring> getForsikringer() {
@@ -118,15 +120,15 @@ public class Kunde {
         this.ubetalteErstatninger = ubetalteErstatninger;
     }*/
 
-    public Date getKundeOpprettelsesDato() {
+    public LocalDate getKundeOpprettelsesDato() {
         return kundeOpprettelsesDato.get();
     }
 
-    public ObjectProperty<Date> kundeOpprettelsesDatoProperty() {
+    public ObjectProperty<LocalDate> kundeOpprettelsesDatoProperty() {
         return kundeOpprettelsesDato;
     }
 
-    public void setKundeOpprettelsesDato(Date kundeOpprettelsesDato) {
+    public void setKundeOpprettelsesDato(LocalDate kundeOpprettelsesDato) {
         this.kundeOpprettelsesDato.set(kundeOpprettelsesDato);
     }
 

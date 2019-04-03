@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="953.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rtbeb.controller.KundevisningController">
+    <children>
+        <Button fx:id="button" layoutX="635.0" layoutY="453.0" onAction="#handleButtonAction" text="Vis kundeforhold for valgt kunde" />
+      <TableView fx:id="tableKunder" layoutX="96.0" layoutY="156.0" prefHeight="277.0" prefWidth="786.0">
+        <columns>
+            <TableColumn fx:id="forsikringsnummerColumn" prefWidth="113.8320541381836" text="Forsikringnr." />
+          <TableColumn fx:id="fornavnColumn" prefWidth="121.16792297363281" text="Fornavn" />
+          <TableColumn fx:id="etternavnColumn" prefWidth="98.61184692382812" text="Etternavn" />
+            <TableColumn fx:id="dateColumn" prefWidth="98.00393676757812" text="Dato" />
+            <TableColumn prefWidth="107.5198974609375" text="Forsikringer" />
+            <TableColumn prefWidth="120.3399658203125" text="Skademeldinger" />
+            <TableColumn prefWidth="127.49176025390625" text="Ubet. Erstatninger" />
+        </columns>
+      </TableView>
+      <Label layoutX="602.0" layoutY="116.0" text="Søk">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField layoutX="665.0" layoutY="110.0" prefHeight="27.0" prefWidth="203.0" promptText="Navn eller forsikringsnummer" />
+      <Label layoutX="109.0" layoutY="104.0" prefHeight="34.0" prefWidth="199.0" text="Kundevisning">
+         <font>
+            <Font name="System Bold" size="29.0" />
+         </font>
+      </Label>
+      <Button fx:id="button1" layoutX="104.0" layoutY="453.0" onAction="#handleButtonAction" text="Tilbake" />
+        <Label fx:id="label" layoutX="383.0" layoutY="458.0" minHeight="16" minWidth="69" />
+    </children>
+</AnchorPane>
