@@ -7,24 +7,29 @@ import java.util.Date;
 
 public class Kunde {
 
+    /*Kundeklassen bruker properties, som fungerer som en wrapper for klassene med muligheten
+    for å binde listeners. Dette gjør at en TableView automatisk vil oppdatere properties
+     som får nye verdier, da dette vil trigge */
     private StringProperty fornavn;
     private StringProperty etternavn;
     private StringProperty fakturaadresse;
+    private StringProperty postnummer;
     private IntegerProperty forsikringsnummer;
     private ObjectProperty<Date> kundeOpprettelsesDato;
 
     //Observable lister over forsikringer, skademeldinger og ubetalte erstatninger.
-    private ObservableList<Forsikring> forsikringer;
-    private ObservableList<Skademelding> skademeldinger;
-    private ObservableList<UbetaltErstatning> ubetalteErstatninger;
+    //private ObservableList<Forsikring> forsikringer;
+    //private ObservableList<Skademelding> skademeldinger;
+    //private ObservableList<UbetaltErstatning> ubetalteErstatninger;
 
 
-    public Kunde(String fornavn, String etternavn, String fakturaadresse,
+    public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer,
                  Integer forsikringnummer,
                  Date kundeOpprettelsesDato) {
         this.fornavn = new SimpleStringProperty(this,"fornavn",fornavn);
         this.etternavn = new SimpleStringProperty(this,"etternavn",etternavn);
         this.fakturaadresse = new SimpleStringProperty(this,"fakturaadresse",fakturaadresse);
+        this.postnummer = new SimpleStringProperty(this, "postnummer", postnummer);
         this.forsikringsnummer = new SimpleIntegerProperty(this,"forsikringsnummer", forsikringnummer);
         this.kundeOpprettelsesDato = new SimpleObjectProperty<Date>(this,"kundeOpprettelsesDato", kundeOpprettelsesDato);
     }
@@ -65,6 +70,18 @@ public class Kunde {
         this.fakturaadresse.set(fakturaadresse);
     }
 
+    public String getPostnummer() {
+        return postnummer.get();
+    }
+
+    public StringProperty postnummerProperty() {
+        return postnummer;
+    }
+
+    public void setPostnummer(String postnummer) {
+        this.postnummer.set(postnummer);
+    }
+
     public int getForsikringnummer() {
         return forsikringsnummer.get();
     }
@@ -76,7 +93,7 @@ public class Kunde {
     public void setForsikringnummer(int forsikringnummer) {
         this.forsikringsnummer.set(forsikringnummer);
     }
-
+/*
     public ObservableList<Forsikring> getForsikringer() {
         return forsikringer;
     }
@@ -99,7 +116,7 @@ public class Kunde {
 
     public void setUbetalteErstatninger(ObservableList<UbetaltErstatning> ubetalteErstatninger) {
         this.ubetalteErstatninger = ubetalteErstatninger;
-    }
+    }*/
 
     public Date getKundeOpprettelsesDato() {
         return kundeOpprettelsesDato.get();

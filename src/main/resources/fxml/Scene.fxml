@@ -10,7 +10,7 @@
     <children>
         <Button fx:id="button" layoutX="436.0" layoutY="338.0" onAction="#handleButtonAction" text="Click Me!" />
         <Label fx:id="label" layoutX="277.0" layoutY="380.0" minHeight="16" minWidth="69" />
-      <TableView layoutX="123.0" layoutY="63.0" prefHeight="222.0" prefWidth="708.0">
+      <TableView fx:id="tableKunder" layoutX="123.0" layoutY="63.0" prefHeight="222.0" prefWidth="708.0">
         <columns>
           <TableColumn prefWidth="100.0" text="Fornavn" />
           <TableColumn prefWidth="120.0" text="Etternavn" />
