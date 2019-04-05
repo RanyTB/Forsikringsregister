@@ -12,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -51,8 +50,8 @@ public class KundevisningController implements Initializable {
         System.out.println("You clicked me!");
 
         //Test for om data blir endret i tabellen når de endres i kundeobjektet:
-        kunderegister.getAlleKunder().get(0).setFornavn("Test");
-        kunderegister.getAlleKunder().get(1).setEtternavn("Test");
+        kunderegister.getKundeliste().get(0).setFornavn("Test");
+        kunderegister.getKundeliste().get(1).setEtternavn("Test");
     }
 
     @FXML
@@ -78,7 +77,7 @@ public class KundevisningController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         kunderegister = new Kunderegister();
 
-        tableKunder.setItems(kunderegister.getAlleKunder());
+        tableKunder.setItems(kunderegister.getKundeliste());
 
         //Kolonne for forsikringsnummer
         forsikringsnummerColumn.setCellValueFactory(new PropertyValueFactory<>("forsikringsnummer"));
