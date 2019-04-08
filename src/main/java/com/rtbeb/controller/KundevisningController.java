@@ -37,12 +37,22 @@ public class KundevisningController implements Initializable {
     @FXML
     TableColumn<Kunde, String> dateColumn;
 
-
     @FXML
     private Label label;
 
     @FXML
     private TableView<Kunde> tableKunder;
+
+    @FXML
+    private void openFile(){
+        //TODO implementer FileChooser her
+    }
+
+    @FXML
+    private void saveFile(){
+        //TODO implementer FileChooser her
+    }
+
 
     @FXML
     private void testButtonAction(ActionEvent event) {
@@ -53,7 +63,6 @@ public class KundevisningController implements Initializable {
         kunderegister.getKundeliste().get(0).setFornavn("Test");
         kunderegister.getKundeliste().get(1).setEtternavn("Test");
     }
-
 
     @FXML
     private void opprettNyKunde(ActionEvent event){
