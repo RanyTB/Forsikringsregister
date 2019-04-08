@@ -5,8 +5,12 @@ import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Kunderegister{
+
+public class Kunderegister implements Serializable{
+    private static final long serialVersionUID = 1;
+
 
     private ObservableList<Kunde> kundeliste = FXCollections.observableArrayList();
 
