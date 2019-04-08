@@ -54,12 +54,30 @@ public class KundevisningController implements Initializable {
         kunderegister.getKundeliste().get(1).setEtternavn("Test");
     }
 
+
     @FXML
-    private void visKundeforholdButton(ActionEvent event){
+    private void opprettNyKunde(ActionEvent event){
+        try{
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/KundeopprettelseOgRedigering.fxml"));
+            Scene kundeScene = new Scene(root);
+            Stage newStage = new Stage();
+            newStage.setScene(kundeScene);
+            newStage.show();
+
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+
+
+
+    }
+
+    @FXML
+    private void visValgtKunde(ActionEvent event){
 
         try {
 
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/kundeforhold.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Kundeforhold.fxml"));
             Scene kundeForholdScene = new Scene(root);
             //Bruker tableKunder som node for å få tak i vinduet.
             Stage stage = (Stage) tableKunder.getScene().getWindow();
@@ -75,7 +93,7 @@ public class KundevisningController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        kunderegister = new Kunderegister();
+        Kunderegister kunderegister = Kunderegister.getInstance();
 
         tableKunder.setItems(kunderegister.getKundeliste());
 

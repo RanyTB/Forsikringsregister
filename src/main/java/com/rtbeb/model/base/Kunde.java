@@ -22,8 +22,8 @@ public class Kunde {
     //Observable lister over forsikringer, skademeldinger og ubetalte erstatninger.
     //private ObservableList<Forsikring> forsikringer;
     //private ObservableList<Skademelding> skademeldinger;
-    //private ObservableList<UbetaltErstatning> ubetalteErstatninger;
 
+    //private ObservableList<UbetaltErstatning> ubetalteErstatninger;
 
     public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer,
                  Integer forsikringsnummer,

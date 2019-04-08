@@ -14,7 +14,10 @@ public class Kunderegister implements Serializable{
 
     private ObservableList<Kunde> kundeliste = FXCollections.observableArrayList();
 
-    public Kunderegister(){
+    //Singleton klasse med privat konstruktør. Instanse hentes med getInstance();
+    private static Kunderegister instance = new Kunderegister();
+
+    private Kunderegister(){
 
         //TODO
         //Konstruktøren brukes foreløpig bare til testing for å initialisere kunderegisteret med dummy-kunder.
@@ -25,6 +28,10 @@ public class Kunderegister implements Serializable{
         Kunde kunde2 = new Kunde("Maimona","Javed","Munkebekken 100","0954" ,12346, dato2);
 
         kundeliste.addAll(kunde1, kunde2);
+    }
+
+    public static Kunderegister getInstance(){
+        return instance;
     }
 
     public void setKundeliste(ArrayList<Kunde> kundeliste){
