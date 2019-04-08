@@ -4,35 +4,42 @@ import javafx.beans.property.*;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Kunde {
 
     /*Kundeklassen bruker properties, som fungerer som en wrapper for klassene med muligheten
     for å binde listeners. Dette gjør at en TableView automatisk vil oppdatere properties
      som får nye verdier.*/
+    private static final AtomicInteger forsikringnummerCounter = new AtomicInteger(100000);
     private StringProperty fornavn;
     private StringProperty etternavn;
     private StringProperty fakturaadresse;
     private StringProperty postnummer;
-    private IntegerProperty forsikringsnummer;
+    private LongProperty forsikringsnummer;
     private ObjectProperty<LocalDate> kundeOpprettelsesDato;
 
-    //TODO Implementer disse
-    //Observable lister over forsikringer, skademeldinger og ubetalte erstatninger.
+    //TODO Implementer observable-lister over forsikringer, skademeldinger og ubetalte erstatninger.
     //private ObservableList<Forsikring> forsikringer;
     //private ObservableList<Skademelding> skademeldinger;
-
     //private ObservableList<UbetaltErstatning> ubetalteErstatninger;
 
-    public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer,
-                 Integer forsikringsnummer,
-                 LocalDate kundeOpprettelsesDato) {
+    public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer) {
         this.fornavn = new SimpleStringProperty(this,"fornavn",fornavn);
         this.etternavn = new SimpleStringProperty(this,"etternavn",etternavn);
         this.fakturaadresse = new SimpleStringProperty(this,"fakturaadresse",fakturaadresse);
         this.postnummer = new SimpleStringProperty(this, "postnummer", postnummer);
-        this.forsikringsnummer = new SimpleIntegerProperty(this,"forsikringsnummer", forsikringsnummer);
-        this.kundeOpprettelsesDato = new SimpleObjectProperty<>(this,"kundeOpprettelsesDato", kundeOpprettelsesDato);
+        this.forsikringsnummer = new SimpleLongProperty(this,"forsikringsnummer", forsikringnummerCounter.getAndIncrement());
+        this.kundeOpprettelsesDato = new SimpleObjectProperty<>(this,"kundeOpprettelsesDato", LocalDate.now());
+    }
+
+    public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer, long forsikringsnummer, LocalDate datoOpprettet) {
+        this.fornavn = new SimpleStringProperty(this,"fornavn",fornavn);
+        this.etternavn = new SimpleStringProperty(this,"etternavn",etternavn);
+        this.fakturaadresse = new SimpleStringProperty(this,"fakturaadresse",fakturaadresse);
+        this.postnummer = new SimpleStringProperty(this, "postnummer", postnummer);
+        this.forsikringsnummer = new SimpleLongProperty(this,"forsikringsnummer", forsikringnummerCounter.getAndIncrement());
+        this.kundeOpprettelsesDato = new SimpleObjectProperty<>(this,"kundeOpprettelsesDato", LocalDate.now());
     }
 
     public String getFornavn() {
@@ -83,15 +90,15 @@ public class Kunde {
         this.postnummer.set(postnummer);
     }
 
-    public int getForsikringsnummer() {
+    public long getForsikringsnummer() {
         return forsikringsnummer.get();
     }
 
-    public IntegerProperty forsikringsnummerProperty() {
+    public LongProperty forsikringsnummerProperty() {
         return forsikringsnummer;
     }
 
-    public void setForsikringsnummer(int forsikringsnummer) {
+    public void setForsikringsnummer(long forsikringsnummer) {
         this.forsikringsnummer.set(forsikringsnummer);
     }
 

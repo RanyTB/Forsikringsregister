@@ -25,16 +25,16 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField maxWidth="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="89.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="txtFornavn" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtEtternavn" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtAdresse" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="txtPostnummer" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="89.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label prefHeight="17.0" prefWidth="47.0" text="Postnr" GridPane.rowIndex="4" />
             <Label text="Adresse" GridPane.rowIndex="3" />
             <Label text="Etternavn" GridPane.rowIndex="2" />
             <Label text="Fornavn" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" text="Opprett kunde" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Button mnemonicParsing="false" text="Lukk" GridPane.rowIndex="5" />
+            <Button mnemonicParsing="false" onAction="#opprettKunde" text="Opprett kunde" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Button fx:id="btnLukkVindu" mnemonicParsing="false" onAction="#lukkVindu" text="Lukk" GridPane.rowIndex="5" />
             <Label prefHeight="37.0" prefWidth="187.0" text="Opprett kunde">
                <font>
                   <Font name="Arial Black" size="14.0" />

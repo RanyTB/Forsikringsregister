@@ -17,18 +17,21 @@ public class Kunderegister{
 
         //TODO fjern konstruktør når testing er fullført
         //Konstruktøren brukes foreløpig bare til testing for å initialisere kunderegisteret med dummy-kunder.
-        LocalDate dato1 = LocalDate.now();
-        LocalDate dato2 = LocalDate.now();
 
-        Kunde kunde1 = new Kunde("Rany Tarek","Bouorm","Ellen Gleditsch Vei 25","0987" ,12345, dato1);
-        Kunde kunde2 = new Kunde("Maimona","Javed","Munkebekken 100","0954" ,12346, dato2);
+        Kunde kunde1 = new Kunde("Rany Tarek","Bouorm","Ellen Gleditsch Vei 25","0987");
+        Kunde kunde2 = new Kunde("Maimona","Javed","Munkebekken 100","0954");
 
         kundeliste.addAll(kunde1, kunde2);
+    }
+
+    public void insertKunde(Kunde kunde){
+        kundeliste.add(kunde);
     }
 
     public static Kunderegister getInstance(){
         return instance;
     }
+
 
     public void setKundeliste(ArrayList<Kunde> kundeliste){
 
