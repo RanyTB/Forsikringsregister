@@ -76,28 +76,21 @@ public class KundevisningController implements Initializable {
         } catch(IOException e){
             e.printStackTrace();
         }
-
-
-
     }
 
     @FXML
     private void visValgtKunde(ActionEvent event){
 
         try {
-
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/Kundeforhold.fxml"));
             Scene kundeForholdScene = new Scene(root);
             //Bruker tableKunder som node for å få tak i vinduet.
             Stage stage = (Stage) tableKunder.getScene().getWindow();
-
-            // TODO Lag og sett en previousScene variabel på neste side som kan brukes til å komme tilbake hit.
-
+            stage.setScene(kundeForholdScene);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
     
     @Override
