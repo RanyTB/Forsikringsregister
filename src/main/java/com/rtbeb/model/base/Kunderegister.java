@@ -15,7 +15,7 @@ public class Kunderegister{
 
     private Kunderegister(){
 
-        //TODO
+        //TODO fjern konstruktør når testing er fullført
         //Konstruktøren brukes foreløpig bare til testing for å initialisere kunderegisteret med dummy-kunder.
         LocalDate dato1 = LocalDate.now();
         LocalDate dato2 = LocalDate.now();

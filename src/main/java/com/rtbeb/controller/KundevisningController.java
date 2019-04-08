@@ -67,7 +67,7 @@ public class KundevisningController implements Initializable {
     @FXML
     private void opprettNyKunde(ActionEvent event){
         try{
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/KundeopprettelseOgRedigering.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/NyKunde.fxml"));
             Scene kundeScene = new Scene(root);
             Stage newStage = new Stage();
             newStage.setScene(kundeScene);
@@ -95,7 +95,7 @@ public class KundevisningController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Kunderegister kunderegister = Kunderegister.getInstance();
+        kunderegister = Kunderegister.getInstance();
 
         tableKunder.setItems(kunderegister.getKundeliste());
 

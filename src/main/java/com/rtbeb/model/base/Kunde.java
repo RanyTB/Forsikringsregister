@@ -4,7 +4,6 @@ import javafx.beans.property.*;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Kunde {
 
