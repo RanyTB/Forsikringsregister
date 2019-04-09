@@ -1,11 +1,14 @@
 package com.rtbeb.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
+import com.rtbeb.model.filemanagement.Context;
+import com.rtbeb.model.filemanagement.WriteToJOBJ;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class KundevisningController implements Initializable {
@@ -49,8 +53,20 @@ public class KundevisningController implements Initializable {
     }
 
     @FXML
-    private void saveFile(){
+    private void saveFile(ActionEvent event) throws IOException {
         //TODO implementer FileChooser her
+        FileChooser fileChooser = new FileChooser();
+
+        FileChooser.ExtensionFilter extensionFilterJOBJ = new FileChooser.ExtensionFilter(".jobj format", "*.jobj");
+        FileChooser.ExtensionFilter extensionFilterCSV = new FileChooser.ExtensionFilter(".csv format", "*.csv");
+        fileChooser.getExtensionFilters().addAll(extensionFilterJOBJ, extensionFilterCSV);
+
+        File file = fileChooser.showSaveDialog(new Stage());
+        System.out.println("Filnavn: "+file.getName());
+
+        Context context = new Context(new WriteToJOBJ());
+        context.fileStrategy(file.getPath());
+
     }
 
 
