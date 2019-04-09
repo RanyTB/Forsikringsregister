@@ -1,27 +1,46 @@
 package com.rtbeb.controller;
 
+import com.rtbeb.model.base.Kunde;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class KundeforholdController {
+public class KundeforholdController implements Initializable {
 
-/* TODO finn ut om dette er en god måte å gå tilbake til forrige scene på
+    Kunde kunde;
 
-    Kontrolleren har en tilbakeknapp, og holder på forrige Scene i denne variabelen.
-    Scene previousScene;
-
-    Variabelen settes ved at kontrolleren i forrige scene kaller på denne metoden.
-    void setPreviousScene(Scene scene){
-        this.previousScene = scene;
+    public void setKunde(Kunde kunde) {
+        this.kunde = kunde;
     }
-    */
+
+    KundeforholdController(Kunde kunde){
+        this.kunde = kunde;
+    }
+
+    @FXML
+    Label lblFornavn;
+
+    @FXML
+    Label lblEtternavn;
+
+    @FXML
+    Label lblForsikringsnummer;
+
+    @FXML
+    Label lblFakturaadresse;
+
+    @FXML
+    Label lblPostnummer;
 
     @FXML
     Button backButton;
@@ -33,12 +52,6 @@ public class KundeforholdController {
 
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/kundevisning.fxml"));
             Scene previousScene = new Scene(root);
-
-/*          Bruker en node for å få tak i vinduet.
-            Stage stage = (Stage) backButton.getScene().getWindow();
-            stage.setScene(previousScene);
-            stage.show();*/
-
             Stage stage = (Stage) backButton.getScene().getWindow();
             stage.setScene(previousScene);
 
@@ -48,4 +61,14 @@ public class KundeforholdController {
 
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        lblForsikringsnummer.textProperty().bind(kunde.forsikringsnummerProperty().asString());
+        lblFornavn.textProperty().bind(kunde.fornavnProperty());
+        lblEtternavn.textProperty().bind(kunde.etternavnProperty());
+        lblFakturaadresse.textProperty().bind(kunde.fakturaadresseProperty());
+        lblPostnummer.textProperty().bind(kunde.postnummerProperty());
+
+    }
 }
