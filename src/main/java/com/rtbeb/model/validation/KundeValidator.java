@@ -11,7 +11,7 @@ public class KundeValidator {
     String fakturaadresse;
     String postnummer;
 
-    String navnRegex = "[a-zæøåA-ZÆØÅ\\-\\ ]{3,50}";
+    String navnRegex = "[a-zæøåA-ZÆØÅ\\-\\ ]{2,50}";
     String fakturaadresseRegex = "[a-zæøåA-ZÆØÅ\\-0-9\\ \\/\\']{5,50}";
     String postnummerRegex = "\\d{4}";
 
