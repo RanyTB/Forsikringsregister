@@ -157,7 +157,7 @@ public class KundevisningController implements Initializable {
         https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableView.html
         */
 
-        //Setter opp en listener for søkefeltet (txtSearch)
+        //Setter opp en listener for søkefeltet (txtSearch), slik at filteret oppdateres hver gang man skriver noe nytt.
         txtSearch.textProperty().addListener((observable,oldValue,newValue) -> {
             filteredList.setPredicate(kunde -> {
 
@@ -183,7 +183,7 @@ public class KundevisningController implements Initializable {
             });
         });
 
-        //Wrapper filteredList i en SortedList for å kunnde sortere etter de forskjellige kolonnene.
+        //Wrapper filteredList i en SortedList for å kunne sortere etter de forskjellige kolonnene.
         SortedList<Kunde> sortedList = new SortedList<>(filteredList);
         //Binder sortedlist sin comparator til tableKunder sin comparator.
         sortedList.comparatorProperty().bind(tableKunder.comparatorProperty());
