@@ -25,10 +25,10 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="txtFornavn" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txtEtternavn" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="txtAdresse" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="txtPostnummer" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="89.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="txtFornavn" onKeyTyped="#fornavnChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtEtternavn" onKeyTyped="#etternavnChanged" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtAdresse" onKeyTyped="#adresseChanged" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="txtPostnummer" maxWidth="-Infinity" minWidth="-Infinity" onKeyTyped="#postnummerChanged" prefHeight="31.0" prefWidth="89.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label prefHeight="17.0" prefWidth="47.0" text="Postnr" GridPane.rowIndex="4" />
             <Label text="Adresse" GridPane.rowIndex="3" />
             <Label text="Etternavn" GridPane.rowIndex="2" />

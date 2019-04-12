@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -29,38 +30,60 @@ public class NyKundeController implements Initializable {
     Button btnLukkVindu;
 
     @FXML
+    private void fornavnChanged(InputEvent event){
+        String fornavn = txtFornavn.getText();
+        if(!KundeValidator.fornavnIsValid(fornavn)){
+            txtFornavn.setStyle("-fx-border-color: red");
+        } else{
+            txtFornavn.setStyle("-fx-border-color: green");
+        }
+    }
+
+    @FXML
+    private void etternavnChanged(InputEvent event){
+        String etternavn = txtEtternavn.getText();
+        if(!KundeValidator.etternavnIsValid(etternavn)){
+            txtEtternavn.setStyle("-fx-border-color: red");
+        } else{
+            txtEtternavn.setStyle("-fx-border-color: green");
+        }
+    }
+
+    @FXML
+    private void adresseChanged(InputEvent event){
+        String adresse = txtAdresse.getText();
+        if(!KundeValidator.fakturaAdresseIsValid(adresse)){
+            txtAdresse.setStyle("-fx-border-color: red");
+        } else{
+            txtAdresse.setStyle("-fx-border-color: green");
+        }
+    }
+
+    @FXML
+    private void postnummerChanged(InputEvent event){
+        String postnummer = txtPostnummer.getText();
+        if(!KundeValidator.postnummerIsValid(postnummer)){
+            txtPostnummer.setStyle("-fx-border-color: red");
+        } else{
+            txtPostnummer.setStyle("-fx-border-color: green");
+        }
+
+    }
+
+    @FXML
     private void opprettKunde(){
 
         Kunde kunde = new Kunde(txtFornavn.getText(), txtEtternavn.getText(), txtAdresse.getText(), txtPostnummer.getText());
 
-        KundeValidator validator = new KundeValidator(kunde);
-
-        //Hvis kunde er gyldig, settes kunden inn i kunderegister. Ellers farges felt med rød border.
-        if(validator.kundeIsValid()){
+        //Hvis kunde er gyldig, settes kunden inn i kunderegister. Ellers vises feilmelding.
+        if(KundeValidator.kundeIsValid(kunde)){
             kunderegister.insertKunde(kunde);
-        } else {
 
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Registreringsfeil");
-            alert.setHeaderText("Kunden kunne ikke registreres. \nRett opp i markerte felt");
+            alert.setHeaderText("Kunnde ikke registrere kunde:\nSjekk kundedata.");
             alert.show();
-
-            if (!validator.fornavnIsValid()) {
-                txtFornavn.setStyle("-fx-border-color: red");
-                txtFornavn.clear();
-            }
-            if (!validator.etternavnIsValid()) {
-                txtEtternavn.setStyle("-fx-border-color: red");
-                txtEtternavn.clear();
-            }
-            if (!validator.fakturaAdresseIsValid()) {
-                txtAdresse.setStyle("-fx-border-color: red");
-                txtAdresse.clear();
-            }
-            if (!validator.postnummerIsValid()) {
-                txtPostnummer.setStyle("-fx-border-color: red");
-                txtPostnummer.clear();
-            }
         }
     }
 

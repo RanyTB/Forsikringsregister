@@ -6,32 +6,30 @@ import java.util.regex.Pattern;
 
 public class KundeValidator {
 
-    String fornavn;
-    String etternavn;
-    String fakturaadresse;
-    String postnummer;
+    //Regex regler for navn og adresse.
+    static String navnRegex = "[a-zæøåA-ZÆØÅ\\-\\ ]{2,50}";
+    static String fakturaadresseRegex = "[a-zæøåA-ZÆØÅ\\-0-9\\ \\/\\']{5,50}";
+    static String postnummerRegex = "\\d{4}";
 
-    String navnRegex = "[a-zæøåA-ZÆØÅ\\-\\ ]{2,50}";
-    String fakturaadresseRegex = "[a-zæøåA-ZÆØÅ\\-0-9\\ \\/\\']{5,50}";
-    String postnummerRegex = "\\d{4}";
+    //Metode for validering av et kundeobjekt.
+    public static boolean kundeIsValid(Kunde kunde){
+        String fornavn = kunde.getFornavn();
+        String etternavn = kunde.getEtternavn();
+        String fakturaadresse = kunde.getFakturaadresse();
+        String postnummer = kunde.getPostnummer();
 
-    public KundeValidator(Kunde kunde) {
-        fornavn = kunde.getFornavn();
-        etternavn = kunde.getEtternavn();
-        fakturaadresse = kunde.getFakturaadresse();
-        postnummer = kunde.getPostnummer();
-    }
 
-    //Metode for validering av alle felt.
-    public boolean kundeIsValid(){
-        if(fornavnIsValid() && etternavnIsValid() && fakturaAdresseIsValid() && postnummerIsValid()){
+        if(fornavnIsValid(fornavn) &&
+                etternavnIsValid(etternavn) &&
+                fakturaAdresseIsValid(fakturaadresse) &&
+                postnummerIsValid(postnummer)) {
             return true;
         }
         return false;
     }
 
     //Metoder for validering av enkelte felt.
-    public boolean fornavnIsValid() {
+    public static boolean fornavnIsValid(String fornavn) {
 
         if (Pattern.matches(navnRegex, fornavn)) {
             return true;
@@ -39,21 +37,21 @@ public class KundeValidator {
         return false;
     }
 
-    public boolean etternavnIsValid() {
+    public static boolean etternavnIsValid(String etternavn) {
         if (Pattern.matches(navnRegex, etternavn)) {
             return true;
         }
         return false;
     }
 
-    public boolean fakturaAdresseIsValid() {
+    public static boolean fakturaAdresseIsValid(String fakturaadresse) {
         if (Pattern.matches(fakturaadresseRegex, fakturaadresse)) {
             return true;
         }
         return false;
     }
 
-    public boolean postnummerIsValid() {
+    public static boolean postnummerIsValid(String postnummer) {
         if (Pattern.matches(postnummerRegex, postnummer)) {
             return true;
         }
