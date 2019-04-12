@@ -1,5 +1,6 @@
 package com.rtbeb.controller;
 
+import com.rtbeb.model.base.Forsikring;
 import com.rtbeb.model.base.Kunde;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,36 +19,43 @@ import java.util.ResourceBundle;
 
 public class KundeforholdController implements Initializable {
 
-    Kunde kunde;
+    Kunde valgtKunde;
 
-    public void setKunde(Kunde kunde) {
-        this.kunde = kunde;
-    }
-
-    KundeforholdController(Kunde kunde){
-        this.kunde = kunde;
+    KundeforholdController(Kunde valgtKunde){
+        this.valgtKunde = valgtKunde;
     }
 
     @FXML
-    Label lblFornavn;
+    private Label lblFornavn;
 
     @FXML
-    Label lblEtternavn;
+    private Label lblEtternavn;
 
     @FXML
-    Label lblForsikringsnummer;
+    private Label lblForsikringsnummer;
 
     @FXML
-    Label lblFakturaadresse;
+    private Label lblFakturaadresse;
 
     @FXML
-    Label lblPostnummer;
+    private Label lblPostnummer;
+
+    @FXML
+    private void redigerKundeClicked(){
+        System.out.println("Ikke implementert enda");
+    }
+
+    @FXML
+    private void slettKundeClicked(){
+        System.out.println("Ikke implementert enda");
+    }
+
 
     @FXML
     Button backButton;
 
     @FXML
-    private void handleBackButtonClicked(ActionEvent event){
+    private void backButtonClicked(ActionEvent event){
 
         try {
 
@@ -64,11 +73,10 @@ public class KundeforholdController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        lblForsikringsnummer.textProperty().bind(kunde.forsikringsnummerProperty().asString());
-        lblFornavn.textProperty().bind(kunde.fornavnProperty());
-        lblEtternavn.textProperty().bind(kunde.etternavnProperty());
-        lblFakturaadresse.textProperty().bind(kunde.fakturaadresseProperty());
-        lblPostnummer.textProperty().bind(kunde.postnummerProperty());
-
+        lblForsikringsnummer.textProperty().bind(valgtKunde.forsikringsnummerProperty().asString());
+        lblFornavn.textProperty().bind(valgtKunde.fornavnProperty());
+        lblEtternavn.textProperty().bind(valgtKunde.etternavnProperty());
+        lblFakturaadresse.textProperty().bind(valgtKunde.fakturaadresseProperty());
+        lblPostnummer.textProperty().bind(valgtKunde.postnummerProperty());
     }
 }

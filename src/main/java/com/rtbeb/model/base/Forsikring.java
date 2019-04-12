@@ -1,6 +1,6 @@
 package com.rtbeb.model.base;
 
-abstract class Forsikring {
+public abstract class Forsikring {
 
 
 }
