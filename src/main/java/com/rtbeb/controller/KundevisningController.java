@@ -18,6 +18,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class KundevisningController implements Initializable {
@@ -80,6 +82,18 @@ public class KundevisningController implements Initializable {
         } catch(IOException e){
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void clickOnTable(MouseEvent event){
+
+        //TODO kall dette noe annet enn actionevent?
+        //Dersom det blir oppdaget dobbeltklikk på tabellen, åpnes kundeforhold for markert kunde.
+        tableKunder.setOnMouseClicked((MouseEvent actualevent) -> {
+            if (actualevent.getButton().equals(MouseButton.PRIMARY) && actualevent.getClickCount() == 2){
+                visValgtKunde(new ActionEvent());
+            }
+        });
     }
 
     @FXML
@@ -190,5 +204,8 @@ public class KundevisningController implements Initializable {
         //Setter tabellens data-source til sortedList.
         tableKunder.setItems(sortedList);
 
+
     }
+
 }
+

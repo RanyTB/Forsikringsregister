@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Kunderegister{
 
@@ -26,6 +27,19 @@ public class Kunderegister{
 
     public void insertKunde(Kunde kunde){
         kundeliste.add(kunde);
+    }
+
+    public void deleteKunde(Kunde kunde){
+
+        Iterator<Kunde> iterator = kundeliste.iterator();
+
+        while(iterator.hasNext()){
+            Kunde currentKunde = iterator.next();
+            if (currentKunde == kunde){
+                iterator.remove();
+                break;
+            }
+        }
     }
 
     public static Kunderegister getInstance(){
