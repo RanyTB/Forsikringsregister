@@ -7,7 +7,7 @@ public class Context {
         this.fileManagement = fileManagement;
     }
 
-    public void fileStrategy(String path){
-        fileManagement.writeToFile(path);
+    public void fileStrategy(String filePath){
+        fileManagement.writeToFile(filePath);
     }
 }

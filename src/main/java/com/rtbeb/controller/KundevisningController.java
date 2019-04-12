@@ -1,6 +1,7 @@
 package com.rtbeb.controller;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -50,22 +51,42 @@ public class KundevisningController implements Initializable {
     @FXML
     private void openFile(){
         //TODO implementer FileChooser her
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(new Stage());
+
+
+
     }
 
     @FXML
     private void saveFile(ActionEvent event) throws IOException {
-        //TODO implementer FileChooser her
         FileChooser fileChooser = new FileChooser();
 
-        FileChooser.ExtensionFilter extensionFilterJOBJ = new FileChooser.ExtensionFilter(".jobj format", "*.jobj");
-        FileChooser.ExtensionFilter extensionFilterCSV = new FileChooser.ExtensionFilter(".csv format", "*.csv");
+        FileChooser.ExtensionFilter extensionFilterJOBJ
+                = new FileChooser.ExtensionFilter(".jobj format", "*.jobj");
+        FileChooser.ExtensionFilter extensionFilterCSV
+                = new FileChooser.ExtensionFilter(".csv format", "*.csv");
+
         fileChooser.getExtensionFilters().addAll(extensionFilterJOBJ, extensionFilterCSV);
-
         File file = fileChooser.showSaveDialog(new Stage());
-        System.out.println("Filnavn: "+file.getName());
 
-        Context context = new Context(new WriteToJOBJ());
-        context.fileStrategy(file.getPath());
+        String extension = file.getName().substring(file.getName().lastIndexOf("."));
+
+        System.out.println("Filendelse: " + extension);
+
+        Context context;
+        if (extension.equals(".jobj")){
+            context = new Context(new WriteToJOBJ());
+            context.fileStrategy(file.getPath());
+
+        } else if (extension.equals(".csv")){
+
+        } else {
+            System.out.println("Feil filtype");
+        }
+
+        //Context context = new Context(new WriteToJOBJ());
+        //context.fileStrategy(file.getPath());
 
     }
 
