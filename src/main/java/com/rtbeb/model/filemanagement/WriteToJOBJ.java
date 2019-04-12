@@ -19,7 +19,8 @@ public class WriteToJOBJ implements FileManagement {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
             Kunderegister kunderegister = Kunderegister.getInstance();
-            objectOutputStream.writeObject(new ArrayList<Kunderegister>(kunderegister));
+            objectOutputStream.writeObject(new ArrayList<Kunde>(kunderegister.getKundeliste()));
+            objectOutputStream.close();
 
         } catch (IOException exception) {
             exception.printStackTrace();

@@ -3,20 +3,24 @@ package com.rtbeb.model.base;
 import javafx.beans.property.*;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class Kunde {
-
+public class Kunde implements Serializable {
+    private static final long serialVersionUID = 1;
     /*Kundeklassen bruker properties, som fungerer som en wrapper for klassene med muligheten
     for å binde listeners. Dette gjør at en TableView automatisk vil oppdatere properties
      som får nye verdier.*/
-    private StringProperty fornavn;
-    private StringProperty etternavn;
-    private StringProperty fakturaadresse;
-    private StringProperty postnummer;
-    private IntegerProperty forsikringsnummer;
-    private ObjectProperty<LocalDate> kundeOpprettelsesDato;
+    private transient StringProperty fornavn;
+    private transient StringProperty etternavn;
+    private transient StringProperty fakturaadresse;
+    private transient StringProperty postnummer;
+    private transient IntegerProperty forsikringsnummer;
+    private transient ObjectProperty<LocalDate> kundeOpprettelsesDato;
 
     //TODO Implementer disse
     //Observable lister over forsikringer, skademeldinger og ubetalte erstatninger.
@@ -136,5 +140,35 @@ public class Kunde {
         this.kundeOpprettelsesDato.set(kundeOpprettelsesDato);
     }
 
+    /*private void writeObject (ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.defaultWriteObject();
+        objectOutputStream.writeObject(fornavn.get());
+        objectOutputStream.writeObject(etternavn.get());
+        objectOutputStream.writeObject(fakturaadresse.get());
+        objectOutputStream.writeObject(postnummer.get());
+        objectOutputStream.writeObject(forsikringsnummer.get());
+        objectOutputStream.writeObject(kundeOpprettelsesDato.get());
+    }*/
+
+
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.defaultWriteObject();
+        objectOutputStream.writeObject(getFornavn());
+        objectOutputStream.writeObject(getEtternavn());
+        objectOutputStream.writeObject(getFakturaadresse());
+        objectOutputStream.writeObject(getPostnummer());
+        objectOutputStream.writeObject(getForsikringsnummer());
+        objectOutputStream.writeObject(getKundeOpprettelsesDato());
+    }
+
+    private void readObject(ObjectInputStream objectInputStream) throws IOException , ClassNotFoundException{
+        objectInputStream.defaultReadObject();
+        fornavn = new SimpleStringProperty((String) objectInputStream.readObject());
+        etternavn = new SimpleStringProperty((String) objectInputStream.readObject());
+        fakturaadresse = new SimpleStringProperty((String) objectInputStream.readObject());
+        postnummer = new SimpleStringProperty((String) objectInputStream.readObject());
+        forsikringsnummer = new SimpleIntegerProperty((Integer) objectInputStream.readObject());
+        kundeOpprettelsesDato = new SimpleObjectProperty<LocalDate>((LocalDate) objectInputStream.readObject());
+    }
 
 }

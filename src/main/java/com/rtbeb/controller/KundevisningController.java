@@ -1,8 +1,6 @@
 package com.rtbeb.controller;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -49,10 +47,17 @@ public class KundevisningController implements Initializable {
     private TableView<Kunde> tableKunder;
 
     @FXML
-    private void openFile(){
+    private void openFile() throws  Exception, IOException{
         //TODO implementer FileChooser her
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(new Stage());
+
+        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file.getPath()));
+        Kunde kunde;
+
+        kunde = (Kunde)objectInputStream.readObject();
+
+        System.out.println("Fornavn: "+ kunde.getFornavn());
 
 
 
