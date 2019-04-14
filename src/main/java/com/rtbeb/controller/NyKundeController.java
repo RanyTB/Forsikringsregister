@@ -77,7 +77,7 @@ public class NyKundeController implements Initializable {
     }
 
     @FXML
-    private void opprettKunde(){
+    private void opprettKunde(ActionEvent event){
 
         Kunde kunde = new Kunde(txtFornavn.getText(), txtEtternavn.getText(), txtAdresse.getText(), txtPostnummer.getText());
 
