@@ -2,6 +2,7 @@ package com.rtbeb.controller;
 
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
+import com.rtbeb.model.base.exception.InvalidKundeException;
 import com.rtbeb.model.validation.KundeValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -82,15 +83,14 @@ public class NyKundeController implements Initializable {
         Kunde kunde = new Kunde(txtFornavn.getText(), txtEtternavn.getText(), txtAdresse.getText(), txtPostnummer.getText());
 
         //Hvis kunde er gyldig, settes kunden inn i kunderegister. Ellers vises feilmelding.
-        if(KundeValidator.kundeIsValid(kunde)){
-            kunderegister.insertKunde(kunde);
-
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Registreringsfeil");
-            alert.setHeaderText("Kunnde ikke registrere kunde:\nSjekk kundedata.");
-            alert.show();
-        }
+            try {
+                kunderegister.insertKunde(kunde);
+            } catch (InvalidKundeException e) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Registreringsfeil");
+                alert.setHeaderText("Kunnde ikke registrere kunde:\nSjekk kundedata.");
+                alert.show();
+            }
     }
 
     @FXML
