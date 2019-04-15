@@ -7,12 +7,12 @@ public class Eier {
 
     StringProperty fornavn;
     StringProperty etternavn;
-    StringProperty fodselsdato;
+    StringProperty fødselsdato;
 
-    public Eier(String fornavn, String etternavn, String fodselsdato) {
+    public Eier(String fornavn, String etternavn, String fødselsdato) {
         this.fornavn = new SimpleStringProperty(fornavn);
         this.etternavn = new SimpleStringProperty(etternavn);
-        this.fodselsdato = new SimpleStringProperty(fodselsdato);
+        this.fødselsdato = new SimpleStringProperty(fødselsdato);
     }
 
     public String getFornavn() {
@@ -39,15 +39,15 @@ public class Eier {
         this.etternavn.set(etternavn);
     }
 
-    public String getFodselsdato() {
-        return fodselsdato.get();
+    public String getFødselsdato() {
+        return fødselsdato.get();
     }
 
-    public StringProperty fodselsdatoProperty() {
-        return fodselsdato;
+    public StringProperty fødselsdatoProperty() {
+        return fødselsdato;
     }
 
-    public void setFodselsdato(String fodselsdato) {
-        this.fodselsdato.set(fodselsdato);
+    public void setFødselsdato(String fødselsdato) {
+        this.fødselsdato.set(fødselsdato);
     }
 }

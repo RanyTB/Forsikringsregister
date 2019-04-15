@@ -1,32 +1,31 @@
 package com.rtbeb.model.base;
 
-import javafx.beans.property.*;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
-public class Baatforsikring extends Forsikring {
+public class Båt {
 
     private ObjectProperty<Eier> eier;
     private StringProperty registreringsnummer;
     private StringProperty merke;
     private StringProperty modell;
     private StringProperty lengde;
-    private StringProperty aarsmodell;
+    private StringProperty årsmodell;
     private StringProperty motorInfo;
 
-    public Baatforsikring(Integer aarligForsikringspremie,
-                          Integer forsikringsbelop, String forsikringsbetingelser,
-                          Eier eier, String registreringsnummer,
-                          String merke, String modell,
-                          String lengde, String aarsmodell,
-                          String motorInfo) {
-
-        super("Båtforsikring", aarligForsikringspremie, forsikringsbelop, forsikringsbetingelser);
-
+    public Båt(Eier eier,
+               String registreringsnummer,
+               String merke, String modell,
+               String lengde, String årsmodell,
+               String motorInfo){
         this.eier = new SimpleObjectProperty<>(eier);
         this.registreringsnummer = new SimpleStringProperty(registreringsnummer);
         this.merke = new SimpleStringProperty(merke);
         this.modell = new SimpleStringProperty(modell);
         this.lengde = new SimpleStringProperty(lengde);
-        this.aarsmodell = new SimpleStringProperty(aarsmodell);
+        this.årsmodell = new SimpleStringProperty(årsmodell);
         this.motorInfo = new SimpleStringProperty(motorInfo);
     }
 
@@ -90,16 +89,16 @@ public class Baatforsikring extends Forsikring {
         this.lengde.set(lengde);
     }
 
-    public String getAarsmodell() {
-        return aarsmodell.get();
+    public String getÅrsmodell() {
+        return årsmodell.get();
     }
 
-    public StringProperty aarsmodellProperty() {
-        return aarsmodell;
+    public StringProperty årsmodellProperty() {
+        return årsmodell;
     }
 
-    public void setAarsmodell(String aarsmodell) {
-        this.aarsmodell.set(aarsmodell);
+    public void setÅrsmodell(String årsmodell) {
+        this.årsmodell.set(årsmodell);
     }
 
     public String getMotorInfo() {

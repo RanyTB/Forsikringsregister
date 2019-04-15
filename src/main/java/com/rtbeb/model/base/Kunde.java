@@ -1,5 +1,7 @@
 package com.rtbeb.model.base;
 
+import com.rtbeb.model.base.exception.InvalidForsikringException;
+import com.rtbeb.model.validation.ForsikringValidator;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +14,8 @@ public class Kunde {
     /*Kundeklassen bruker properties, som fungerer som en wrapper for klassene med muligheten
     for å binde listeners. Dette gjør at en TableView automatisk vil oppdatere properties
      som får nye verdier.*/
+
+    //Counteren sørger for threadsafe utdeling av forsikringsnummer til nye kunder med metoden getAndIncrement();
     private static final AtomicInteger forsikringnummerCounter = new AtomicInteger(100000);
     private StringProperty fornavn;
     private StringProperty etternavn;
@@ -35,6 +39,7 @@ public class Kunde {
         this.kundeOpprettelsesDato = new SimpleObjectProperty<>(this,"kundeOpprettelsesDato", LocalDate.now());
     }
 
+    //TODO Bruk denne for opprettelse av kunder ved fillesing fra csv.
     public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer, long forsikringsnummer, LocalDate datoOpprettet) {
         this.fornavn = new SimpleStringProperty(this,"fornavn",fornavn);
         this.etternavn = new SimpleStringProperty(this,"etternavn",etternavn);
@@ -106,12 +111,23 @@ public class Kunde {
         this.forsikringsnummer.set(forsikringsnummer);
     }
 
-    //----------------------------------------------//
+    public LocalDate getKundeOpprettelsesDato() {
+        return kundeOpprettelsesDato.get();
+    }
+
+    public ObjectProperty<LocalDate> kundeOpprettelsesDatoProperty() {
+        return kundeOpprettelsesDato;
+    }
+
+    public void setKundeOpprettelsesDato(LocalDate kundeOpprettelsesDato) {
+        this.kundeOpprettelsesDato.set(kundeOpprettelsesDato);
+    }
+
+    //--------------------KUNDEINFO END---------------------//
 
 
 
-    //---------------FORSIKRINGSINFO----------------//
-
+    //--------------------FORSIKRINGER---------------------//
 
     public ObservableList<Forsikring> getForsikringsListe() {
         return forsikringsListe;
@@ -121,8 +137,18 @@ public class Kunde {
         this.forsikringsListe = forsikringsListe;
     }
 
-        /*TODO Implementer disse
+    public void addForsikring(Forsikring forsikring) throws InvalidForsikringException {
+        if(ForsikringValidator.ForsikringIsValid(forsikring)){
+            this.forsikringsListe.add(forsikring);
+        } else{
+            throw new InvalidForsikringException("Ugyldig forsikring");
+        }
+    }
 
+    //--------------------FORSIKRINGER END-----------------//
+
+
+    /*TODO Implementer disse
 
     public ObservableList<Skademelding> getSkademeldinger() {
         return skademeldinger;
@@ -141,17 +167,6 @@ public class Kunde {
     }
     ----------------------------------------------------------------------------------------------*/
 
-    public LocalDate getKundeOpprettelsesDato() {
-        return kundeOpprettelsesDato.get();
-    }
-
-    public ObjectProperty<LocalDate> kundeOpprettelsesDatoProperty() {
-        return kundeOpprettelsesDato;
-    }
-
-    public void setKundeOpprettelsesDato(LocalDate kundeOpprettelsesDato) {
-        this.kundeOpprettelsesDato.set(kundeOpprettelsesDato);
-    }
 
 
 }

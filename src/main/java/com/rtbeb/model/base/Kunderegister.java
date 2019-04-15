@@ -1,5 +1,6 @@
 package com.rtbeb.model.base;
 
+import com.rtbeb.model.base.exception.InvalidForsikringException;
 import com.rtbeb.model.base.exception.InvalidKundeException;
 import com.rtbeb.model.validation.KundeValidator;
 import javafx.collections.FXCollections;
@@ -24,15 +25,23 @@ public class Kunderegister{
         //TODO fjern konstruktør når testing er fullført
         //Konstruktøren brukes foreløpig bare til testing for å initialisere kunderegisteret med dummy-kunder.
 
+        //Tester innsetting av kunder i kunderegisteret
         Kunde kunde1 = new Kunde("Rany Tarek","Bouorm","Ellen Gleditsch Vei 25","0987");
         Kunde kunde2 = new Kunde("Maimona","Javed","Munkebekken 100","0954");
-
-        Baatforsikring baatforsikring = new Baatforsikring(20000, 10000,
-                "blabla", new Eier("Testing", "Testo", "200394"),
-                "PP55530", "Volvo", "V1000", "10", "2013", "1000hk");
-        kunde1.getForsikringsListe().add(baatforsikring);
-
         kundeliste.addAll(kunde1, kunde2);
+
+        //Tester opprettelse av båtforsikring
+        Eier eier = new Eier("Ola", "Nordmann", "200394");
+        Båt båt = new Båt(eier, "4444", "Tekst", "Tekst", "300", "2004", "400hk");
+        Båtforsikring båtforsikring = new Båtforsikring(20000, 300000, "roawijrawoj", båt);
+
+        //Tester innsetting av båtforsikring i et kundeobjekt.
+        try {
+            kunde1.addForsikring(båtforsikring);
+        } catch (InvalidForsikringException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void insertKunde(Kunde kunde) throws InvalidKundeException {

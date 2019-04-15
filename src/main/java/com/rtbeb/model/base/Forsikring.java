@@ -4,7 +4,7 @@ import javafx.beans.property.*;
 
 import java.time.LocalDate;
 
-public class Forsikring {
+public abstract class Forsikring {
 
     public StringProperty forsikringstype;
     private IntegerProperty forsikringspremie;
