@@ -20,8 +20,9 @@ public class Kunde {
     private LongProperty forsikringsnummer;
     private ObjectProperty<LocalDate> kundeOpprettelsesDato;
 
-    //TODO Implementer observable-lister over forsikringer, skademeldinger og ubetalte erstatninger.
     private ObservableList<Forsikring> forsikringsListe = FXCollections.observableArrayList();
+
+    //TODO Implementer observable-lister over skademeldinger og ubetalte erstatninger.
     //private ObservableList<Skademelding> skademeldinger;
     //private ObservableList<UbetaltErstatning> ubetalteErstatninger;
 
@@ -108,8 +109,8 @@ public class Kunde {
     //----------------------------------------------//
 
 
-    //---------------FORSIKRINGSINFO----------------//
 
+    //---------------FORSIKRINGSINFO----------------//
 
 
     public ObservableList<Forsikring> getForsikringsListe() {
