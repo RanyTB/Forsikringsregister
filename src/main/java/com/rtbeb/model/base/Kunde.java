@@ -1,6 +1,7 @@
 package com.rtbeb.model.base;
 
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ public class Kunde {
     private ObjectProperty<LocalDate> kundeOpprettelsesDato;
 
     //TODO Implementer observable-lister over forsikringer, skademeldinger og ubetalte erstatninger.
-    //private ObservableList<Forsikring> forsikringer;
+    private ObservableList<Forsikring> forsikringsListe = FXCollections.observableArrayList();
     //private ObservableList<Skademelding> skademeldinger;
     //private ObservableList<UbetaltErstatning> ubetalteErstatninger;
 
@@ -41,6 +42,8 @@ public class Kunde {
         this.forsikringsnummer = new SimpleLongProperty(this,"forsikringsnummer", forsikringnummerCounter.getAndIncrement());
         this.kundeOpprettelsesDato = new SimpleObjectProperty<>(this,"kundeOpprettelsesDato", LocalDate.now());
     }
+
+    //----------------KUNDEINFO-----------------------//
 
     public String getFornavn() {
         return fornavn.get();
@@ -102,16 +105,23 @@ public class Kunde {
         this.forsikringsnummer.set(forsikringsnummer);
     }
 
+    //----------------------------------------------//
 
-    /*TODO Implementer disse
 
-    public ObservableList<Forsikring> getForsikringer() {
-        return forsikringer;
+    //---------------FORSIKRINGSINFO----------------//
+
+
+
+    public ObservableList<Forsikring> getForsikringsListe() {
+        return forsikringsListe;
     }
 
-    public void setForsikringer(ObservableList<Forsikring> forsikringer) {
-        this.forsikringer = forsikringer;
+    public void setForsikringsListe(ObservableList<Forsikring> forsikringsListe) {
+        this.forsikringsListe = forsikringsListe;
     }
+
+        /*TODO Implementer disse
+
 
     public ObservableList<Skademelding> getSkademeldinger() {
         return skademeldinger;

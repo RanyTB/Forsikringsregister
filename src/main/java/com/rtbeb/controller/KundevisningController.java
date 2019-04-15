@@ -61,7 +61,7 @@ public class KundevisningController implements Initializable {
 
     @FXML
     private void testButtonAction(ActionEvent event) {
-        //TODO Fjern denne når testing er fullført.
+        //TODO Implementer denne som en test og fjern den herfra.
         //Lag ny kunde og test tableview.
         System.out.println("You clicked me!");
 
@@ -87,7 +87,7 @@ public class KundevisningController implements Initializable {
     @FXML
     private void clickOnTable(MouseEvent event){
 
-        //TODO kall dette noe annet enn actionevent?
+        //TODO kall dette noe annet enn actualevent?
         //Dersom det blir oppdaget dobbeltklikk på tabellen, åpnes kundeforhold for markert kunde.
         tableKunder.setOnMouseClicked((MouseEvent actualevent) -> {
             if (actualevent.getButton().equals(MouseButton.PRIMARY) && actualevent.getClickCount() == 2){

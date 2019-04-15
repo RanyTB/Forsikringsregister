@@ -3,7 +3,6 @@ package com.rtbeb.model.base;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -21,6 +20,11 @@ public class Kunderegister{
 
         Kunde kunde1 = new Kunde("Rany Tarek","Bouorm","Ellen Gleditsch Vei 25","0987");
         Kunde kunde2 = new Kunde("Maimona","Javed","Munkebekken 100","0954");
+
+        Baatforsikring baatforsikring = new Baatforsikring(20000, 10000,
+                "blabla", new Eier("Testing", "Testo", "200394"),
+                "PP55530", "Volvo", "V1000", "10", "2013", "1000hk");
+        kunde1.getForsikringsListe().add(baatforsikring);
 
         kundeliste.addAll(kunde1, kunde2);
     }

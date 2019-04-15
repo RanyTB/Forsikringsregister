@@ -10,10 +10,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class KundeforholdController implements Initializable {
@@ -107,11 +109,51 @@ public class KundeforholdController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        bindLabelsWithCustomerInfo();
+        setupForsikringsTable();
+    }
 
+    private void bindLabelsWithCustomerInfo(){
+        //Binder TextFields til kundens datafelt.
         lblForsikringsnummer.textProperty().bind(valgtKunde.forsikringsnummerProperty().asString());
         lblFornavn.textProperty().bind(valgtKunde.fornavnProperty());
         lblEtternavn.textProperty().bind(valgtKunde.etternavnProperty());
         lblFakturaadresse.textProperty().bind(valgtKunde.fakturaadresseProperty());
         lblPostnummer.textProperty().bind(valgtKunde.postnummerProperty());
     }
+
+    //---------------Forsikringer-----------------//
+
+
+    @FXML
+    private TableView<Forsikring> tableForsikringer;
+
+    @FXML
+    private TableColumn<Forsikring,String> forsikringstypeColumn;
+
+    @FXML
+    private TableColumn<Forsikring, LocalDate> datoOpprettetColumn;
+
+    @FXML
+    private TableColumn<Forsikring, Integer> forsikringsbelopColumn;
+
+    @FXML
+    private TableColumn<Forsikring, LocalDate> forsikringspremieColumn;
+
+
+
+
+    private void setupForsikringsTable(){
+
+        forsikringstypeColumn.setCellValueFactory(new PropertyValueFactory<>("forsikringstype"));
+        datoOpprettetColumn.setCellValueFactory(new PropertyValueFactory<>("datoOpprettet"));
+        forsikringsbelopColumn.setCellValueFactory(new PropertyValueFactory<>("forsikringsbelop"));
+        forsikringspremieColumn.setCellValueFactory(new PropertyValueFactory<>("forsikringspremie"));
+
+        tableForsikringer.setItems(valgtKunde.getForsikringsListe());
+    }
+
+
+
+
 }
