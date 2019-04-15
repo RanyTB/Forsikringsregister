@@ -1,7 +1,5 @@
 package com.rtbeb.model.base;
 
-import com.rtbeb.model.base.exception.InvalidKundeException;
-import com.rtbeb.model.validation.KundeValidator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,10 +12,6 @@ public class Kunderegister{
 
     //Singleton klasse med privat konstruktør. Instanse hentes med getInstance();
     private static Kunderegister instance = new Kunderegister();
-
-    public static Kunderegister getInstance(){
-        return instance;
-    }
 
     private Kunderegister(){
 
@@ -35,12 +29,8 @@ public class Kunderegister{
         kundeliste.addAll(kunde1, kunde2);
     }
 
-    public void insertKunde(Kunde kunde) throws InvalidKundeException {
-        if(KundeValidator.kundeIsValid(kunde)) {
-            kundeliste.add(kunde);
-        } else{
-            throw new InvalidKundeException("Ugyldig kunde");
-        }
+    public void insertKunde(Kunde kunde){
+        kundeliste.add(kunde);
     }
 
     public void deleteKunde(Kunde kunde){
@@ -54,6 +44,10 @@ public class Kunderegister{
                 break;
             }
         }
+    }
+
+    public static Kunderegister getInstance(){
+        return instance;
     }
 
 
