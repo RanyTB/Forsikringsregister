@@ -1,10 +1,15 @@
 package com.rtbeb.model.filemanagement;
 
-public class WriteToCSV implements FileManagement{
+public class Csv implements FileManagement{
 
     //TODO implementer denne metoden
     @Override
     public void writeToFile(String filePath) {
+
+    }
+
+    @Override
+    public void readFromFile(String filePath) {
 
     }
 }

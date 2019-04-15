@@ -7,7 +7,11 @@ public class Context {
         this.fileManagement = fileManagement;
     }
 
-    public void fileStrategy(String filePath){
+    public void writeStrategy(String filePath){
         fileManagement.writeToFile(filePath);
+    }
+
+    public void readStrategy(String filePath) throws Exception {
+        fileManagement.readFromFile(filePath);
     }
 }

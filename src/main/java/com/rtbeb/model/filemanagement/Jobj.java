@@ -2,15 +2,13 @@ package com.rtbeb.model.filemanagement;
 import com.rtbeb.model.base.Kunderegister;
 import com.rtbeb.model.base.Kunde;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 import java.util.ArrayList;
 
 
 
-public class WriteToJOBJ implements FileManagement {
+public class Jobj implements FileManagement {
 
     @Override
     public void writeToFile(String filePath) {
@@ -24,6 +22,19 @@ public class WriteToJOBJ implements FileManagement {
 
         } catch (IOException exception) {
             exception.printStackTrace();
+        }
+    }
+
+    @Override
+    public void readFromFile(String filePath) throws  Exception, IOException{
+        try(FileInputStream fileInputStream = new FileInputStream(filePath);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)){
+            Object object = objectInputStream.readObject();
+            System.out.println("Lastet inn: " + object);
+        }catch (IOException e){
+            System.err.println("Kunne ikke lese fra fil grunnet: " + e.getCause());
+        }catch (ClassNotFoundException e){
+            System.err.println("Kunne ikke konvertere objekt");
         }
     }
 }

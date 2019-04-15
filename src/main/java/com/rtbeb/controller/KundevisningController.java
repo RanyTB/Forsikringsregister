@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
 import com.rtbeb.model.filemanagement.Context;
-import com.rtbeb.model.filemanagement.WriteToJOBJ;
+import com.rtbeb.model.filemanagement.Jobj;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,13 +52,18 @@ public class KundevisningController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(new Stage());
 
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file.getPath()));
-        Kunde kunde;
+        String extension = file.getName().substring(file.getName().lastIndexOf("."));
 
-        kunde = (Kunde)objectInputStream.readObject();
+        Context context;
+        if (extension.equals(".jobj")){
+            context = new Context(new Jobj());
+            context.readStrategy(file.getPath());
 
-        System.out.println("Fornavn: "+ kunde.getFornavn());
+        } else if (extension.equals(".csv")){
 
+        } else {
+            System.out.println("Feil filtype");
+        }
 
 
     }
@@ -77,12 +82,13 @@ public class KundevisningController implements Initializable {
 
         String extension = file.getName().substring(file.getName().lastIndexOf("."));
 
+        //test
         System.out.println("Filendelse: " + extension);
 
         Context context;
         if (extension.equals(".jobj")){
-            context = new Context(new WriteToJOBJ());
-            context.fileStrategy(file.getPath());
+            context = new Context(new Jobj());
+            context.writeStrategy(file.getPath());
 
         } else if (extension.equals(".csv")){
 
@@ -90,7 +96,7 @@ public class KundevisningController implements Initializable {
             System.out.println("Feil filtype");
         }
 
-        //Context context = new Context(new WriteToJOBJ());
+        //Context context = new Context(new Jobj());
         //context.fileStrategy(file.getPath());
 
     }
