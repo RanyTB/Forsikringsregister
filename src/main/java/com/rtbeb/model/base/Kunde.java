@@ -1,6 +1,9 @@
 package com.rtbeb.model.base;
 
+import com.rtbeb.model.base.exception.InvalidForsikringException;
+import com.rtbeb.model.validation.ForsikringValidator;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
@@ -8,37 +11,49 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Kunde implements Serializable {
     private static final long serialVersionUID = 1;
     /*Kundeklassen bruker properties, som fungerer som en wrapper for klassene med muligheten
     for å binde listeners. Dette gjør at en TableView automatisk vil oppdatere properties
      som får nye verdier.*/
+
+    //Counteren sørger for threadsafe utdeling av forsikringsnummer til nye kunder med metoden getAndIncrement();
+    private transient static final AtomicInteger forsikringnummerCounter = new AtomicInteger(100000);
     private transient StringProperty fornavn;
     private transient StringProperty etternavn;
     private transient StringProperty fakturaadresse;
     private transient StringProperty postnummer;
-    private transient IntegerProperty forsikringsnummer;
+    private transient LongProperty forsikringsnummer;
     private transient ObjectProperty<LocalDate> kundeOpprettelsesDato;
 
-    //TODO Implementer disse
-    //Observable lister over forsikringer, skademeldinger og ubetalte erstatninger.
-    //private ObservableList<Forsikring> forsikringer;
-    //private ObservableList<Skademelding> skademeldinger;
+    private ObservableList<Forsikring> forsikringsListe = FXCollections.observableArrayList();
 
+    //TODO Implementer observable-lister over skademeldinger og ubetalte erstatninger.
+    //private ObservableList<Skademelding> skademeldinger;
     //private ObservableList<UbetaltErstatning> ubetalteErstatninger;
 
-    public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer,
-                 Integer forsikringsnummer,
-                 LocalDate kundeOpprettelsesDato) {
+    public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer) {
         this.fornavn = new SimpleStringProperty(this,"fornavn",fornavn);
         this.etternavn = new SimpleStringProperty(this,"etternavn",etternavn);
         this.fakturaadresse = new SimpleStringProperty(this,"fakturaadresse",fakturaadresse);
         this.postnummer = new SimpleStringProperty(this, "postnummer", postnummer);
-        this.forsikringsnummer = new SimpleIntegerProperty(this,"forsikringsnummer", forsikringsnummer);
-        this.kundeOpprettelsesDato = new SimpleObjectProperty<>(this,"kundeOpprettelsesDato", kundeOpprettelsesDato);
+        this.forsikringsnummer = new SimpleLongProperty(this,"forsikringsnummer", forsikringnummerCounter.getAndIncrement());
+        this.kundeOpprettelsesDato = new SimpleObjectProperty<>(this,"kundeOpprettelsesDato", LocalDate.now());
     }
+
+    //TODO Bruk denne for opprettelse av kunder ved fillesing fra csv.
+    public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer, long forsikringsnummer, LocalDate datoOpprettet) {
+        this.fornavn = new SimpleStringProperty(this,"fornavn",fornavn);
+        this.etternavn = new SimpleStringProperty(this,"etternavn",etternavn);
+        this.fakturaadresse = new SimpleStringProperty(this,"fakturaadresse",fakturaadresse);
+        this.postnummer = new SimpleStringProperty(this, "postnummer", postnummer);
+        this.forsikringsnummer = new SimpleLongProperty(this,"forsikringsnummer", forsikringnummerCounter.getAndIncrement());
+        this.kundeOpprettelsesDato = new SimpleObjectProperty<>(this,"kundeOpprettelsesDato", LocalDate.now());
+    }
+
+    //----------------KUNDEINFO-----------------------//
 
     public String getFornavn() {
         return fornavn.get();
@@ -88,28 +103,56 @@ public class Kunde implements Serializable {
         this.postnummer.set(postnummer);
     }
 
-    public int getForsikringsnummer() {
+    public long getForsikringsnummer() {
         return forsikringsnummer.get();
     }
 
-    public IntegerProperty forsikringsnummerProperty() {
+    public LongProperty forsikringsnummerProperty() {
         return forsikringsnummer;
     }
 
-    public void setForsikringsnummer(int forsikringsnummer) {
+    public void setForsikringsnummer(long forsikringsnummer) {
         this.forsikringsnummer.set(forsikringsnummer);
     }
 
+    public LocalDate getKundeOpprettelsesDato() {
+        return kundeOpprettelsesDato.get();
+    }
+
+    public ObjectProperty<LocalDate> kundeOpprettelsesDatoProperty() {
+        return kundeOpprettelsesDato;
+    }
+
+    public void setKundeOpprettelsesDato(LocalDate kundeOpprettelsesDato) {
+        this.kundeOpprettelsesDato.set(kundeOpprettelsesDato);
+    }
+
+    //--------------------KUNDEINFO END---------------------//
+
+
+
+    //--------------------FORSIKRINGER---------------------//
+
+    public ObservableList<Forsikring> getForsikringsListe() {
+        return forsikringsListe;
+    }
+
+    public void setForsikringsListe(ObservableList<Forsikring> forsikringsListe) {
+        this.forsikringsListe = forsikringsListe;
+    }
+
+    public void addForsikring(Forsikring forsikring) throws InvalidForsikringException {
+        if(ForsikringValidator.ForsikringIsValid(forsikring)){
+            this.forsikringsListe.add(forsikring);
+        } else{
+            throw new InvalidForsikringException("Ugyldig forsikring");
+        }
+    }
+
+    //--------------------FORSIKRINGER END-----------------//
+
 
     /*TODO Implementer disse
-
-    public ObservableList<Forsikring> getForsikringer() {
-        return forsikringer;
-    }
-
-    public void setForsikringer(ObservableList<Forsikring> forsikringer) {
-        this.forsikringer = forsikringer;
-    }
 
     public ObservableList<Skademelding> getSkademeldinger() {
         return skademeldinger;
@@ -128,17 +171,6 @@ public class Kunde implements Serializable {
     }
     ----------------------------------------------------------------------------------------------*/
 
-    public LocalDate getKundeOpprettelsesDato() {
-        return kundeOpprettelsesDato.get();
-    }
-
-    public ObjectProperty<LocalDate> kundeOpprettelsesDatoProperty() {
-        return kundeOpprettelsesDato;
-    }
-
-    public void setKundeOpprettelsesDato(LocalDate kundeOpprettelsesDato) {
-        this.kundeOpprettelsesDato.set(kundeOpprettelsesDato);
-    }
 
     /*private void writeObject (ObjectOutputStream objectOutputStream) throws IOException {
         objectOutputStream.defaultWriteObject();
@@ -167,7 +199,7 @@ public class Kunde implements Serializable {
         etternavn = new SimpleStringProperty((String) objectInputStream.readObject());
         fakturaadresse = new SimpleStringProperty((String) objectInputStream.readObject());
         postnummer = new SimpleStringProperty((String) objectInputStream.readObject());
-        forsikringsnummer = new SimpleIntegerProperty((Integer) objectInputStream.readObject());
+        forsikringsnummer = new SimpleLongProperty((Long) objectInputStream.readObject());
         kundeOpprettelsesDato = new SimpleObjectProperty<LocalDate>((LocalDate) objectInputStream.readObject());
     }
 

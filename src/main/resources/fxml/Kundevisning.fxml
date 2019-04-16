@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -9,35 +10,33 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="953.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rtbeb.controller.KundevisningController">
+<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="953.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rtbeb.controller.KundevisningController">
     <children>
-        <Button fx:id="btnVisValgtKunde" layoutX="692.0" layoutY="453.0" onAction="#visValgtKunde" text="Vis kundeforhold for valgt kunde" />
-      <TableView fx:id="tableKunder" layoutX="96.0" layoutY="156.0" prefHeight="277.0" prefWidth="786.0">
+      <TableView fx:id="tableKunder" layoutX="60.0" layoutY="161.0" onMouseClicked="#clickOnTable" prefHeight="277.0" prefWidth="865.0">
         <columns>
             <TableColumn fx:id="forsikringsnummerColumn" prefWidth="113.8320541381836" text="Forsikringnr." />
-          <TableColumn fx:id="fornavnColumn" prefWidth="121.16792297363281" text="Fornavn" />
-          <TableColumn fx:id="etternavnColumn" prefWidth="98.61184692382812" text="Etternavn" />
-            <TableColumn fx:id="dateColumn" prefWidth="98.00393676757812" text="Dato" />
-            <TableColumn prefWidth="107.5198974609375" text="Forsikringer" />
-            <TableColumn prefWidth="120.3399658203125" text="Skademeldinger" />
-            <TableColumn prefWidth="127.49176025390625" text="Ubet. Erstatninger" />
+          <TableColumn fx:id="fornavnColumn" prefWidth="153.0" text="Fornavn" />
+          <TableColumn fx:id="etternavnColumn" prefWidth="148.0" text="Etternavn" />
+            <TableColumn fx:id="adresseColumn" prefWidth="326.0" text="Adresse" />
+            <TableColumn fx:id="dateColumn" prefWidth="123.0" text="Dato" />
         </columns>
       </TableView>
-      <Label layoutX="602.0" layoutY="116.0" text="Søk">
+      <Label layoutX="640.0" layoutY="117.0" text="Søk">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="679.0" layoutY="113.0" prefHeight="27.0" prefWidth="203.0" promptText="Navn eller forsikringsnummer" />
+      <TextField fx:id="txtSearch" layoutX="727.0" layoutY="111.0" prefHeight="31.0" prefWidth="231.0" promptText="Navn eller forsikringsnummer" />
       <Label layoutX="96.0" layoutY="95.0" prefHeight="34.0" prefWidth="199.0" text="Kundevisning">
          <font>
             <Font name="System Bold" size="29.0" />
          </font>
       </Label>
-      <Button layoutX="410.0" layoutY="453.0" onAction="#testButtonAction" text="Test endring av kunde" />
-      <Button fx:id="ol" layoutX="581.0" layoutY="453.0" mnemonicParsing="false" onAction="#opprettNyKunde" text="Ny kunde" />
       <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="984.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
@@ -49,5 +48,23 @@
           </Menu>
         </menus>
       </MenuBar>
+      <GridPane hgap="30.0" layoutX="353.0" layoutY="446.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="79.0" prefWidth="575.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.0" minWidth="10.0" prefWidth="242.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="10.0" prefWidth="102.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="386.0" minWidth="10.0" prefWidth="171.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="ol" mnemonicParsing="false" onAction="#opprettNyKunde" prefHeight="35.0" prefWidth="300.0" text="Ny kunde" GridPane.columnIndex="1" />
+              <Button fx:id="btnVisValgtKunde" onAction="#visValgtKunde" prefHeight="35.0" prefWidth="300.0" text="Vis kundeforhold for valgt kunde" />
+            <Button onAction="#testButtonAction" prefHeight="35.0" prefWidth="300.0" text="Test endring av kunde" GridPane.columnIndex="2" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </GridPane>
     </children>
 </AnchorPane>
