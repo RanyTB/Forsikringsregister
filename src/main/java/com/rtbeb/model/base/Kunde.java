@@ -28,7 +28,8 @@ public class Kunde implements Serializable {
     private transient LongProperty forsikringsnummer;
     private transient ObjectProperty<LocalDate> kundeOpprettelsesDato;
 
-    private ObservableList<Forsikring> forsikringsListe = FXCollections.observableArrayList();
+    //TODO Eirik: implementer lagring og lesing av denne:
+    private transient ObservableList<Forsikring> forsikringsListe = FXCollections.observableArrayList();
 
     //TODO Implementer observable-lister over skademeldinger og ubetalte erstatninger.
     //private ObservableList<Skademelding> skademeldinger;
