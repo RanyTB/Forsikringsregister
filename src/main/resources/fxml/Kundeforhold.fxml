@@ -113,7 +113,7 @@
                   <Button fx:id="backButton" layoutX="30.0" layoutY="595.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="30.0" prefWidth="67.0" text="Tilbake" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" />
                   <Button layoutX="269.0" layoutY="262.0" mnemonicParsing="false" prefHeight="30.0" text="Rediger valgt forsikring" />
                   <Button layoutX="467.0" layoutY="262.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="161.0" text="Slett valgt forsikring" />
-                  <Button layoutX="88.0" layoutY="264.0" mnemonicParsing="false" onAction="#nySkademeldingButtonClicked" text="Ny skademelding" />
+                  <Button fx:id="btnNySkademelding" layoutX="88.0" layoutY="264.0" mnemonicParsing="false" onAction="#nySkademeldingButtonClicked" text="Ny skademelding" />
                </children>
             </AnchorPane>
         </items>

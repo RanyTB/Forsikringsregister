@@ -38,6 +38,8 @@ public class KundeforholdController implements Initializable {
     private Label lblPostnummer;
     @FXML
     private Button btnSlettKunde;
+    @FXML
+    private Button btnNySkademelding;
 
     @FXML
     Button backButton;
@@ -156,7 +158,30 @@ public class KundeforholdController implements Initializable {
 
     //---------------Skademeldinger-----------------//
 
-    private void nySkademeldingButtonClicked(){
+    @FXML
+    private void nySkademeldingButtonClicked(ActionEvent event) {
+        SkademeldingController skademeldingController = new SkademeldingController(valgtKunde);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/registrerSkademeldingSide2.fxml"));
+
+        //Setter loaderens kontroller til kontroller-instansen. fx:controller er ikke satt i FXML-filen.
+        loader.setController(skademeldingController);
+
+        //Loader FXML-hierarkiet
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Oppretter ny scene
+        Scene scene = new Scene(root);
+
+        //Oppretter ny stage
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
 
     }
 
