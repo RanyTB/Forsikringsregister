@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Jobj implements FileManagement {
 
     @Override
-    public void writeToFile(String filePath) {
+    public void writeToFile(String filePath) throws IOException{
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(filePath);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
