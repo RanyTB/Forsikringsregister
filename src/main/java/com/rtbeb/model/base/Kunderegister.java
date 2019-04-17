@@ -76,7 +76,9 @@ public class Kunderegister {
         Denne bruker vi til å sette kunderegisteret etter import fra fil.
         Tenker derfor at vi setter alle kunder i en ArrayList når disse leses fra fil, og deretter omgjør til
         observablelist her. */
-        this.kundeliste = FXCollections.observableList(kundeliste);
+        //this.kundeliste = FXCollections.observableList(kundeliste);
+        this.kundeliste.clear();
+        this.kundeliste.addAll(kundeliste);
     }
 
     public ObservableList<Kunde> getKundeliste(){

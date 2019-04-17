@@ -5,15 +5,21 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Båt {
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-    private ObjectProperty<Eier> eier;
-    private StringProperty registreringsnummer;
-    private StringProperty merke;
-    private StringProperty modell;
-    private StringProperty lengde;
-    private StringProperty årsmodell;
-    private StringProperty motorInfo;
+public class Båt implements Serializable {
+    private static final long serialVersionUID = 1;
+
+    private transient ObjectProperty<Eier> eier;
+    private transient StringProperty registreringsnummer;
+    private transient StringProperty merke;
+    private transient StringProperty modell;
+    private transient StringProperty lengde;
+    private transient StringProperty årsmodell;
+    private transient StringProperty motorInfo;
 
     public Båt(Eier eier,
                String registreringsnummer,
@@ -111,5 +117,29 @@ public class Båt {
 
     public void setMotorInfo(String motorInfo) {
         this.motorInfo.set(motorInfo);
+    }
+
+    //Egendefinert serialisering
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.defaultWriteObject();
+        objectOutputStream.writeObject(getEier());
+        objectOutputStream.writeObject(getRegistreringsnummer());
+        objectOutputStream.writeObject(getMerke());
+        objectOutputStream.writeObject(getModell());
+        objectOutputStream.writeObject(getLengde());
+        objectOutputStream.writeObject(getÅrsmodell());
+        objectOutputStream.writeObject(getMotorInfo());
+    }
+
+    //Egendefinert serialisering
+    private void readObject(ObjectInputStream objectInputStream) throws IOException , ClassNotFoundException{
+        objectInputStream.defaultReadObject();
+        this.eier = new SimpleObjectProperty<>((Eier) objectInputStream.readObject());
+        this.registreringsnummer = new SimpleStringProperty((String) objectInputStream.readObject());
+        this.merke = new SimpleStringProperty((String) objectInputStream.readObject());
+        this.modell = new SimpleStringProperty((String) objectInputStream.readObject());
+        this.lengde = new SimpleStringProperty ((String) objectInputStream.readObject());
+        this.årsmodell = new SimpleStringProperty((String) objectInputStream.readObject());
+        this.motorInfo = new SimpleStringProperty((String) objectInputStream.readObject());
     }
 }

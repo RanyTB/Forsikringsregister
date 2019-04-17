@@ -14,6 +14,7 @@ public class Csv implements FileManagement{
     public void writeToFile(String filePath) throws IOException {
         Kunderegister kunderegister = Kunderegister.getInstance();
         Path path = Paths.get(filePath);
+
     }
 
     @Override

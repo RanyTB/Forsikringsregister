@@ -26,13 +26,17 @@ public class Jobj implements FileManagement {
     }
 
     @Override
-    public void readFromFile(String filePath) throws  Exception, IOException{
+    public void readFromFile(String filePath) {
         try(FileInputStream fileInputStream = new FileInputStream(filePath);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)){
             Object object = objectInputStream.readObject();
             System.out.println("Lastet inn: " + object);
+            Kunderegister kunderegister = Kunderegister.getInstance();
+            kunderegister.setKundeliste((ArrayList<Kunde>) object);
+
         }catch (IOException e){
-            System.err.println("Kunne ikke lese fra fil grunnet: " + e.getCause());
+            //System.err.println("Kunne ikke lese fra fil grunnet: " + e.getCause());
+            e.printStackTrace();
         }catch (ClassNotFoundException e){
             System.err.println("Kunne ikke konvertere objekt");
         }

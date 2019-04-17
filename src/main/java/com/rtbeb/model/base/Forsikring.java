@@ -2,15 +2,23 @@ package com.rtbeb.model.base;
 
 import javafx.beans.property.*;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public abstract class Forsikring {
+public abstract class Forsikring implements Serializable {
+    private static final long serialVersionUID = 1;
 
-    public StringProperty forsikringstype;
-    private IntegerProperty forsikringspremie;
-    private ObjectProperty<LocalDate> datoOpprettet;
-    private IntegerProperty forsikringsbelop;
-    private StringProperty forsikringsbetingelser;
+
+    private transient StringProperty forsikringstype;
+    private transient IntegerProperty forsikringspremie;
+    private transient ObjectProperty<LocalDate> datoOpprettet;
+    private transient IntegerProperty forsikringsbelop;
+    private transient StringProperty forsikringsbetingelser;
+
+
 
     public Forsikring(String forsikringstype, Integer forsikringspremie, Integer forsikringsbelop, String forsikringsbetingelser) {
         this.forsikringstype = new SimpleStringProperty(forsikringstype);
@@ -79,4 +87,26 @@ public abstract class Forsikring {
     public void setForsikringsbetingelser(String forsikringsbetingelser) {
         this.forsikringsbetingelser.set(forsikringsbetingelser);
     }
+
+    //Egendefinert serialisering
+    private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
+        objectOutputStream.defaultWriteObject();
+        objectOutputStream.writeObject(getForsikringstype());
+        objectOutputStream.writeObject(getForsikringspremie());
+        objectOutputStream.writeObject(getDatoOpprettet());
+        objectOutputStream.writeObject(getForsikringsbelop());
+        objectOutputStream.writeObject(getForsikringsbetingelser());
+    }
+
+    //Egendefinert serialisering
+    private void readObject(ObjectInputStream objectInputStream) throws IOException , ClassNotFoundException{
+        objectInputStream.defaultReadObject();
+        this.forsikringstype = new SimpleStringProperty((String) objectInputStream.readObject());
+        this.forsikringspremie = new SimpleIntegerProperty((Integer) objectInputStream.readObject());
+        this.datoOpprettet = new SimpleObjectProperty<>((LocalDate) objectInputStream.readObject());
+        this.forsikringsbelop = new SimpleIntegerProperty((Integer) objectInputStream.readObject());
+        this.forsikringsbetingelser = new SimpleStringProperty((String) objectInputStream.readObject());
+
+    }
+
 }

@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Kunde implements Serializable {
@@ -137,6 +138,9 @@ public class Kunde implements Serializable {
     public ObservableList<Forsikring> getForsikringsListe() {
         return forsikringsListe;
     }
+    public ArrayList<Forsikring> getForsikringsListeAsArrayList(){
+        return new ArrayList<Forsikring>(getForsikringsListe());
+    }
 
     public void setForsikringsListe(ObservableList<Forsikring> forsikringsListe) {
         this.forsikringsListe = forsikringsListe;
@@ -173,17 +177,7 @@ public class Kunde implements Serializable {
     ----------------------------------------------------------------------------------------------*/
 
 
-    /*private void writeObject (ObjectOutputStream objectOutputStream) throws IOException {
-        objectOutputStream.defaultWriteObject();
-        objectOutputStream.writeObject(fornavn.get());
-        objectOutputStream.writeObject(etternavn.get());
-        objectOutputStream.writeObject(fakturaadresse.get());
-        objectOutputStream.writeObject(postnummer.get());
-        objectOutputStream.writeObject(forsikringsnummer.get());
-        objectOutputStream.writeObject(kundeOpprettelsesDato.get());
-    }*/
-
-
+    //Egendefinert serialisering
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
         objectOutputStream.defaultWriteObject();
         objectOutputStream.writeObject(getFornavn());
@@ -192,16 +186,19 @@ public class Kunde implements Serializable {
         objectOutputStream.writeObject(getPostnummer());
         objectOutputStream.writeObject(getForsikringsnummer());
         objectOutputStream.writeObject(getKundeOpprettelsesDato());
+        objectOutputStream.writeObject(getForsikringsListeAsArrayList());
     }
 
+    //Egendefinert serialisering
     private void readObject(ObjectInputStream objectInputStream) throws IOException , ClassNotFoundException{
         objectInputStream.defaultReadObject();
-        fornavn = new SimpleStringProperty((String) objectInputStream.readObject());
-        etternavn = new SimpleStringProperty((String) objectInputStream.readObject());
-        fakturaadresse = new SimpleStringProperty((String) objectInputStream.readObject());
-        postnummer = new SimpleStringProperty((String) objectInputStream.readObject());
-        forsikringsnummer = new SimpleLongProperty((Long) objectInputStream.readObject());
-        kundeOpprettelsesDato = new SimpleObjectProperty<LocalDate>((LocalDate) objectInputStream.readObject());
+        this.fornavn = new SimpleStringProperty((String) objectInputStream.readObject());
+        this.etternavn = new SimpleStringProperty((String) objectInputStream.readObject());
+        this.fakturaadresse = new SimpleStringProperty((String) objectInputStream.readObject());
+        this.postnummer = new SimpleStringProperty((String) objectInputStream.readObject());
+        this.forsikringsnummer = new SimpleLongProperty((Long) objectInputStream.readObject());
+        this.kundeOpprettelsesDato = new SimpleObjectProperty<LocalDate>((LocalDate) objectInputStream.readObject());
+        this.forsikringsListe = FXCollections.observableArrayList( (ArrayList<Forsikring>) objectInputStream.readObject());
     }
 
 }

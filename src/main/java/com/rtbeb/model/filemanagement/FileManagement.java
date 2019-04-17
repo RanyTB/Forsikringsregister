@@ -6,5 +6,5 @@ import java.io.IOException;
 public interface FileManagement {
     public void writeToFile(String filePath) throws IOException;
 
-    public void readFromFile(String filePath) throws Exception;
+    public void readFromFile(String filePath) throws IOException;
 }
