@@ -1,6 +1,7 @@
 package com.rtbeb.model.base;
 
 import com.rtbeb.model.base.exception.InvalidForsikringException;
+import com.rtbeb.model.base.exception.InvalidSkademeldingException;
 import com.rtbeb.model.base.forsikring.Forsikring;
 import com.rtbeb.model.validation.ForsikringValidator;
 import javafx.beans.property.*;
@@ -34,7 +35,7 @@ public class Kunde implements Serializable {
     private transient ObservableList<Forsikring> forsikringsListe = FXCollections.observableArrayList();
 
     //TODO Implementer observable-lister over skademeldinger og ubetalte erstatninger.
-    //private ObservableList<Skademelding> skademeldinger;
+    private transient ObservableList<Skademelding> skademeldinger;
     //private ObservableList<UbetaltErstatning> ubetalteErstatninger;
 
     public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer) {
@@ -158,7 +159,7 @@ public class Kunde implements Serializable {
     //--------------------FORSIKRINGER END-----------------//
 
 
-    /*TODO Implementer disse
+    //TODO Implementer disse
 
     public ObservableList<Skademelding> getSkademeldinger() {
         return skademeldinger;
@@ -168,6 +169,13 @@ public class Kunde implements Serializable {
         this.skademeldinger = skademeldinger;
     }
 
+    public void addSkademelding(Skademelding skademelding){
+        this.skademeldinger.add(skademelding);
+
+    }
+
+
+    /*
     public ObservableList<UbetaltErstatning> getUbetalteErstatninger() {
         return ubetalteErstatninger;
     }

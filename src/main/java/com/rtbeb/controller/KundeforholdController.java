@@ -154,6 +154,10 @@ public class KundeforholdController implements Initializable {
     }
 
 
+    //---------------Skademeldinger-----------------//
 
+    private void nySkademeldingButtonClicked(){
+
+    }
 
 }
