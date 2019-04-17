@@ -1,6 +1,7 @@
 package com.rtbeb.model.base;
 
 import com.rtbeb.model.base.exception.InvalidForsikringException;
+import com.rtbeb.model.base.forsikring.Forsikring;
 import com.rtbeb.model.validation.ForsikringValidator;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;

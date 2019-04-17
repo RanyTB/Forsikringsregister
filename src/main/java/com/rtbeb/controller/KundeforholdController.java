@@ -1,6 +1,6 @@
 package com.rtbeb.controller;
 
-import com.rtbeb.model.base.Forsikring;
+import com.rtbeb.model.base.forsikring.Forsikring;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
 import javafx.event.ActionEvent;
