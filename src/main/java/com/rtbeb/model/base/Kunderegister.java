@@ -59,6 +59,7 @@ public class Kunderegister {
 
     public void deleteKunde(Kunde kunde){
 
+        //TODO Fjern iterator, bruk remove().
         Iterator<Kunde> iterator = kundeliste.iterator();
 
         while(iterator.hasNext()){
