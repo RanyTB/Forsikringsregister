@@ -153,11 +153,30 @@ public class KundeforholdController implements Initializable {
         tableForsikringer.setItems(valgtKunde.getForsikringsListe());
     }
 
+    @FXML
+    private void nyForsikringButtonClicked(ActionEvent event) {
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegistrerNyForsikring.fxml"));
+            RegistrerNyForsikringController controller = new RegistrerNyForsikringController(valgtKunde);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
 
     //---------------Skademeldinger-----------------//
 
-    private void nySkademeldingButtonClicked(){
+    @FXML
+    private void nySkademeldingButtonClicked(ActionEvent event){
 
     }
+
 
 }
