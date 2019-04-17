@@ -1,7 +1,7 @@
 package com.rtbeb.model.validation;
 
-import com.rtbeb.model.base.Båt;
-import com.rtbeb.model.base.Båtforsikring;
+import com.rtbeb.model.base.forsikring.Båt;
+import com.rtbeb.model.base.forsikring.Båtforsikring;
 import com.rtbeb.model.base.Eier;
 
 public class BåtforsikringValidator extends ForsikringValidator{

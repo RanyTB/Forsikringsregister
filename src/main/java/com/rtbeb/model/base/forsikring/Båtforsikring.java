@@ -1,4 +1,4 @@
-package com.rtbeb.model.base;
+package com.rtbeb.model.base.forsikring;
 
 import javafx.beans.property.*;
 

@@ -1,6 +1,6 @@
 package com.rtbeb.model.validation;
 
-import com.rtbeb.model.base.Forsikring;
+import com.rtbeb.model.base.forsikring.Forsikring;
 
 public class ForsikringValidator {
 
