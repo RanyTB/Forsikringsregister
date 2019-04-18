@@ -5,16 +5,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SkademeldingController implements Initializable {
+public class RegistrerSkademeldingController implements Initializable {
 
     Kunde valgtKunde;
 
-    SkademeldingController(Kunde valgtKunde){
+    RegistrerSkademeldingController(Kunde valgtKunde){
         this.valgtKunde = valgtKunde;
     }
 
@@ -25,9 +26,9 @@ public class SkademeldingController implements Initializable {
     @FXML
     private TextField txtTypeSkade;
     @FXML
-    private TextField txtBeskrivelse;
+    private TextArea txtBeskrivelse;
     @FXML
-    private TextField txtVitner;
+    private TextArea txtVitner;
     @FXML
     private TextField txtTakseringAvSkaden;
     @FXML

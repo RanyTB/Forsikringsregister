@@ -160,12 +160,12 @@ public class KundeforholdController implements Initializable {
 
     @FXML
     private void nySkademeldingButtonClicked(ActionEvent event) {
-        SkademeldingController skademeldingController = new SkademeldingController(valgtKunde);
+        RegistrerSkademeldingController registrerSkademeldingController = new RegistrerSkademeldingController(valgtKunde);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/registrerSkademeldingSide2.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegistrerSkademelding.fxml"));
 
         //Setter loaderens kontroller til kontroller-instansen. fx:controller er ikke satt i FXML-filen.
-        loader.setController(skademeldingController);
+        loader.setController(registrerSkademeldingController);
 
         //Loader FXML-hierarkiet
         Parent root = null;
