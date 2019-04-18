@@ -38,6 +38,7 @@ public class SkademeldingController implements Initializable {
         bindLabelsWithCustomerInfo();
     }
 
+    @FXML
     private void bindLabelsWithCustomerInfo(){
         //Binder TextFields til kundens datafelt.
         lblForsikringsnummer.textProperty().bind(valgtKunde.forsikringsnummerProperty().asString());
