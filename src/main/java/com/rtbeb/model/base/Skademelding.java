@@ -12,7 +12,7 @@ import java.util.Date;
 public class Skademelding implements Serializable {
     private static final long serialVersionUID = 1;
 
-    private transient ObjectProperty<Date> skademeldingsDato;
+    private transient ObjectProperty<LocalDate> skademeldingsDato;
     private transient StringProperty typeSkade;
     private transient StringProperty beskrivelse;
     private transient StringProperty vitner;
@@ -20,8 +20,8 @@ public class Skademelding implements Serializable {
     private transient IntegerProperty utbetaltErstatningsbeløp;
 
     public Skademelding(LocalDate skademeldingsDato, String typeSkade, String beskrivelse, String vitner,
-                        String takseringAvSkaden, Integer utbetaltErstatningsbeløp){
-        this.skademeldingsDato = new SimpleObjectProperty<>(this, "skademeldingsDato", skademeldingsDato);
+                        Integer takseringAvSkaden, Integer utbetaltErstatningsbeløp){
+        this.skademeldingsDato = new SimpleObjectProperty<LocalDate>(this, "skademeldingsDato", skademeldingsDato);
         this.typeSkade = new SimpleStringProperty(this, "typeSkade", typeSkade);
         this.beskrivelse = new SimpleStringProperty(this, "beskrivelse", beskrivelse);
         this.vitner = new SimpleStringProperty(this, "vitner", vitner);
@@ -30,15 +30,15 @@ public class Skademelding implements Serializable {
 
     }
 
-    public Date getSkademeldingsDato(){
+    public LocalDate getSkademeldingsDato(){
         return skademeldingsDato.get();
     }
 
-    public ObjectProperty<Date> skademeldingsDatoProperty(){
+    public ObjectProperty<LocalDate> skademeldingsDatoProperty(){
         return skademeldingsDato;
     }
 
-    public void setSkademeldingsDato(Date skademeldingsDato) {
+    public void setSkademeldingsDato(LocalDate skademeldingsDato) {
         this.skademeldingsDato.set(skademeldingsDato);
     }
 
@@ -78,15 +78,15 @@ public class Skademelding implements Serializable {
         this.vitner.set(vitner);
     }
 
-    public void setTakseringAvSkaden(String takseringAvSkaden) {
+    public void setTakseringAvSkaden(int takseringAvSkaden) {
         this.takseringAvSkaden.set(takseringAvSkaden);
     }
 
-    public SimpleIntegerProperty takseringAvSkadenProperty() {
+    public IntegerProperty takseringAvSkadenProperty() {
         return takseringAvSkaden;
     }
 
-    public String getTakseringAvSkaden() {
+    public int getTakseringAvSkaden() {
         return takseringAvSkaden.get();
     }
 
@@ -116,11 +116,11 @@ public class Skademelding implements Serializable {
     //Egendefinert serialisering
     private void readObject(ObjectInputStream objectInputStream) throws IOException , ClassNotFoundException{
         objectInputStream.defaultReadObject();
-        this.skademeldingsDato = new SimpleObjectProperty<>((Date) objectInputStream.readObject());
+        this.skademeldingsDato = new SimpleObjectProperty<>((LocalDate) objectInputStream.readObject());
         this.typeSkade = new SimpleStringProperty((String) objectInputStream.readObject());
         this.beskrivelse = new SimpleStringProperty((String) objectInputStream.readObject());
         this.vitner = new SimpleStringProperty((String) objectInputStream.readObject());
-        this.takseringAvSkaden = new IntegerProperty((Integer) objectInputStream.readObject());
-        this.utbetaltErstatningsbeløp = new IntegerProperty((Integer) objectInputStream.readObject());
+        this.takseringAvSkaden = new SimpleIntegerProperty((Integer) objectInputStream.readObject());
+        this.utbetaltErstatningsbeløp = new SimpleIntegerProperty((Integer) objectInputStream.readObject());
     }
 }
