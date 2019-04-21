@@ -5,6 +5,10 @@ import com.rtbeb.model.base.forsikring.Båt;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 
+/**
+ * Validering av båter. Inkluderer validering av båt-objekter og validering av enkelte båtdata
+ * for bruk i UI-feedback på inputfelter.
+ */
 public class BåtValidator {
 
     private static String registreringsnummerRegex = "^([A-ZÆØÅa-zæøå]{2}\\d{4}|[A-Za-z]{3}\\d{5})$";

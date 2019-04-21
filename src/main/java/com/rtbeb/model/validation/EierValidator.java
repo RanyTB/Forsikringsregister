@@ -5,6 +5,10 @@ import com.rtbeb.model.base.forsikring.Eier;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 
+/**
+ * Validering av Eier klassen. Inkluderer validering av Eier-objekter og validering av enkelte felt i disse
+ * for bruk i UI-feedback på inputfelter.
+ */
 public class EierValidator {
 
     static String navnRegex = "[a-zæøåA-ZÆØÅ\\- ]{2,50}";

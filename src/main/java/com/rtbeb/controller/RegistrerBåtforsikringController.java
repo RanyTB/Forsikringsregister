@@ -1,5 +1,6 @@
 package com.rtbeb.controller;
 
+import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.forsikring.Eier;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.exception.InvalidForsikringException;

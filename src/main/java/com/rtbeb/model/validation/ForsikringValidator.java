@@ -2,6 +2,10 @@ package com.rtbeb.model.validation;
 
 import com.rtbeb.model.base.forsikring.Forsikring;
 
+/**
+ * Validering av Forsikring-objekter. Inkluderer også validering av enkelte felt
+ * i disse for bruk i UI-feedback på inputfelter.
+ */
 public class ForsikringValidator {
 
     //Minimum og maksimumsverdier
