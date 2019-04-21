@@ -25,8 +25,35 @@ public class ForsikringValidator {
         return false;
     }
 
+    public static boolean forsikringspremieIsValid(String forsikringspremie){
+
+        int forsikringspremieParsed = 0;
+
+        try {
+            forsikringspremieParsed = Integer.parseInt(forsikringspremie);
+        } catch(NumberFormatException e){}
+
+        if(forsikringspremieParsed > minForsikringspremie && forsikringspremieParsed < maxForsikringspremie){
+            return true;
+        }
+        return false;
+    }
+
     public static boolean forsikringspremieIsValid(int forsikringspremie){
         if(forsikringspremie > minForsikringspremie && forsikringspremie < maxForsikringspremie){
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean forsikringsbelopIsValid(String forsikringsbelop){
+
+        int forsikringsbelopParsed = 0;
+        try{
+            forsikringsbelopParsed = Integer.parseInt(forsikringsbelop);
+        } catch(NumberFormatException e){}
+
+        if(forsikringsbelopParsed > minForsikringsbelop && forsikringsbelopParsed < maxForsikringsbelop ){
             return true;
         }
         return false;
@@ -40,7 +67,7 @@ public class ForsikringValidator {
     }
 
     public static boolean forsikringsbetingelserIsValid(String forsikringsbetingelser){
-        if(forsikringsbetingelser.length() > 0){
+        if(!forsikringsbetingelser.isEmpty()){
             return true;
         }
         return false;

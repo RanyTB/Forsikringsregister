@@ -98,6 +98,8 @@ public class RedigerKundeController implements Initializable {
         String fakturaadresse = txtAdresse.getText();
         String postnummer = txtPostnummer.getText();
 
+        //TODO fiks bug her, hvor man bypasser validering av kunden.
+
         kunde.setFornavn(fornavn);
         kunde.setEtternavn(etternavn);
         kunde.setFakturaadresse(fakturaadresse);
