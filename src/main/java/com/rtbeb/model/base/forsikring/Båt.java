@@ -1,6 +1,5 @@
 package com.rtbeb.model.base.forsikring;
 
-import com.rtbeb.model.base.Eier;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

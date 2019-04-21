@@ -1,6 +1,6 @@
 package com.rtbeb.controller;
 
-import com.rtbeb.model.base.Eier;
+import com.rtbeb.model.base.forsikring.Eier;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.exception.InvalidForsikringException;
 import com.rtbeb.model.base.forsikring.Båt;

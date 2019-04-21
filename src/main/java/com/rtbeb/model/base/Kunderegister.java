@@ -4,13 +4,13 @@ import com.rtbeb.model.base.exception.InvalidForsikringException;
 import com.rtbeb.model.base.exception.InvalidKundeException;
 import com.rtbeb.model.base.forsikring.Båt;
 import com.rtbeb.model.base.forsikring.Båtforsikring;
+import com.rtbeb.model.base.forsikring.Eier;
 import com.rtbeb.model.validation.KundeValidator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.io.Serializable;
 import java.util.Iterator;
 
 public class Kunderegister {
