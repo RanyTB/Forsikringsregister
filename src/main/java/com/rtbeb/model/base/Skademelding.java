@@ -8,11 +8,16 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Skademelding implements Serializable {
     private static final long serialVersionUID = 1;
 
+    //Counteren sørger for threadsafe utdeling av skadenummer til nye skademeldinger med metoden getAndIncrement();
+    private transient static final AtomicInteger skadenummerCounter = new AtomicInteger(10000);
+
     private transient ObjectProperty<LocalDate> skademeldingsDato;
+    private transient LongProperty skadenummer;
     private transient StringProperty typeSkade;
     private transient StringProperty beskrivelse;
     private transient StringProperty vitner;
@@ -22,6 +27,7 @@ public class Skademelding implements Serializable {
     public Skademelding(LocalDate skademeldingsDato, String typeSkade, String beskrivelse, String vitner,
                         Integer takseringAvSkaden, Integer utbetaltErstatningsbeløp){
         this.skademeldingsDato = new SimpleObjectProperty<LocalDate>(this, "skademeldingsDato", skademeldingsDato);
+        this.skadenummer = new SimpleLongProperty(this, "skadenummer", skadenummerCounter.getAndIncrement());
         this.typeSkade = new SimpleStringProperty(this, "typeSkade", typeSkade);
         this.beskrivelse = new SimpleStringProperty(this, "beskrivelse", beskrivelse);
         this.vitner = new SimpleStringProperty(this, "vitner", vitner);
@@ -40,6 +46,18 @@ public class Skademelding implements Serializable {
 
     public void setSkademeldingsDato(LocalDate skademeldingsDato) {
         this.skademeldingsDato.set(skademeldingsDato);
+    }
+
+    public long getSkadenummer() {
+        return skadenummer.get();
+    }
+
+    public LongProperty skadenummerProperty() {
+        return skadenummer;
+    }
+
+    public void setSkadenummer(long skadenummer) {
+        this.skadenummer.set(skadenummer);
     }
 
     public String getTypeSkade() {
@@ -106,6 +124,7 @@ public class Skademelding implements Serializable {
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
         objectOutputStream.defaultWriteObject();
         objectOutputStream.writeObject(getSkademeldingsDato());
+        objectOutputStream.writeObject(getSkadenummer());
         objectOutputStream.writeObject(getTypeSkade());
         objectOutputStream.writeObject(getBeskrivelse());
         objectOutputStream.writeObject(getVitner());
@@ -117,6 +136,7 @@ public class Skademelding implements Serializable {
     private void readObject(ObjectInputStream objectInputStream) throws IOException , ClassNotFoundException{
         objectInputStream.defaultReadObject();
         this.skademeldingsDato = new SimpleObjectProperty<>((LocalDate) objectInputStream.readObject());
+        this.skadenummer = new SimpleLongProperty((Long) objectInputStream.readObject());
         this.typeSkade = new SimpleStringProperty((String) objectInputStream.readObject());
         this.beskrivelse = new SimpleStringProperty((String) objectInputStream.readObject());
         this.vitner = new SimpleStringProperty((String) objectInputStream.readObject());

@@ -35,7 +35,7 @@ public class Kunde implements Serializable {
     private transient ObservableList<Forsikring> forsikringsListe = FXCollections.observableArrayList();
 
     //TODO Implementer observable-lister over skademeldinger og ubetalte erstatninger.
-    private transient ObservableList<Skademelding> skademeldinger;
+    private transient ObservableList<Skademelding> skademeldinger = FXCollections.observableArrayList();
     //private ObservableList<UbetaltErstatning> ubetalteErstatninger;
 
     public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer) {
@@ -159,10 +159,13 @@ public class Kunde implements Serializable {
     //--------------------FORSIKRINGER END-----------------//
 
 
-    //TODO Implementer disse
-
+    //--------------------SKADEMELDINGER---------------------//
     public ObservableList<Skademelding> getSkademeldinger() {
         return skademeldinger;
+    }
+
+    public ArrayList<Skademelding> getSkademeldingerAsArrayList(){
+        return new ArrayList<Skademelding>(getSkademeldinger());
     }
 
     public void setSkademeldinger(ObservableList<Skademelding> skademeldinger) {
@@ -173,6 +176,12 @@ public class Kunde implements Serializable {
         this.skademeldinger.add(skademelding);
 
     }
+
+    public void slettSkademelding(Skademelding skademelding){
+        this.skademeldinger.remove(skademelding);
+    }
+
+    //--------------------SKADEMELDINGER END---------------------//
 
 
     /*
@@ -196,6 +205,7 @@ public class Kunde implements Serializable {
         objectOutputStream.writeObject(getForsikringsnummer());
         objectOutputStream.writeObject(getKundeOpprettelsesDato());
         objectOutputStream.writeObject(getForsikringsListeAsArrayList());
+        objectOutputStream.writeObject(getSkademeldingerAsArrayList());
     }
 
     //Egendefinert serialisering
@@ -208,6 +218,7 @@ public class Kunde implements Serializable {
         this.forsikringsnummer = new SimpleLongProperty((Long) objectInputStream.readObject());
         this.kundeOpprettelsesDato = new SimpleObjectProperty<LocalDate>((LocalDate) objectInputStream.readObject());
         this.forsikringsListe = FXCollections.observableArrayList( (ArrayList<Forsikring>) objectInputStream.readObject());
+        this.skademeldinger = FXCollections.observableArrayList( (ArrayList<Skademelding>) objectInputStream.readObject());
     }
 
 }

@@ -8,6 +8,7 @@ import com.rtbeb.model.validation.KundeValidator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.io.Serializable;
 import java.util.Iterator;
@@ -39,6 +40,14 @@ public class Kunderegister {
         Eier eier = new Eier("Ola", "Nordmann", "200394");
         Båt båt = new Båt(eier, "4444", "Tekst", "Tekst", "300", "2004", "400hk");
         Båtforsikring båtforsikring = new Båtforsikring(20000, 300000, "roawijrawoj", båt);
+
+        //Tester opprettelse av skademeldinge
+        Skademelding skademelding1 = new Skademelding(LocalDate.now(), "Påkjørlse", "Påkjørt fra babord", "Truls tlf 12738492", 50000, 10000);
+        Skademelding skademelding2 = new Skademelding(LocalDate.now(), "Brann", "Brann fra sikringsskap", "Linda tlf 89372645", 70000, 50000);
+
+        kunde1.addSkademelding(skademelding1);
+        kunde1.addSkademelding(skademelding2);
+
 
         //Tester innsetting av båtforsikring i et kundeobjekt.
         try {

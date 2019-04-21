@@ -1,5 +1,6 @@
 package com.rtbeb.controller;
 
+import com.rtbeb.model.base.Skademelding;
 import com.rtbeb.model.base.forsikring.Forsikring;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
@@ -113,6 +114,7 @@ public class KundeforholdController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         bindLabelsWithCustomerInfo();
         setupForsikringsTable();
+        setupSkademeldingsTable();
     }
 
     private void bindLabelsWithCustomerInfo(){
@@ -159,6 +161,35 @@ public class KundeforholdController implements Initializable {
     //---------------Skademeldinger-----------------//
 
     @FXML
+    private TableView<Skademelding> tableSkademeldinger;
+
+    @FXML
+    private TableColumn<Skademelding, LocalDate> datoForSkadeColumn;
+
+    @FXML
+    private TableColumn<Skademelding, Integer> skadennummerColumn;
+
+    @FXML
+    private TableColumn<Skademelding, String> typeSkadeColumn;
+
+    @FXML
+    private TableColumn<Skademelding, Integer> takseringAvSkadeColumn;
+
+    @FXML
+    private TableColumn<Skademelding, Integer> utbetaltErstatningsbeløpColumn;
+
+    private void setupSkademeldingsTable(){
+      
+      datoForSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("skademeldingsDato"));
+      skadennummerColumn.setCellValueFactory(new PropertyValueFactory<>("skadenummer"));
+      typeSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("typeSkade"));
+      takseringAvSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("takseringAvSkaden"));
+      utbetaltErstatningsbeløpColumn.setCellValueFactory(new PropertyValueFactory<>("utbetaltErstatningsbeløp"));
+      tableSkademeldinger.setItems(valgtKunde.getSkademeldinger());
+
+    }
+
+    @FXML
     private void nySkademeldingButtonClicked(ActionEvent event) {
         RegistrerSkademeldingController registrerSkademeldingController = new RegistrerSkademeldingController(valgtKunde);
 
@@ -184,5 +215,42 @@ public class KundeforholdController implements Initializable {
         stage.show();
 
     }
+
+    @FXML
+    private void slettSkademeldingButtonClicked(ActionEvent event){
+        Skademelding skademelding = tableSkademeldinger.getSelectionModel().getSelectedItem();
+        System.out.println("Valgt forsikringsnummer: " + skademelding.getSkadenummer());
+        valgtKunde.slettSkademelding(skademelding);
+    }
+
+    @FXML
+    private void redigerSkademeldingButtonClicked(ActionEvent event){
+        Skademelding valgtSkademelding = tableSkademeldinger.getSelectionModel().getSelectedItem();
+
+        RedigerSkademeldingController redigerSkademeldingController = new RedigerSkademeldingController(valgtKunde, valgtSkademelding);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RedigerSkademelding.fxml"));
+
+        //Setter loaderens kontroller til kontroller-instansen. fx:controller er ikke satt i FXML-filen.
+        loader.setController(redigerSkademeldingController);
+
+        //Loader FXML-hierarkiet
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Oppretter ny scene
+        Scene scene = new Scene(root);
+
+        //Oppretter ny stage
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    //---------------Skademeldinger end-----------------//
 
 }

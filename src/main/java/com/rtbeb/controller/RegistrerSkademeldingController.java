@@ -58,13 +58,14 @@ public class RegistrerSkademeldingController implements Initializable {
 
     @FXML
     private void registrerSkademeldingClicked(ActionEvent event){
+        //Gjør om til LocalDate objekt
         LocalDate date = datePicker.getValue();
 
         Skademelding skademelding = new Skademelding(date, txtTypeSkade.getText(),
                 txtBeskrivelse.getText(), txtVitner.getText(), Integer.parseInt(txtTakseringAvSkaden.getText()),
                 Integer.parseInt(txtUtbetaltErstatningsbeløp.getText()));
 
-        System.out.println("Dato: " + date);
+        valgtKunde.addSkademelding(skademelding);
 
         Stage thisStage = (Stage) btnRegistrerSkademelding.getScene().getWindow();
         thisStage.close();
