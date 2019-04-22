@@ -1,11 +1,11 @@
 package com.rtbeb.controller;
 
 import com.rtbeb.controller.helper.FieldStyler;
-import com.rtbeb.model.base.forsikring.Eier;
+import com.rtbeb.model.base.forsikring.Båt.Eier;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.exception.InvalidForsikringException;
-import com.rtbeb.model.base.forsikring.Båt;
-import com.rtbeb.model.base.forsikring.Båtforsikring;
+import com.rtbeb.model.base.forsikring.Båt.Båt;
+import com.rtbeb.model.base.forsikring.Båt.Båtforsikring;
 import com.rtbeb.model.validation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,14 +19,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-import static java.lang.System.exit;
-
-public class RegistrerBåtforsikringController implements Initializable {
-
-    Kunde kunde;
+public class RegistrerBåtforsikringController extends RegistrerForsikringController implements Initializable {
 
     public RegistrerBåtforsikringController(Kunde kunde){
-        this.kunde = kunde;
+        super(kunde);
     }
 
     @FXML
@@ -282,41 +278,10 @@ public class RegistrerBåtforsikringController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        addNumericListeners();
+
+        TextField[] numericFields = {txtForsikringspremie, txtForsikringsbeløp, txtLengde, txtÅrsmodell};
+        addNumericListeners(numericFields);
     }
 
-    public void addNumericListeners(){
 
-        //Listener for å hindre at ikke-numeriske characters blir skrevet i felt.
-        txtForsikringspremie.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                txtForsikringspremie.setText(oldValue);
-
-            }
-        });
-
-        //Listener for å hindre at ikke-numeriske characters blir skrevet i felt.
-        txtForsikringsbeløp.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                txtForsikringsbeløp.setText(oldValue);
-
-            }
-        });
-
-        //Listener for å hindre at ikke-numeriske characters blir skrevet i felt.
-        txtLengde.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                txtLengde.setText(oldValue);
-
-            }
-        });
-
-        //Listener for å hindre at ikke-numeriske characters blir skrevet i felt.
-        txtÅrsmodell.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                txtÅrsmodell.setText(oldValue);
-
-            }
-        });
-    }
 }

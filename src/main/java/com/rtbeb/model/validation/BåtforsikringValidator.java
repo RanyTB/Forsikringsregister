@@ -1,8 +1,8 @@
 package com.rtbeb.model.validation;
 
-import com.rtbeb.model.base.forsikring.Båt;
-import com.rtbeb.model.base.forsikring.Båtforsikring;
-import com.rtbeb.model.base.forsikring.Eier;
+import com.rtbeb.model.base.forsikring.Båt.Båt;
+import com.rtbeb.model.base.forsikring.Båt.Båtforsikring;
+import com.rtbeb.model.base.forsikring.Båt.Eier;
 
 /**
  * Validerer båtforsikringer i sin helhet.

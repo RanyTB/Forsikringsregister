@@ -1,4 +1,4 @@
-package com.rtbeb.model.base.forsikring;
+package com.rtbeb.model.base.forsikring.Båt;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

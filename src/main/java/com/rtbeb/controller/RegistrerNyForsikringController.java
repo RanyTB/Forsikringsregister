@@ -44,6 +44,23 @@ public class RegistrerNyForsikringController implements Initializable {
     }
 
     @FXML
+    private void innboforsikringButtonClicked(ActionEvent event){
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegistrerInnboforsikring.fxml"));
+            RegistrerInnboForsikringController controller = new RegistrerInnboForsikringController(kunde);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) lblTitle.getScene().getWindow();
+            stage.setScene(scene);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void reiseforsikringButtonClicked(ActionEvent event){
 
         try {

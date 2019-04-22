@@ -3,25 +3,24 @@ package com.rtbeb.controller;
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.exception.InvalidForsikringException;
-import com.rtbeb.model.base.forsikring.Reiseforsikring;
+import com.rtbeb.model.base.forsikring.Reise.Reiseforsikring;
 import com.rtbeb.model.validation.ForsikringValidator;
+import com.rtbeb.model.validation.ReiseforsikringValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.InputEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RegistrerReiseforsikringController implements Initializable {
-
-    Kunde kunde;
+public class RegistrerReiseforsikringController extends RegistrerForsikringController implements Initializable {
 
     public RegistrerReiseforsikringController(Kunde kunde){
-        this.kunde = kunde;
+        super(kunde);
     }
 
     @FXML
@@ -101,10 +100,8 @@ public class RegistrerReiseforsikringController implements Initializable {
 
     //-----------VALIDERING---------//
 
-    //TODO implementer validering.
-
     @FXML
-    void betingelserChanged(InputEvent event) {
+    private void betingelserChanged(InputEvent event) {
         String betingelser = txtBetingelser.getText();
 
         if(!ForsikringValidator.forsikringsbetingelserIsValid(betingelser)){
@@ -115,7 +112,7 @@ public class RegistrerReiseforsikringController implements Initializable {
     }
 
     @FXML
-    void forsikringsbeløpChanged(InputEvent event) {
+    private void forsikringsbeløpChanged(InputEvent event) {
         String forsikringsbeløp = txtForsikringsbeløp.getText();
 
         if(!ForsikringValidator.forsikringsbelopIsValid(forsikringsbeløp)){
@@ -126,7 +123,7 @@ public class RegistrerReiseforsikringController implements Initializable {
     }
 
     @FXML
-    void forsikringspremieChanged(InputEvent event) {
+    private void forsikringspremieChanged(InputEvent event) {
         String forsikringspremie = txtForsikringspremie.getText();
 
         if(!ForsikringValidator.forsikringspremieIsValid(forsikringspremie)){
@@ -137,34 +134,33 @@ public class RegistrerReiseforsikringController implements Initializable {
 
     }
 
+    @FXML
+    private void forsikringsområdeChanged(InputEvent event){
+        String forsikringsområde = txtForsikringsområde.getText();
+
+        if(!ReiseforsikringValidator.forsikringsområdeIsValid(forsikringsområde)){
+            FieldStyler.setInvalidStyle(txtForsikringsområde);
+        } else{
+            FieldStyler.setValidStyle(txtForsikringsområde);
+        }
+    }
+
+    @FXML
+    private void forsikringssumChanged(InputEvent event){
+        int forsikringssum = Integer.parseInt(txtForsikringssum.getText());
+
+        if(!ReiseforsikringValidator.forsikringssumIsValid(forsikringssum)){
+            FieldStyler.setInvalidStyle(txtForsikringssum);
+        } else{
+            FieldStyler.setValidStyle(txtForsikringssum);
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        addNumericListeneres();
+
+        TextField[] numericFields = {txtForsikringspremie, txtForsikringsbeløp, txtForsikringssum};
+        addNumericListeners(numericFields);
     }
 
-    private void addNumericListeneres(){
-        //Listener for å hindre at ikke-numeriske characters blir skrevet i felt.
-        txtForsikringspremie.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                txtForsikringspremie.setText(oldValue);
-
-            }
-        });
-
-        //Listener for å hindre at ikke-numeriske characters blir skrevet i felt.
-        txtForsikringsbeløp.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                txtForsikringsbeløp.setText(oldValue);
-
-            }
-        });
-
-        //Listener for å hindre at ikke-numeriske characters blir skrevet i felt.
-        txtForsikringssum.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                txtForsikringssum.setText(oldValue);
-
-            }
-        });
-    }
 }

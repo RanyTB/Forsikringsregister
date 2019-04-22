@@ -1,8 +1,6 @@
 package com.rtbeb.model.validation;
 
-import com.rtbeb.model.base.forsikring.Reiseforsikring;
-
-import java.util.regex.Pattern;
+import com.rtbeb.model.base.forsikring.Reise.Reiseforsikring;
 
 /**
  * For validering av reiseforsikringer i sin helhet.
@@ -34,6 +32,20 @@ public class ReiseforsikringValidator extends ForsikringValidator{
             return true;
         }
         return false;
+    }
+
+    /**
+     * @param forsikringssum
+     * @return Returnerer true hvis gyldig.
+     */
+    public static boolean forsikringssumIsValid(String forsikringssum){
+
+        try{
+            int forsikringssumParsed = Integer.parseInt(forsikringssum);
+            return forsikringssumIsValid(forsikringssumParsed);
+        } catch(NumberFormatException e){
+            return false;
+        }
     }
 
     /**

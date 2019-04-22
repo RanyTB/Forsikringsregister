@@ -1,5 +1,7 @@
-package com.rtbeb.model.base.forsikring;
+package com.rtbeb.model.base.forsikring.Reise;
 
+import com.rtbeb.model.base.forsikring.Forsikring;
+import com.rtbeb.model.base.forsikring.Validatable;
 import com.rtbeb.model.validation.ReiseforsikringValidator;
 import javafx.beans.property.*;
 
