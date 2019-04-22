@@ -9,14 +9,19 @@ import com.rtbeb.model.base.forsikring.Båtforsikring;
 import com.rtbeb.model.validation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
 
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
 
-public class RegistrerBåtforsikringController {
+import static java.lang.System.exit;
+
+public class RegistrerBåtforsikringController implements Initializable {
 
     Kunde kunde;
 
@@ -92,22 +97,25 @@ public class RegistrerBåtforsikringController {
     @FXML
     private void registrerBåtforsikring(ActionEvent event){
 
-        Båtforsikring båtforsikring = generateBåtforsikring();
         try {
+            Båtforsikring båtforsikring = generateBåtforsikring();
             kunde.addForsikring(båtforsikring);
-        } catch (InvalidForsikringException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Registreringsfeil");
-            alert.setHeaderText("Kunne ikke registrere forsikring:\nSjekk markerte felt.");
-            alert.show();
+        } catch (InvalidForsikringException|NumberFormatException e) {
+            generateAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
         }
+    }
 
+    private void generateAlert(String message){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Registreringsfeil");
+        alert.setHeaderText(message);
+        alert.showAndWait();
     }
 
     /**
      * @return Returnerer en båtforsikring basert på innfylte felt. Forsikringen returneres uvalidert.
      */
-    private Båtforsikring generateBåtforsikring(){
+    private Båtforsikring generateBåtforsikring() throws NumberFormatException {
         String fornavn = txtFornavn.getText();
         String etternavn = txtEtternavn.getText();
         LocalDate fødselsDato = dateFødselsdato.getValue();
@@ -117,6 +125,7 @@ public class RegistrerBåtforsikringController {
         String lengde = txtLengde.getText();
         String årsmodell = txtÅrsmodell.getText();
         String motorinfo = txtMotorinfo.getText();
+
         int forsikringspremie = Integer.parseInt(txtForsikringspremie.getText());
         int forsikringsbeløp = Integer.parseInt(txtForsikringsbeløp.getText());
         String betingelser = txtBetingelser.getText();
@@ -271,4 +280,43 @@ public class RegistrerBåtforsikringController {
         }
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        addNumericListeners();
+    }
+
+    public void addNumericListeners(){
+
+        //Listener for å hindre at ikke-numeriske characters blir skrevet i felt.
+        txtForsikringspremie.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txtForsikringspremie.setText(oldValue);
+
+            }
+        });
+
+        //Listener for å hindre at ikke-numeriske characters blir skrevet i felt.
+        txtForsikringsbeløp.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txtForsikringsbeløp.setText(oldValue);
+
+            }
+        });
+
+        //Listener for å hindre at ikke-numeriske characters blir skrevet i felt.
+        txtLengde.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txtLengde.setText(oldValue);
+
+            }
+        });
+
+        //Listener for å hindre at ikke-numeriske characters blir skrevet i felt.
+        txtÅrsmodell.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txtÅrsmodell.setText(oldValue);
+
+            }
+        });
+    }
 }

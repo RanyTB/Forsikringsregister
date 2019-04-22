@@ -37,8 +37,8 @@ public class Kunderegister {
         kundeliste.addAll(kunde1, kunde2);
 
         //Tester opprettelse av båtforsikring
-        Eier eier = new Eier("Ola", "Nordmann", LocalDate.now());
-        Båt båt = new Båt(eier, "4444", "Tekst", "Tekst", "300", "2004", "400hk");
+        Eier eier = new Eier("Ola", "Nordmann", LocalDate.now().minusYears(10));
+        Båt båt = new Båt(eier, "pp4444", "Tekst", "Tekst", "300", "2004", "400hk");
         Båtforsikring båtforsikring = new Båtforsikring(20000, 300000, "roawijrawoj", båt);
 
         //Tester innsetting av båtforsikring i et kundeobjekt.

@@ -9,14 +9,16 @@ import com.rtbeb.model.base.forsikring.Eier;
  */
 public class BåtforsikringValidator extends ForsikringValidator{
 
+    /**
+     * Validerer Båt, eier og båtforsikringen.
+     * @param båtforsikring
+     * @return Returnerer true hvis gyldig.
+     */
     public static boolean BåtforsikringIsValid(Båtforsikring båtforsikring){
         Båt båt = båtforsikring.getBåt();
         Eier eier = båt.getEier();
 
-        if(ForsikringValidator.ForsikringIsValid(båtforsikring) && BåtValidator.båtIsValid(båt) && EierValidator.EierIsValid(eier)){
-            return true;
-        }
-        return false;
+        return ForsikringValidator.ForsikringIsValid(båtforsikring) && BåtValidator.båtIsValid(båt) && EierValidator.EierIsValid(eier);
     }
 
 }

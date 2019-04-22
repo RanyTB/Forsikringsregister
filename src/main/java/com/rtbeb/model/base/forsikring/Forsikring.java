@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public abstract class Forsikring implements Serializable {
+public abstract class Forsikring implements Serializable, Validatable {
     private static final long serialVersionUID = 1;
 
 

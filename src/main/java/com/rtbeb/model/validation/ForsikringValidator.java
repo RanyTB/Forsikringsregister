@@ -35,7 +35,9 @@ public class ForsikringValidator {
 
         try {
             forsikringspremieParsed = Integer.parseInt(forsikringspremie);
-        } catch(NumberFormatException e){}
+        } catch(NumberFormatException e){
+            return false;
+        }
 
         if(forsikringspremieParsed > minForsikringspremie && forsikringspremieParsed < maxForsikringspremie){
             return true;
@@ -43,7 +45,7 @@ public class ForsikringValidator {
         return false;
     }
 
-    public static boolean forsikringspremieIsValid(int forsikringspremie){
+    private static boolean forsikringspremieIsValid(int forsikringspremie){
         if(forsikringspremie > minForsikringspremie && forsikringspremie < maxForsikringspremie){
             return true;
         }
@@ -55,7 +57,9 @@ public class ForsikringValidator {
         int forsikringsbelopParsed = 0;
         try{
             forsikringsbelopParsed = Integer.parseInt(forsikringsbelop);
-        } catch(NumberFormatException e){}
+        } catch(NumberFormatException e){
+            return false;
+        }
 
         if(forsikringsbelopParsed > minForsikringsbelop && forsikringsbelopParsed < maxForsikringsbelop ){
             return true;
@@ -63,7 +67,7 @@ public class ForsikringValidator {
         return false;
     }
 
-    public static boolean forsikringsbelopIsValid(int forsikringsbelop){
+    private static boolean forsikringsbelopIsValid(int forsikringsbelop){
         if(forsikringsbelop > minForsikringsbelop && forsikringsbelop < maxForsikringsbelop ){
             return true;
         }

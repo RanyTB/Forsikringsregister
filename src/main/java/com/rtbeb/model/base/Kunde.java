@@ -151,7 +151,7 @@ public class Kunde implements Serializable {
     }
 
     public void addForsikring(Forsikring forsikring) throws InvalidForsikringException {
-        if(ForsikringValidator.ForsikringIsValid(forsikring)){
+        if(forsikring.isValid()){
             this.forsikringsListe.add(forsikring);
         } else{
             throw new InvalidForsikringException("Ugyldig forsikring");
