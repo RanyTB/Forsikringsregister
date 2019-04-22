@@ -104,6 +104,9 @@ public class RegistrerBåtforsikringController {
 
     }
 
+    /**
+     * @return Returnerer en båtforsikring basert på innfylte felt. Forsikringen returneres uvalidert.
+     */
     private Båtforsikring generateBåtforsikring(){
         String fornavn = txtFornavn.getText();
         String etternavn = txtEtternavn.getText();
