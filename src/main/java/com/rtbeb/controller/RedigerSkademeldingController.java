@@ -2,10 +2,12 @@ package com.rtbeb.controller;
 
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Skademelding;
+import com.rtbeb.model.validation.SkademeldingValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -16,6 +18,8 @@ public class RedigerSkademeldingController implements Initializable {
 
     Kunde valgtKunde;
     Skademelding valgtSkademelding;
+    SkademeldingValidator skademeldingValidator;
+
 
     RedigerSkademeldingController(Kunde valgtKunde, Skademelding valgtSkademelding){
         this.valgtKunde = valgtKunde;
@@ -51,6 +55,68 @@ public class RedigerSkademeldingController implements Initializable {
         txtTakseringAvSkaden.setText(Integer.toString(valgtSkademelding.getTakseringAvSkaden()));
         txtUtbetaltErstatningsbeløp.setText(Integer.toString(valgtSkademelding.getUtbetaltErstatningsbeløp()));
 
+    }
+
+    @FXML
+    private void dateChanged(ActionEvent event){
+        LocalDate date = datePicker.getValue();
+        if(skademeldingValidator.dateIsValid(date)){
+            datePicker.setStyle("-fx-border-color: green");
+        } else {
+            datePicker.setStyle("-fx-border-color: red");
+        }
+
+    }
+
+
+    @FXML
+    private void typeSkadeChanged(InputEvent event){
+        String typeSkade = txtTypeSkade.getText();
+        if(skademeldingValidator.textIsValid(typeSkade, 20)){
+            txtTypeSkade.setStyle("-fx-border-color: green");
+        } else {
+            txtTypeSkade.setStyle("-fx-border-color: red");
+        }
+    }
+
+    @FXML
+    private void beskrivelseChanged(InputEvent event){
+        String beskrivelse = txtBeskrivelse.getText();
+        if(skademeldingValidator.textOgTallIsValid(beskrivelse, 200)){
+            txtBeskrivelse.setStyle("-fx-border-color: green");
+        } else {
+            txtBeskrivelse.setStyle("-fx-border-color: red");
+        }
+    }
+
+    @FXML
+    private void vitneChanged(InputEvent event){
+        String vitner = txtVitner.getText();
+        if(skademeldingValidator.textOgTallIsValid(vitner, 100)){
+            txtVitner.setStyle("-fx-border-color: green");
+        } else {
+            txtVitner.setStyle("-fx-border-color: red");
+        }
+    }
+
+    @FXML
+    private void takseringChanged(InputEvent event){
+        String takseringAvSkaden = txtTakseringAvSkaden.getText();
+        if(skademeldingValidator.tallIsValid(takseringAvSkaden, 8)){
+            txtTakseringAvSkaden.setStyle("-fx-border-color: green");
+        } else {
+            txtTakseringAvSkaden.setStyle("-fx-border-color: red");
+        }
+    }
+
+    @FXML
+    private void utbetaltChanged(InputEvent event){
+        String utbetaltErstatningsbeløp = txtUtbetaltErstatningsbeløp.getText();
+        if(skademeldingValidator.tallIsValid(utbetaltErstatningsbeløp, 8)){
+            txtUtbetaltErstatningsbeløp.setStyle("-fx-border-color: green");
+        } else {
+            txtUtbetaltErstatningsbeløp.setStyle("-fx-border-color: red");
+        }
     }
 
     @FXML
