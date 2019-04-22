@@ -1,6 +1,6 @@
 package com.rtbeb.model.base.forsikring;
 
-public interface Validatable {
+public interface Validerbar {
 
     /**
      * En klasse som implementerer validatable har en metode isValid() for validering.

@@ -2,7 +2,6 @@ package com.rtbeb.model.validation;
 
 import com.rtbeb.model.base.forsikring.Bolig.Bolig;
 import com.rtbeb.model.base.forsikring.Bolig.Innboforsikring;
-import com.rtbeb.model.base.forsikring.Validatable;
 
 public class InnboForsikringValidator extends ForsikringValidator{
 

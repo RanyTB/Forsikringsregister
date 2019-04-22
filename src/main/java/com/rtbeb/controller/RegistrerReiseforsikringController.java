@@ -147,7 +147,7 @@ public class RegistrerReiseforsikringController extends RegistrerForsikringContr
 
     @FXML
     private void forsikringssumChanged(InputEvent event){
-        int forsikringssum = Integer.parseInt(txtForsikringssum.getText());
+        String forsikringssum = txtForsikringssum.getText();
 
         if(!ReiseforsikringValidator.forsikringssumIsValid(forsikringssum)){
             FieldStyler.setInvalidStyle(txtForsikringssum);

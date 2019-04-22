@@ -1,8 +1,7 @@
 package com.rtbeb.model.base.forsikring.Bolig;
 
-import com.rtbeb.model.base.forsikring.Bolig.Bolig;
 import com.rtbeb.model.base.forsikring.Forsikring;
-import com.rtbeb.model.base.forsikring.Validatable;
+import com.rtbeb.model.base.forsikring.Validerbar;
 import com.rtbeb.model.validation.InnboForsikringValidator;
 import javafx.beans.property.*;
 
@@ -11,11 +10,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class Innboforsikring extends Forsikring implements Serializable, Validatable {
+public class Innboforsikring extends Forsikring implements Serializable, Validerbar {
 
-    private ObjectProperty<Bolig> bolig;
-    private IntegerProperty forsikringssbeløpBygning;
-    private IntegerProperty forsikringsbeløpInnbo;
+    private transient ObjectProperty<Bolig> bolig;
+    private transient IntegerProperty forsikringssbeløpBygning;
+    private transient IntegerProperty forsikringsbeløpInnbo;
 
     public Innboforsikring(int forsikringspremie, int forsikringsbeløp, String betingelser,
                            Bolig bolig, Integer forsikringssbeløpBygning, Integer forsikringsbeløpInnbo) {

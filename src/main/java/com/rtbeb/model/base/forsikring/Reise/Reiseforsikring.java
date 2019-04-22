@@ -1,7 +1,7 @@
 package com.rtbeb.model.base.forsikring.Reise;
 
 import com.rtbeb.model.base.forsikring.Forsikring;
-import com.rtbeb.model.base.forsikring.Validatable;
+import com.rtbeb.model.base.forsikring.Validerbar;
 import com.rtbeb.model.validation.ReiseforsikringValidator;
 import javafx.beans.property.*;
 
@@ -10,7 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class Reiseforsikring extends Forsikring implements Serializable, Validatable {
+public class Reiseforsikring extends Forsikring implements Serializable, Validerbar {
 
     private transient StringProperty forsikringsområde;
     private transient IntegerProperty forsikringssum;
