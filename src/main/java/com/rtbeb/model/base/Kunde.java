@@ -158,6 +158,10 @@ public class Kunde implements Serializable {
         }
     }
 
+    public void slettForsikring(Forsikring forsikring){
+        forsikringsListe.remove(forsikring);
+    }
+
     //--------------------FORSIKRINGER END-----------------//
 
 

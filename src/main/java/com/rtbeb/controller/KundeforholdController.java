@@ -173,6 +173,23 @@ public class KundeforholdController implements Initializable {
         }
     }
 
+    @FXML
+    private void slettForsikringButtonClicked(ActionEvent event){
+       Forsikring valgtForsikring = tableForsikringer.getSelectionModel().getSelectedItem();
+        //Genererer alert
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Slett forsikring");
+        alert.setHeaderText("Er du sikker på at du vil slette forsikringen?");
+
+        //Sletter forsikringen dersom brukeren trykker OK.
+        alert.showAndWait().ifPresent(respons -> {
+            if (respons == ButtonType.OK) {
+                valgtKunde.slettForsikring(valgtForsikring);
+            }
+        });
+
+    }
+
 
     //---------------Skademeldinger-----------------//
 
