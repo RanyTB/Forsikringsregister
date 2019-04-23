@@ -1,22 +1,29 @@
-package com.rtbeb.controller;
+package com.rtbeb.controller.forsikring;
 
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.exception.InvalidForsikringException;
 import com.rtbeb.model.base.forsikring.Bolig.Bolig;
+import com.rtbeb.model.base.forsikring.Bolig.Bolig.Boligtype;
+import com.rtbeb.model.base.forsikring.Bolig.Bolig.Byggemateriale;
+import com.rtbeb.model.base.forsikring.Bolig.Bolig.Standard;
 import com.rtbeb.model.base.forsikring.Bolig.Innboforsikring;
 import com.rtbeb.model.validation.BoligValidator;
 import com.rtbeb.model.validation.ForsikringValidator;
 import com.rtbeb.model.validation.InnboForsikringValidator;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class RegistrerInnboForsikringController extends RegistrerForsikringController implements Initializable {
@@ -33,11 +40,11 @@ public class RegistrerInnboForsikringController extends RegistrerForsikringContr
     @FXML
     private TextField txtByggeår;
     @FXML
-    private ChoiceBox<?> txtBoligtype;
+    private ChoiceBox<Boligtype> cBoxBoligtype;
     @FXML
-    private ChoiceBox<?> txtByggemateriale;
+    private ChoiceBox<Byggemateriale> cBoxByggemateriale;
     @FXML
-    private ChoiceBox<?> txtStandard;
+    private ChoiceBox<Standard> cBoxStandard;
     @FXML
     private TextField txtStørrelse;
     @FXML
@@ -79,13 +86,9 @@ public class RegistrerInnboForsikringController extends RegistrerForsikringContr
         String adresse = txtAdresse.getText();
         String postnummer = txtPostnummer.getText();
         String byggeår = txtByggeår.getText();
-        /*String boligtype = txtBoligtype.getSelectionModel().getSelectedItem().toString();
-        String byggemateriale = txtByggemateriale.getSelectionModel().getSelectedItem().toString();
-        String standard = txtStandard.getSelectionModel().getSelectedItem().toString();      */
-
-        String boligtype = "test";
-        String byggemateriale = "test";
-        String standard = "test";
+        Boligtype boligtype = cBoxBoligtype.getSelectionModel().getSelectedItem();
+        Byggemateriale byggemateriale = cBoxByggemateriale.getSelectionModel().getSelectedItem();
+        Standard standard = cBoxStandard.getSelectionModel().getSelectedItem();
         String størrelse = txtStørrelse.getText();
         int forsikringssbeløpBygning = Integer.parseInt(txtForsikringsbeløpBygning.getText());
         int forsikringsbeløpInnbo = Integer.parseInt(txtForsikringsbeløpInnbo.getText());
@@ -122,6 +125,20 @@ public class RegistrerInnboForsikringController extends RegistrerForsikringContr
         Stage stage = (Stage) btnNeste.getScene().getWindow();
         stage.close();
 
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        //Henter lovlige verdier for Boligtype, Byggemateriale og Standard og setter disse inn i ChoiceBox-ene.
+        cBoxBoligtype.getItems().setAll(Boligtype.values());
+        cBoxByggemateriale.getItems().setAll(Byggemateriale.values());
+        cBoxStandard.getItems().setAll(Standard.values());
+
+
+        TextField[] numericFields = {txtPostnummer,txtByggeår,txtStørrelse, txtForsikringsbeløpBygning,
+                txtForsikringsbeløpInnbo, txtForsikringspremie, txtForsikringsbeløp};
+        addNumericListeners(numericFields);
     }
 
 
@@ -226,12 +243,5 @@ public class RegistrerInnboForsikringController extends RegistrerForsikringContr
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        TextField[] numericFields = {txtPostnummer,txtByggeår,txtStørrelse, txtForsikringsbeløpBygning,
-                txtForsikringsbeløpInnbo, txtForsikringspremie, txtForsikringsbeløp};
-        addNumericListeners(numericFields);
-    }
 
 }

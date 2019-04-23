@@ -1,4 +1,4 @@
-package com.rtbeb.controller;
+package com.rtbeb.controller.forsikring;
 
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.forsikring.Båt.Eier;

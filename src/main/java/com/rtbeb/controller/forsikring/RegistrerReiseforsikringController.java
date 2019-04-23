@@ -1,4 +1,4 @@
-package com.rtbeb.controller;
+package com.rtbeb.controller.forsikring;
 
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.InputEvent;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.net.URL;

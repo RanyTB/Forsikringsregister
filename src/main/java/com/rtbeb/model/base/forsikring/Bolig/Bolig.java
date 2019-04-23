@@ -1,5 +1,7 @@
 package com.rtbeb.model.base.forsikring.Bolig;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -10,24 +12,89 @@ import java.io.Serializable;
 
 public class Bolig implements Serializable {
 
-    StringProperty adresse;
-    StringProperty postnummer;
-    StringProperty byggeår;
-    StringProperty boligtype;
-    StringProperty byggemateriale;
-    StringProperty standard;
-    StringProperty størrelse;
+    private transient StringProperty adresse;
+    private transient StringProperty postnummer;
+    private transient StringProperty byggeår;
+    private transient ObjectProperty<Boligtype> boligtype;
+    private transient ObjectProperty<Byggemateriale> byggemateriale;
+    private transient ObjectProperty<Standard> standard;
+    private transient StringProperty størrelse;
 
-    public Bolig(String adresse, String postnummer, String byggeår, String boligtype,
-                 String byggemateriale, String standard, String størrelse) {
+    public Bolig(String adresse, String postnummer, String byggeår, Boligtype boligtype,
+                 Byggemateriale byggemateriale, Standard standard, String størrelse) {
 
         this.adresse = new SimpleStringProperty(adresse);
         this.postnummer = new SimpleStringProperty(postnummer);
         this.byggeår = new SimpleStringProperty(byggeår);
-        this.boligtype = new SimpleStringProperty(boligtype);
-        this.byggemateriale = new SimpleStringProperty(byggemateriale);
-        this.standard = new SimpleStringProperty(standard);
+        this.boligtype = new SimpleObjectProperty<Boligtype>(boligtype);
+        this.byggemateriale = new SimpleObjectProperty<Byggemateriale>(byggemateriale);
+        this.standard = new SimpleObjectProperty<Standard>(standard);
         this.størrelse = new SimpleStringProperty(størrelse);
+    }
+
+    /**
+     * Lovlige boligtype-verdier.
+     */
+    public enum Boligtype{
+        LEILIGHET("Leilighet"),
+        ENEBOLIG("Enebolig"),
+        REKKEHUS("Rekkehus"),
+        TOMANNSBOLIG("Tomannsbolig"),
+        GÅRDSBRUK("Gårdsbruk"),
+        ANNET("Annet");
+
+        private final String navn;
+
+        private Boligtype(String navn){
+            this.navn = navn;
+        }
+
+        @Override
+        public String toString(){
+            return navn;
+        }
+    }
+
+    /**
+     * Lovlige Byggemateriale-verdier.
+     */
+    public enum Byggemateriale{
+        TRE("Tre"),
+        BETONG("Betong"),
+        ANNET("Annet");
+
+        private String navn;
+
+        private Byggemateriale(String navn){
+            this.navn = navn;
+        }
+
+        @Override
+        public String toString(){
+            return navn;
+        }
+    }
+
+    /**
+     * Lovlige Standard-verdier.
+     */
+    public enum Standard{
+        LAV("Lav"),
+        MIDDELS("Middels"),
+        HØY("Høy"),
+        NY("Ny bolig");
+
+        private String navn;
+
+        private Standard(String navn){
+            this.navn = navn;
+        }
+
+        @Override
+        public String toString(){
+            return navn;
+        }
+
     }
 
     public String getAdresse() {
@@ -66,39 +133,39 @@ public class Bolig implements Serializable {
         this.byggeår.set(byggeår);
     }
 
-    public String getBoligtype() {
+    public Boligtype getBoligtype() {
         return boligtype.get();
     }
 
-    public StringProperty boligtypeProperty() {
+    public ObjectProperty<Boligtype> boligtypeProperty() {
         return boligtype;
     }
 
-    public void setBoligtype(String boligtype) {
+    public void setBoligtype(Boligtype boligtype) {
         this.boligtype.set(boligtype);
     }
 
-    public String getByggemateriale() {
+    public Byggemateriale getByggemateriale() {
         return byggemateriale.get();
     }
 
-    public StringProperty byggematerialeProperty() {
+    public ObjectProperty<Byggemateriale> byggematerialeProperty() {
         return byggemateriale;
     }
 
-    public void setByggemateriale(String byggemateriale) {
+    public void setByggemateriale(Byggemateriale byggemateriale) {
         this.byggemateriale.set(byggemateriale);
     }
 
-    public String getStandard() {
+    public Standard getStandard() {
         return standard.get();
     }
 
-    public StringProperty standardProperty() {
+    public ObjectProperty<Standard> standardProperty() {
         return standard;
     }
 
-    public void setStandard(String standard) {
+    public void setStandard(Standard standard) {
         this.standard.set(standard);
     }
 
@@ -134,9 +201,9 @@ public class Bolig implements Serializable {
         this.adresse = new SimpleStringProperty( (String) objectInputStream.readObject());
         this.postnummer = new SimpleStringProperty( (String) objectInputStream.readObject());
         this.byggeår = new SimpleStringProperty( (String) objectInputStream.readObject());
-        this.boligtype = new SimpleStringProperty( (String) objectInputStream.readObject());
-        this.byggemateriale = new SimpleStringProperty( (String) objectInputStream.readObject());
-        this.standard = new SimpleStringProperty( (String) objectInputStream.readObject());
+        this.boligtype = new SimpleObjectProperty<>( (Boligtype) objectInputStream.readObject());
+        this.byggemateriale = new SimpleObjectProperty<>( (Byggemateriale) objectInputStream.readObject());
+        this.standard = new SimpleObjectProperty<>( (Standard) objectInputStream.readObject());
         this.størrelse = new SimpleStringProperty( (String) objectInputStream.readObject());
     }
 }

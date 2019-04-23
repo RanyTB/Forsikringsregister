@@ -10,10 +10,18 @@ public class FieldStyler {
     private static String validColor="green";
     private static String invalidColor="red";
 
+    /**
+     * Setter kantfarge til standard gyldig farge.
+     * @param node Noden som skal modifiseres.
+     */
     public static void setValidStyle(Node node){
         node.setStyle("-fx-border-color: " + validColor);
     }
 
+    /**
+     * Setter kantfarge til standard ugyldig farge.
+     * @param node Noden som skal modifiseres.
+     */
     public static void setInvalidStyle(Node node){
         node.setStyle("-fx-border-color: " + invalidColor);
     }

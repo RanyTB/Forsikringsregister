@@ -51,9 +51,9 @@
                               <Label text="Byggemateriale" GridPane.rowIndex="4" />
                               <Label text="Standard" GridPane.rowIndex="5" />
                               <Label text="Størrelse (kvadratmeter)" GridPane.rowIndex="6" />
-                              <ChoiceBox fx:id="txtBoligtype" maxWidth="200.0" minWidth="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <ChoiceBox fx:id="txtByggemateriale" maxWidth="200.0" minWidth="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <ChoiceBox fx:id="txtStandard" maxWidth="200.0" minWidth="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <ChoiceBox fx:id="cBoxBoligtype" maxWidth="200.0" minWidth="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <ChoiceBox fx:id="cBoxByggemateriale" maxWidth="200.0" minWidth="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <ChoiceBox fx:id="cBoxStandard" maxWidth="200.0" minWidth="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <TextField fx:id="txtStørrelse" maxWidth="200.0" minWidth="100.0" onKeyTyped="#størrelseChanged" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                               <TextField fx:id="txtByggeår" maxWidth="200.0" minWidth="100.0" onKeyTyped="#byggeårChanged" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>

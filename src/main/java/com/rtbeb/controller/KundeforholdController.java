@@ -1,5 +1,6 @@
 package com.rtbeb.controller;
 
+import com.rtbeb.controller.forsikring.RegistrerNyForsikringController;
 import com.rtbeb.model.base.forsikring.Forsikring;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
