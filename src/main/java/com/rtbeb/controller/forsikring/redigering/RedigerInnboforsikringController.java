@@ -62,6 +62,9 @@ public class RedigerInnboforsikringController extends RedigerforsikringControlle
         //Hvis forsikringen er gyldig, oppdateres den opprinnelige forsikringen.
         if (InnboForsikringValidator.innboForsikringIsValid(redigertInnboforsikring)){
             updateOpprinneligforsikring();
+
+            Stage stage = (Stage)btnNeste.getScene().getWindow();
+            stage.close();
         }
     }
 
