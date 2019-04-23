@@ -12,32 +12,32 @@ import java.io.Serializable;
 
 public class Innboforsikring extends Forsikring implements Serializable, Validerbar {
 
-    private Innboforsikringstype innboforsikringstype;
+    private Brukstype brukstype;
     private transient ObjectProperty<Bolig> bolig;
     private transient IntegerProperty forsikringssbeløpBygning;
     private transient IntegerProperty forsikringsbeløpInnbo;
 
-    public Innboforsikring(Innboforsikringstype forsikringtype, int forsikringspremie, int forsikringsbeløp, String betingelser,
+    public Innboforsikring(Brukstype brukstype, int forsikringspremie, int forsikringsbeløp, String betingelser,
                            Bolig bolig, Integer forsikringssbeløpBygning, Integer forsikringsbeløpInnbo) {
 
-        super(forsikringtype.toString(), forsikringspremie, forsikringsbeløp, betingelser);
-        this.innboforsikringstype = forsikringtype;
+        super(brukstype.toString(), forsikringspremie, forsikringsbeløp, betingelser);
+        this.brukstype = brukstype;
         this.bolig = new SimpleObjectProperty<>(bolig);
         this.forsikringssbeløpBygning = new SimpleIntegerProperty(forsikringssbeløpBygning);
         this.forsikringsbeløpInnbo = new SimpleIntegerProperty(forsikringsbeløpInnbo);
     }
 
     /**
-     * enum Innboforsikringstype brukes i konstruktøren for å skille mellom vanlig innbo og fritidsboligforsikring.
+     * enum Brukstype brukes i konstruktøren for å skille mellom vanlig innbo og fritidsboligforsikring.
      * Dette slik at samme Controller kan brukes til de forskjellige forsikringstypene.
      */
-    public enum Innboforsikringstype {
+    public enum Brukstype {
         HELÅRSBOLIG("Hus og Innbo"),
         FRITIDSBOLIG("Fritidsbolig");
 
         private String forsikringstype;
 
-        private Innboforsikringstype(String forsikringsstype){
+        private Brukstype(String forsikringsstype){
             this.forsikringstype = forsikringsstype;
         }
 
@@ -48,12 +48,12 @@ public class Innboforsikring extends Forsikring implements Serializable, Valider
 
     }
 
-    public Innboforsikringstype getInnboforsikringstype() {
-        return innboforsikringstype;
+    public Brukstype getBrukstype() {
+        return brukstype;
     }
 
-    public void setInnboforsikringstype(Innboforsikringstype innboforsikringstype) {
-        this.innboforsikringstype = innboforsikringstype;
+    public void setBrukstype(Brukstype brukstype) {
+        this.brukstype = brukstype;
     }
 
     public Bolig getBolig() {

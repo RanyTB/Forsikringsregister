@@ -106,7 +106,7 @@ public class RedigerInnboforsikringController extends RedigerforsikringControlle
         Bolig bolig = new Bolig(adresse, postnummer, byggeår, boligtype,
                 byggemateriale, standard, størrelse);
 
-        return new Innboforsikring(opprinneligInnboforsikring.getInnboforsikringstype(), forsikringspremie, forsikringsbeløp, betingelser,
+        return new Innboforsikring(opprinneligInnboforsikring.getBrukstype(), forsikringspremie, forsikringsbeløp, betingelser,
                 bolig, forsikringssbeløpBygning,forsikringsbeløpInnbo);
     }
 
@@ -144,7 +144,7 @@ public class RedigerInnboforsikringController extends RedigerforsikringControlle
         //Fyller alle tekstfelt med data fra forsikringen som skal redigeres.
         initTextFields();
 
-        //Henter lovlige verdier for Innboforsikringstype, Byggemateriale og Standard og setter disse inn i ChoiceBox-ene.
+        //Henter lovlige verdier for Brukstype, Byggemateriale og Standard og setter disse inn i ChoiceBox-ene.
         cBoxBoligtype.getItems().setAll(Bolig.Boligtype.values());
         cBoxByggemateriale.getItems().setAll(Bolig.Byggemateriale.values());
         cBoxStandard.getItems().setAll(Bolig.Standard.values());

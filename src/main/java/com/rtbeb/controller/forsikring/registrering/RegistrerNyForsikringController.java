@@ -48,7 +48,7 @@ public class RegistrerNyForsikringController implements Initializable {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegistrerInnboforsikring.fxml"));
-            RegistrerInnboForsikringController controller = new RegistrerInnboForsikringController(kunde, Innboforsikring.Innboforsikringstype.HELÅRSBOLIG);
+            RegistrerInnboForsikringController controller = new RegistrerInnboForsikringController(kunde, Innboforsikring.Brukstype.HELÅRSBOLIG);
             loader.setController(controller);
             Parent root = loader.load();
             Scene scene = new Scene(root);
@@ -65,7 +65,7 @@ public class RegistrerNyForsikringController implements Initializable {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegistrerInnboforsikring.fxml"));
-            RegistrerInnboForsikringController controller = new RegistrerInnboForsikringController(kunde, Innboforsikring.Innboforsikringstype.FRITIDSBOLIG);
+            RegistrerInnboForsikringController controller = new RegistrerInnboForsikringController(kunde, Innboforsikring.Brukstype.FRITIDSBOLIG);
             loader.setController(controller);
             Parent root = loader.load();
             Scene scene = new Scene(root);

@@ -22,11 +22,11 @@ import java.util.ResourceBundle;
 
 public class RegistrerInnboForsikringController extends RegistrerForsikringController implements Initializable {
 
-    Innboforsikring.Innboforsikringstype innboforsikringstype;
+    Innboforsikring.Brukstype brukstype;
 
-    public RegistrerInnboForsikringController(Kunde kunde, Innboforsikring.Innboforsikringstype innboforsikringstype){
+    public RegistrerInnboForsikringController(Kunde kunde, Innboforsikring.Brukstype brukstype){
         super(kunde);
-        this.innboforsikringstype = innboforsikringstype;
+        this.brukstype = brukstype;
     }
 
     @FXML
@@ -96,7 +96,7 @@ public class RegistrerInnboForsikringController extends RegistrerForsikringContr
         Bolig bolig = new Bolig(adresse, postnummer, byggeår, boligtype,
                 byggemateriale, standard, størrelse);
 
-        return new Innboforsikring(this.innboforsikringstype, forsikringspremie, forsikringsbeløp, betingelser,
+        return new Innboforsikring(this.brukstype, forsikringspremie, forsikringsbeløp, betingelser,
                 bolig, forsikringssbeløpBygning,forsikringsbeløpInnbo);
     }
 
@@ -131,7 +131,7 @@ public class RegistrerInnboForsikringController extends RegistrerForsikringContr
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //Henter lovlige verdier for Innboforsikringstype, Byggemateriale og Standard og setter disse inn i ChoiceBox-ene.
+        //Henter lovlige verdier for Brukstype, Byggemateriale og Standard og setter disse inn i ChoiceBox-ene.
         cBoxBoligtype.getItems().setAll(Bolig.Boligtype.values());
         cBoxByggemateriale.getItems().setAll(Byggemateriale.values());
         cBoxStandard.getItems().setAll(Standard.values());
