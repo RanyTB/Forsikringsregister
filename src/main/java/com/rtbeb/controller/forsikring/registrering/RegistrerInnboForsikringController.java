@@ -1,17 +1,15 @@
-package com.rtbeb.controller.forsikring;
+package com.rtbeb.controller.forsikring.registrering;
 
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.exception.InvalidForsikringException;
 import com.rtbeb.model.base.forsikring.Bolig.Bolig;
-import com.rtbeb.model.base.forsikring.Bolig.Bolig.Boligtype;
 import com.rtbeb.model.base.forsikring.Bolig.Bolig.Byggemateriale;
 import com.rtbeb.model.base.forsikring.Bolig.Bolig.Standard;
 import com.rtbeb.model.base.forsikring.Bolig.Innboforsikring;
 import com.rtbeb.model.validation.BoligValidator;
 import com.rtbeb.model.validation.ForsikringValidator;
 import com.rtbeb.model.validation.InnboForsikringValidator;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,11 +22,11 @@ import java.util.ResourceBundle;
 
 public class RegistrerInnboForsikringController extends RegistrerForsikringController implements Initializable {
 
-    Innboforsikring.Innbotype innbotype;
+    Innboforsikring.Innboforsikringstype innboforsikringstype;
 
-    public RegistrerInnboForsikringController(Kunde kunde, Innboforsikring.Innbotype innbotype){
+    public RegistrerInnboForsikringController(Kunde kunde, Innboforsikring.Innboforsikringstype innboforsikringstype){
         super(kunde);
-        this.innbotype = innbotype;
+        this.innboforsikringstype = innboforsikringstype;
     }
 
     @FXML
@@ -38,7 +36,7 @@ public class RegistrerInnboForsikringController extends RegistrerForsikringContr
     @FXML
     private TextField txtByggeår;
     @FXML
-    private ChoiceBox<Boligtype> cBoxBoligtype;
+    private ChoiceBox<Bolig.Boligtype> cBoxBoligtype;
     @FXML
     private ChoiceBox<Byggemateriale> cBoxByggemateriale;
     @FXML
@@ -88,7 +86,7 @@ public class RegistrerInnboForsikringController extends RegistrerForsikringContr
         String adresse = txtAdresse.getText();
         String postnummer = txtPostnummer.getText();
         String byggeår = txtByggeår.getText();
-        Boligtype boligtype = cBoxBoligtype.getSelectionModel().getSelectedItem();
+        Bolig.Boligtype boligtype = cBoxBoligtype.getSelectionModel().getSelectedItem();
         Byggemateriale byggemateriale = cBoxByggemateriale.getSelectionModel().getSelectedItem();
         Standard standard = cBoxStandard.getSelectionModel().getSelectedItem();
         String størrelse = txtStørrelse.getText();
@@ -98,7 +96,7 @@ public class RegistrerInnboForsikringController extends RegistrerForsikringContr
         Bolig bolig = new Bolig(adresse, postnummer, byggeår, boligtype,
                 byggemateriale, standard, størrelse);
 
-        return new Innboforsikring(this.innbotype, forsikringspremie, forsikringsbeløp, betingelser,
+        return new Innboforsikring(this.innboforsikringstype, forsikringspremie, forsikringsbeløp, betingelser,
                 bolig, forsikringssbeløpBygning,forsikringsbeløpInnbo);
     }
 
@@ -133,8 +131,8 @@ public class RegistrerInnboForsikringController extends RegistrerForsikringContr
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //Henter lovlige verdier for Boligtype, Byggemateriale og Standard og setter disse inn i ChoiceBox-ene.
-        cBoxBoligtype.getItems().setAll(Boligtype.values());
+        //Henter lovlige verdier for Innboforsikringstype, Byggemateriale og Standard og setter disse inn i ChoiceBox-ene.
+        cBoxBoligtype.getItems().setAll(Bolig.Boligtype.values());
         cBoxByggemateriale.getItems().setAll(Byggemateriale.values());
         cBoxStandard.getItems().setAll(Standard.values());
 

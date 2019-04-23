@@ -12,30 +12,32 @@ import java.io.Serializable;
 
 public class Innboforsikring extends Forsikring implements Serializable, Validerbar {
 
+    private Innboforsikringstype innboforsikringstype;
     private transient ObjectProperty<Bolig> bolig;
     private transient IntegerProperty forsikringssbeløpBygning;
     private transient IntegerProperty forsikringsbeløpInnbo;
 
-    public Innboforsikring(Innbotype forsikringtype,int forsikringspremie, int forsikringsbeløp, String betingelser,
+    public Innboforsikring(Innboforsikringstype forsikringtype, int forsikringspremie, int forsikringsbeløp, String betingelser,
                            Bolig bolig, Integer forsikringssbeløpBygning, Integer forsikringsbeløpInnbo) {
 
         super(forsikringtype.toString(), forsikringspremie, forsikringsbeløp, betingelser);
+        this.innboforsikringstype = forsikringtype;
         this.bolig = new SimpleObjectProperty<>(bolig);
         this.forsikringssbeløpBygning = new SimpleIntegerProperty(forsikringssbeløpBygning);
         this.forsikringsbeløpInnbo = new SimpleIntegerProperty(forsikringsbeløpInnbo);
     }
 
     /**
-     * enum Innbotype brukes kun i konstruktøren for å skille mellom vanlig innbo og fritidsboligforsikring.
+     * enum Innboforsikringstype brukes i konstruktøren for å skille mellom vanlig innbo og fritidsboligforsikring.
      * Dette slik at samme Controller kan brukes til de forskjellige forsikringstypene.
      */
-    public enum Innbotype{
+    public enum Innboforsikringstype {
         HELÅRSBOLIG("Hus og Innbo"),
         FRITIDSBOLIG("Fritidsbolig");
 
         private String forsikringstype;
 
-        private Innbotype(String forsikringsstype){
+        private Innboforsikringstype(String forsikringsstype){
             this.forsikringstype = forsikringsstype;
         }
 
@@ -44,6 +46,14 @@ public class Innboforsikring extends Forsikring implements Serializable, Valider
             return forsikringstype;
         }
 
+    }
+
+    public Innboforsikringstype getInnboforsikringstype() {
+        return innboforsikringstype;
+    }
+
+    public void setInnboforsikringstype(Innboforsikringstype innboforsikringstype) {
+        this.innboforsikringstype = innboforsikringstype;
     }
 
     public Bolig getBolig() {
@@ -58,19 +68,19 @@ public class Innboforsikring extends Forsikring implements Serializable, Valider
         this.bolig.set(bolig);
     }
 
-    public int getForsikringssbeløpBygning() {
+    public Integer getForsikringssbeløpBygning() {
         return forsikringssbeløpBygning.get();
     }
 
-    public IntegerProperty forsikringssbeløpBygningProperty() {
+    public IntegerProperty forsikringsbeløpBygningProperty() {
         return forsikringssbeløpBygning;
     }
 
-    public void setForsikringssbeløpBygning(int forsikringssbeløpBygning) {
+    public void setForsikringsbeløpBygning(Integer forsikringssbeløpBygning) {
         this.forsikringssbeløpBygning.set(forsikringssbeløpBygning);
     }
 
-    public int getForsikringsbeløpInnbo() {
+    public Integer getForsikringsbeløpInnbo() {
         return forsikringsbeløpInnbo.get();
     }
 
@@ -78,7 +88,7 @@ public class Innboforsikring extends Forsikring implements Serializable, Valider
         return forsikringsbeløpInnbo;
     }
 
-    public void setForsikringsbeløpInnbo(int forsikringsbeløpInnbo) {
+    public void setForsikringsbeløpInnbo(Integer forsikringsbeløpInnbo) {
         this.forsikringsbeløpInnbo.set(forsikringsbeløpInnbo);
     }
 

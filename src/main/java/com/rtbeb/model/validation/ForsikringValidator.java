@@ -18,7 +18,7 @@ public class ForsikringValidator {
 
         //Datafelt i Forsikringsklassen
         int forsikringspremie = forsikring.getForsikringspremie();
-        int forsikringsbelop = forsikring.getForsikringsbelop();
+        int forsikringsbelop = forsikring.getForsikringsbeløp();
         String forsikringsbetingelser = forsikring.getForsikringsbetingelser();
 
         //Validerer alle felt

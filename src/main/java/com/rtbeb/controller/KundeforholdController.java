@@ -1,12 +1,10 @@
 package com.rtbeb.controller;
 
-import com.rtbeb.controller.forsikring.RegistrerNyForsikringController;
-import com.rtbeb.model.base.forsikring.Bolig.Innboforsikring;
-import com.rtbeb.model.base.forsikring.Båt.Båtforsikring;
+import com.rtbeb.controller.forsikring.redigering.helper.RedigerforsikringHelper;
+import com.rtbeb.controller.forsikring.registrering.RegistrerNyForsikringController;
 import com.rtbeb.model.base.forsikring.Forsikring;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
-import com.rtbeb.model.base.forsikring.Reise.Reiseforsikring;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -151,7 +149,7 @@ public class KundeforholdController implements Initializable {
 
         forsikringstypeColumn.setCellValueFactory(new PropertyValueFactory<>("forsikringstype"));
         datoOpprettetColumn.setCellValueFactory(new PropertyValueFactory<>("datoOpprettet"));
-        forsikringsbelopColumn.setCellValueFactory(new PropertyValueFactory<>("forsikringsbelop"));
+        forsikringsbelopColumn.setCellValueFactory(new PropertyValueFactory<>("forsikringsbeløp"));
         forsikringspremieColumn.setCellValueFactory(new PropertyValueFactory<>("forsikringspremie"));
 
         tableForsikringer.setItems(valgtKunde.getForsikringsListe());
@@ -179,18 +177,7 @@ public class KundeforholdController implements Initializable {
 
         Forsikring valgtForsikring = tableForsikringer.getSelectionModel().getSelectedItem();
 
-        if(valgtForsikring instanceof Innboforsikring){
-            //open Innboforsikring controller
-            System.out.println("Innbo valgt");
-        }
-        if(valgtForsikring instanceof Båtforsikring){
-            //open Båtforsikring controller
-            System.out.println("Båtforsikring valgt");
-        }
-        if(valgtForsikring instanceof Reiseforsikring){
-            //open Reiseforsikring controller
-            System.out.println("Reiseforsikring valgt");
-        }
+        RedigerforsikringHelper.openRedigeringScene(valgtForsikring, valgtKunde);
     }
 
     @FXML

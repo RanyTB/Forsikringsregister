@@ -1,4 +1,4 @@
-package com.rtbeb.controller.forsikring;
+package com.rtbeb.controller.forsikring.registrering;
 
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.forsikring.Bolig.Innboforsikring;
@@ -48,7 +48,7 @@ public class RegistrerNyForsikringController implements Initializable {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegistrerInnboforsikring.fxml"));
-            RegistrerInnboForsikringController controller = new RegistrerInnboForsikringController(kunde, Innboforsikring.Innbotype.HELÅRSBOLIG);
+            RegistrerInnboForsikringController controller = new RegistrerInnboForsikringController(kunde, Innboforsikring.Innboforsikringstype.HELÅRSBOLIG);
             loader.setController(controller);
             Parent root = loader.load();
             Scene scene = new Scene(root);
@@ -65,7 +65,7 @@ public class RegistrerNyForsikringController implements Initializable {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegistrerInnboforsikring.fxml"));
-            RegistrerInnboForsikringController controller = new RegistrerInnboForsikringController(kunde, Innboforsikring.Innbotype.FRITIDSBOLIG);
+            RegistrerInnboForsikringController controller = new RegistrerInnboForsikringController(kunde, Innboforsikring.Innboforsikringstype.FRITIDSBOLIG);
             loader.setController(controller);
             Parent root = loader.load();
             Scene scene = new Scene(root);
