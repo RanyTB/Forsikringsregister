@@ -1,6 +1,7 @@
 package com.rtbeb.controller.forsikring;
 
 import com.rtbeb.model.base.Kunde;
+import com.rtbeb.model.base.forsikring.Bolig.Innboforsikring;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,7 +48,24 @@ public class RegistrerNyForsikringController implements Initializable {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegistrerInnboforsikring.fxml"));
-            RegistrerInnboForsikringController controller = new RegistrerInnboForsikringController(kunde);
+            RegistrerInnboForsikringController controller = new RegistrerInnboForsikringController(kunde, Innboforsikring.Innbotype.HELÅRSBOLIG);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) lblTitle.getScene().getWindow();
+            stage.setScene(scene);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void fritidsboligforsikringButtonClicked(ActionEvent event){
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegistrerInnboforsikring.fxml"));
+            RegistrerInnboForsikringController controller = new RegistrerInnboForsikringController(kunde, Innboforsikring.Innbotype.FRITIDSBOLIG);
             loader.setController(controller);
             Parent root = loader.load();
             Scene scene = new Scene(root);

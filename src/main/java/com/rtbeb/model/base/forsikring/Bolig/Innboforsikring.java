@@ -16,13 +16,34 @@ public class Innboforsikring extends Forsikring implements Serializable, Valider
     private transient IntegerProperty forsikringssbeløpBygning;
     private transient IntegerProperty forsikringsbeløpInnbo;
 
-    public Innboforsikring(int forsikringspremie, int forsikringsbeløp, String betingelser,
+    public Innboforsikring(Innbotype forsikringtype,int forsikringspremie, int forsikringsbeløp, String betingelser,
                            Bolig bolig, Integer forsikringssbeløpBygning, Integer forsikringsbeløpInnbo) {
 
-        super("Hus og Innbo", forsikringspremie, forsikringsbeløp, betingelser);
+        super(forsikringtype.toString(), forsikringspremie, forsikringsbeløp, betingelser);
         this.bolig = new SimpleObjectProperty<>(bolig);
         this.forsikringssbeløpBygning = new SimpleIntegerProperty(forsikringssbeløpBygning);
         this.forsikringsbeløpInnbo = new SimpleIntegerProperty(forsikringsbeløpInnbo);
+    }
+
+    /**
+     * enum Innbotype brukes kun i konstruktøren for å skille mellom vanlig innbo og fritidsboligforsikring.
+     * Dette slik at samme Controller kan brukes til de forskjellige forsikringstypene.
+     */
+    public enum Innbotype{
+        HELÅRSBOLIG("Hus og Innbo"),
+        FRITIDSBOLIG("Fritidsbolig");
+
+        private String forsikringstype;
+
+        private Innbotype(String forsikringsstype){
+            this.forsikringstype = forsikringsstype;
+        }
+
+        @Override
+        public String toString(){
+            return forsikringstype;
+        }
+
     }
 
     public Bolig getBolig() {

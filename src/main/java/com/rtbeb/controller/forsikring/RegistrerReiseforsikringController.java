@@ -73,6 +73,11 @@ public class RegistrerReiseforsikringController extends RegistrerForsikringContr
         try {
             Reiseforsikring reiseforsikring = generateReiseforsikring();
             kunde.addForsikring(reiseforsikring);
+
+            //Lukk stage hvis forsikring blir registrert OK.
+            Stage stage = (Stage) btnNeste.getScene().getWindow();
+            stage.close();
+
         } catch (InvalidForsikringException|NumberFormatException e) {
             generateAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
         }

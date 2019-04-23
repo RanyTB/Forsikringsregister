@@ -9,9 +9,9 @@ import com.rtbeb.model.base.forsikring.Forsikring;
 public class ForsikringValidator {
 
     //Minimum og maksimumsverdier
-    private static int maxForsikringspremie = 50000;
+    private static int maxForsikringspremie = 100000;
     private static int minForsikringspremie = 500;
-    private static int maxForsikringsbelop = 2000000;
+    private static int maxForsikringsbelop = 20000000;
     private static int minForsikringsbelop = 1000;
 
     public static boolean ForsikringIsValid(Forsikring forsikring){
@@ -39,14 +39,11 @@ public class ForsikringValidator {
             return false;
         }
 
-        if(forsikringspremieParsed > minForsikringspremie && forsikringspremieParsed < maxForsikringspremie){
-            return true;
-        }
-        return false;
+        return forsikringspremieIsValid(forsikringspremieParsed);
     }
 
     private static boolean forsikringspremieIsValid(int forsikringspremie){
-        if(forsikringspremie > minForsikringspremie && forsikringspremie < maxForsikringspremie){
+        if(forsikringspremie >= minForsikringspremie && forsikringspremie <= maxForsikringspremie){
             return true;
         }
         return false;
@@ -61,14 +58,11 @@ public class ForsikringValidator {
             return false;
         }
 
-        if(forsikringsbelopParsed > minForsikringsbelop && forsikringsbelopParsed < maxForsikringsbelop ){
-            return true;
-        }
-        return false;
+        return forsikringsbelopIsValid(forsikringsbelopParsed);
     }
 
     private static boolean forsikringsbelopIsValid(int forsikringsbelop){
-        if(forsikringsbelop > minForsikringsbelop && forsikringsbelop < maxForsikringsbelop ){
+        if(forsikringsbelop >= minForsikringsbelop && forsikringsbelop <= maxForsikringsbelop ){
             return true;
         }
         return false;

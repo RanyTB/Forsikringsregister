@@ -96,6 +96,11 @@ public class RegistrerBåtforsikringController extends RegistrerForsikringContro
         try {
             Båtforsikring båtforsikring = generateBåtforsikring();
             kunde.addForsikring(båtforsikring);
+
+            //Lukk stage hvis forsikring blir registrert OK.
+            Stage stage = (Stage) btnNeste.getScene().getWindow();
+            stage.close();
+
         } catch (InvalidForsikringException|NumberFormatException e) {
             generateAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
         }

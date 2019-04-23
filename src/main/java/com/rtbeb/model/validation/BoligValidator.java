@@ -33,17 +33,19 @@ public class BoligValidator {
 
     public static boolean byggeårIsValid(String byggeår){
 
-        int årsmodellParsed = 0;
+        int byggeårParsed = 0;
         try{
-            årsmodellParsed = Integer.parseInt(byggeår);
-        } catch(NumberFormatException e){}
+            byggeårParsed = Integer.parseInt(byggeår);
+        } catch(NumberFormatException e){
+            return false;
+        }
 
         int detteÅret = LocalDate.now().getYear();
 
         if(byggeår.isEmpty()){
             return false;
         }
-        else if(årsmodellParsed <= detteÅret && årsmodellParsed > minByggeår){
+        else if(byggeårParsed <= detteÅret && byggeårParsed > minByggeår){
             return true;
         }
         return false;
