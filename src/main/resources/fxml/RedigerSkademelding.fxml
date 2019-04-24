@@ -41,7 +41,7 @@
             <RowConstraints maxHeight="66.0" minHeight="10.0" prefHeight="66.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="txtTypeSkade" onKeyTyped="#typeSkadeChanged" prefHeight="27.0" prefWidth="245.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="txtTypeSkade" prefHeight="27.0" prefWidth="245.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
@@ -56,7 +56,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <TextArea fx:id="txtVitner" onKeyTyped="#vitneChanged" prefHeight="18.0" prefWidth="237.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <TextArea fx:id="txtVitner" prefHeight="18.0" prefWidth="237.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
@@ -71,12 +71,12 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <TextField fx:id="txtTakseringAvSkaden" onKeyTyped="#takseringChanged" prefHeight="25.0" prefWidth="245.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <TextField fx:id="txtTakseringAvSkaden" prefHeight="25.0" prefWidth="245.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="txtUtbetaltErstatningsbeløp" onKeyTyped="#utbetaltChanged" prefHeight="25.0" prefWidth="245.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <TextField fx:id="txtUtbetaltErstatningsbeløp" prefHeight="25.0" prefWidth="245.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
@@ -86,7 +86,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <TextArea fx:id="txtBeskrivelse" onKeyTyped="#beskrivelseChanged" prefHeight="48.0" prefWidth="204.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TextArea fx:id="txtBeskrivelse" prefHeight="48.0" prefWidth="204.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
@@ -97,7 +97,7 @@
                </GridPane.margin>
             </Button>
             <Button fx:id="backButton" text="Tilbake" GridPane.rowIndex="7" />
-            <DatePicker fx:id="datePicker" onAction="#dateChanged" prefHeight="25.0" prefWidth="200.0" promptText="Dato" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <DatePicker fx:id="datePicker" prefHeight="25.0" prefWidth="200.0" promptText="Dato" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>

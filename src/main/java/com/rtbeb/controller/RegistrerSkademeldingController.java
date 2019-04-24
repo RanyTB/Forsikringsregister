@@ -2,7 +2,6 @@ package com.rtbeb.controller;
 
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Skademelding;
-import com.rtbeb.model.validation.SkademeldingValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,18 +9,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class RegistrerSkademeldingController implements Initializable {
 
     Kunde valgtKunde;
-    SkademeldingValidator skademeldingValidator;
 
     RegistrerSkademeldingController(Kunde valgtKunde){
         this.valgtKunde = valgtKunde;
@@ -48,9 +47,7 @@ public class RegistrerSkademeldingController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         bindLabelsWithCustomerInfo();
-
     }
 
     @FXML
@@ -60,82 +57,13 @@ public class RegistrerSkademeldingController implements Initializable {
     }
 
     @FXML
-    private void dateChanged(ActionEvent event){
-        LocalDate date = datePicker.getValue();
-        if(skademeldingValidator.dateIsValid(date)){
-            datePicker.setStyle("-fx-border-color: green");
-        } else {
-            datePicker.setStyle("-fx-border-color: red");
-        }
-
-    }
-
-
-    @FXML
-    private void typeSkadeChanged(InputEvent event){
-        String typeSkade = txtTypeSkade.getText();
-        if(skademeldingValidator.textIsValid(typeSkade, 20)){
-            txtTypeSkade.setStyle("-fx-border-color: green");
-        } else {
-            txtTypeSkade.setStyle("-fx-border-color: red");
-        }
-    }
-
-    @FXML
-    private void beskrivelseChanged(InputEvent event){
-        String beskrivelse = txtBeskrivelse.getText();
-        if(skademeldingValidator.textOgTallIsValid(beskrivelse, 200)){
-            txtBeskrivelse.setStyle("-fx-border-color: green");
-        } else {
-            txtBeskrivelse.setStyle("-fx-border-color: red");
-        }
-    }
-
-    @FXML
-    private void vitneChanged(InputEvent event){
-        String vitner = txtVitner.getText();
-        if(skademeldingValidator.textOgTallIsValid(vitner, 100)){
-            txtVitner.setStyle("-fx-border-color: green");
-        } else {
-            txtVitner.setStyle("-fx-border-color: red");
-        }
-    }
-
-    @FXML
-    private void takseringChanged(InputEvent event){
-        String takseringAvSkaden = txtTakseringAvSkaden.getText();
-        if(skademeldingValidator.tallIsValid(takseringAvSkaden, 8)){
-            txtTakseringAvSkaden.setStyle("-fx-border-color: green");
-        } else {
-            txtTakseringAvSkaden.setStyle("-fx-border-color: red");
-        }
-    }
-
-    @FXML
-    private void utbetaltChanged(InputEvent event){
-        String utbetaltErstatningsbeløp = txtUtbetaltErstatningsbeløp.getText();
-        if(skademeldingValidator.tallIsValid(utbetaltErstatningsbeløp, 8)){
-            txtUtbetaltErstatningsbeløp.setStyle("-fx-border-color: green");
-        } else {
-            txtUtbetaltErstatningsbeløp.setStyle("-fx-border-color: red");
-        }
-    }
-
-
-
-    @FXML
     private void registrerSkademeldingClicked(ActionEvent event){
         //Gjør om til LocalDate objekt
         LocalDate date = datePicker.getValue();
-        String typeSkade = txtTypeSkade.getText();
-        String beskrivelse = txtBeskrivelse.getText();
-        String vitner = txtVitner.getText();
-        int takseringAvSkaden = Integer.parseInt(txtTakseringAvSkaden.getText());
-        int utbetaltErstatningsbeløp = Integer.parseInt(txtUtbetaltErstatningsbeløp.getText());
 
-
-        Skademelding skademelding = new Skademelding(date, typeSkade,
-                beskrivelse, vitner, takseringAvSkaden, utbetaltErstatningsbeløp);
+        Skademelding skademelding = new Skademelding(date, txtTypeSkade.getText(),
+                txtBeskrivelse.getText(), txtVitner.getText(), Integer.parseInt(txtTakseringAvSkaden.getText()),
+                Integer.parseInt(txtUtbetaltErstatningsbeløp.getText()));
 
         valgtKunde.addSkademelding(skademelding);
 
