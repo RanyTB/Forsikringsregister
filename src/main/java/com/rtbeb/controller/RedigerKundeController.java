@@ -47,6 +47,33 @@ public class RedigerKundeController implements Initializable {
         txtPostnummer.setText(kunde.getPostnummer());
     }
 
+
+    @FXML
+    private void redigerKunde(ActionEvent event){
+        String fornavn = txtFornavn.getText();
+        String etternavn = txtEtternavn.getText();
+        String fakturaadresse = txtAdresse.getText();
+        String postnummer = txtPostnummer.getText();
+
+        //TODO fiks bug her, hvor man bypasser validering av kunden.
+
+        kunde.setFornavn(fornavn);
+        kunde.setEtternavn(etternavn);
+        kunde.setFakturaadresse(fakturaadresse);
+        kunde.setPostnummer(postnummer);
+
+        Stage thisStage = (Stage) btnRedigerKunde.getScene().getWindow();
+        thisStage.close();
+    }
+
+    @FXML
+    private void lukkVindu(ActionEvent event){
+        Stage thisStage = (Stage) btnLukkVindu.getScene().getWindow();
+        thisStage.close();
+    }
+
+    //-----------VALIDERING----------//
+
     @FXML
     private void fornavnChanged(InputEvent event){
         String fornavn = txtFornavn.getText();
@@ -88,29 +115,6 @@ public class RedigerKundeController implements Initializable {
         } else{
             txtPostnummer.setStyle("-fx-border-color: green");
         }
-    }
-
-
-    @FXML
-    private void redigerKunde(ActionEvent event){
-        String fornavn = txtFornavn.getText();
-        String etternavn = txtEtternavn.getText();
-        String fakturaadresse = txtAdresse.getText();
-        String postnummer = txtPostnummer.getText();
-
-        kunde.setFornavn(fornavn);
-        kunde.setEtternavn(etternavn);
-        kunde.setFakturaadresse(fakturaadresse);
-        kunde.setPostnummer(postnummer);
-
-        Stage thisStage = (Stage) btnRedigerKunde.getScene().getWindow();
-        thisStage.close();
-    }
-
-    @FXML
-    private void lukkVindu(ActionEvent event){
-        Stage thisStage = (Stage) btnLukkVindu.getScene().getWindow();
-        thisStage.close();
     }
 
 }
