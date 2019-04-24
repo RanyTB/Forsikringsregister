@@ -1,5 +1,6 @@
-package com.rtbeb.model.base.forsikring.Båt;
+package com.rtbeb.model.base.forsikring;
 
+import com.rtbeb.model.base.Eier;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,20 +20,20 @@ public class Båt implements Serializable {
     private transient StringProperty modell;
     private transient StringProperty lengde;
     private transient StringProperty årsmodell;
-    private transient StringProperty motorinfo;
+    private transient StringProperty motorInfo;
 
     public Båt(Eier eier,
                String registreringsnummer,
                String merke, String modell,
                String lengde, String årsmodell,
-               String motorinfo){
+               String motorInfo){
         this.eier = new SimpleObjectProperty<>(eier);
         this.registreringsnummer = new SimpleStringProperty(registreringsnummer);
         this.merke = new SimpleStringProperty(merke);
         this.modell = new SimpleStringProperty(modell);
         this.lengde = new SimpleStringProperty(lengde);
         this.årsmodell = new SimpleStringProperty(årsmodell);
-        this.motorinfo = new SimpleStringProperty(motorinfo);
+        this.motorInfo = new SimpleStringProperty(motorInfo);
     }
 
     public Eier getEier() {
@@ -107,16 +108,16 @@ public class Båt implements Serializable {
         this.årsmodell.set(årsmodell);
     }
 
-    public String getMotorinfo() {
-        return motorinfo.get();
+    public String getMotorInfo() {
+        return motorInfo.get();
     }
 
-    public StringProperty motorinfoProperty() {
-        return motorinfo;
+    public StringProperty motorInfoProperty() {
+        return motorInfo;
     }
 
-    public void setMotorinfo(String motorinfo) {
-        this.motorinfo.set(motorinfo);
+    public void setMotorInfo(String motorInfo) {
+        this.motorInfo.set(motorInfo);
     }
 
     //Egendefinert serialisering
@@ -128,7 +129,7 @@ public class Båt implements Serializable {
         objectOutputStream.writeObject(getModell());
         objectOutputStream.writeObject(getLengde());
         objectOutputStream.writeObject(getÅrsmodell());
-        objectOutputStream.writeObject(getMotorinfo());
+        objectOutputStream.writeObject(getMotorInfo());
     }
 
     //Egendefinert serialisering
@@ -140,6 +141,6 @@ public class Båt implements Serializable {
         this.modell = new SimpleStringProperty((String) objectInputStream.readObject());
         this.lengde = new SimpleStringProperty ((String) objectInputStream.readObject());
         this.årsmodell = new SimpleStringProperty((String) objectInputStream.readObject());
-        this.motorinfo = new SimpleStringProperty((String) objectInputStream.readObject());
+        this.motorInfo = new SimpleStringProperty((String) objectInputStream.readObject());
     }
 }

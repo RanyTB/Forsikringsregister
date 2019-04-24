@@ -1,7 +1,5 @@
-package com.rtbeb.model.base.forsikring.Båt;
+package com.rtbeb.model.base;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -9,19 +7,18 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.time.LocalDate;
 
 public class Eier implements Serializable {
     private static final long serialVersionUID = 1;
 
     private transient StringProperty fornavn;
     private transient StringProperty etternavn;
-    private transient ObjectProperty<LocalDate> fødselsdato;
+    private transient StringProperty fødselsdato;
 
-    public Eier(String fornavn, String etternavn, LocalDate fødselsdato) {
+    public Eier(String fornavn, String etternavn, String fødselsdato) {
         this.fornavn = new SimpleStringProperty(fornavn);
         this.etternavn = new SimpleStringProperty(etternavn);
-        this.fødselsdato = new SimpleObjectProperty<>(fødselsdato);
+        this.fødselsdato = new SimpleStringProperty(fødselsdato);
     }
 
     public String getFornavn() {
@@ -48,15 +45,15 @@ public class Eier implements Serializable {
         this.etternavn.set(etternavn);
     }
 
-    public LocalDate getFødselsdato() {
+    public String getFødselsdato() {
         return fødselsdato.get();
     }
 
-    public ObjectProperty<LocalDate> fødselsdatoProperty() {
+    public StringProperty fødselsdatoProperty() {
         return fødselsdato;
     }
 
-    public void setFødselsdato(LocalDate fødselsdato) {
+    public void setFødselsdato(String fødselsdato) {
         this.fødselsdato.set(fødselsdato);
     }
 
@@ -73,6 +70,6 @@ public class Eier implements Serializable {
         objectInputStream.defaultReadObject();
         this.fornavn = new SimpleStringProperty((String) objectInputStream.readObject());
         this.etternavn = new SimpleStringProperty((String) objectInputStream.readObject());
-        this.fødselsdato = new SimpleObjectProperty<>((LocalDate) objectInputStream.readObject());
+        this.fødselsdato = new SimpleStringProperty((String) objectInputStream.readObject());
     }
 }

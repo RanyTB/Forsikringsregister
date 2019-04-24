@@ -4,11 +4,6 @@ import com.rtbeb.model.base.Kunde;
 
 import java.util.regex.Pattern;
 
-/**
- * Validering av kunder.
- * Inkluderer metoder for validering av Kunde-objekter og validering av enkelt-felt i Kunde,
- * for bruk i UI-feedback på inputfelt.
- */
 public class KundeValidator {
 
     //Regex regler for navn og adresse.

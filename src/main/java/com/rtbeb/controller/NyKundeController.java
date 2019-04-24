@@ -32,37 +32,6 @@ public class NyKundeController implements Initializable {
     @FXML
     Button btnLukkVindu;
 
-
-    @FXML
-    private void opprettKunde(ActionEvent event){
-
-        Kunde kunde = new Kunde(txtFornavn.getText(), txtEtternavn.getText(), txtAdresse.getText(), txtPostnummer.getText());
-
-        //Hvis kunde er gyldig, settes kunden inn i kunderegister. Ellers vises feilmelding.
-            try {
-                kunderegister.insertKunde(kunde);
-            } catch (InvalidKundeException e) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Registreringsfeil");
-                alert.setHeaderText("Kunnde ikke registrere kunde:\nSjekk kundedata.");
-                alert.show();
-            }
-    }
-
-    @FXML
-    private void lukkVindu(ActionEvent event){
-
-        Stage stage = (Stage) btnLukkVindu.getScene().getWindow();
-        stage.close();
-    }
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-    }
-
-    //--------------VALIDERING---------------//
-
     @FXML
     private void fornavnChanged(InputEvent event){
 
@@ -106,5 +75,34 @@ public class NyKundeController implements Initializable {
             txtPostnummer.setStyle("-fx-border-color: green");
         }
 
+    }
+
+    @FXML
+    private void opprettKunde(ActionEvent event){
+
+        Kunde kunde = new Kunde(txtFornavn.getText(), txtEtternavn.getText(), txtAdresse.getText(), txtPostnummer.getText());
+
+        //Hvis kunde er gyldig, settes kunden inn i kunderegister. Ellers vises feilmelding.
+            try {
+                kunderegister.insertKunde(kunde);
+            } catch (InvalidKundeException e) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Registreringsfeil");
+                alert.setHeaderText("Kunnde ikke registrere kunde:\nSjekk kundedata.");
+                alert.show();
+            }
+    }
+
+    @FXML
+    private void lukkVindu(ActionEvent event){
+
+        System.out.println("Button clicked");
+        Stage stage = (Stage) btnLukkVindu.getScene().getWindow();
+        stage.close();
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 }

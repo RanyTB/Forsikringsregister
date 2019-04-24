@@ -1,8 +1,5 @@
-package com.rtbeb.model.base.forsikring.Båt;
+package com.rtbeb.model.base.forsikring;
 
-import com.rtbeb.model.base.forsikring.Forsikring;
-import com.rtbeb.model.base.forsikring.Validerbar;
-import com.rtbeb.model.validation.BåtforsikringValidator;
 import javafx.beans.property.*;
 
 import java.io.IOException;
@@ -10,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class Båtforsikring extends Forsikring implements Serializable, Validerbar {
+public class Båtforsikring extends Forsikring implements Serializable {
     private static final long serialVersionUID = 1;
 
 
@@ -45,13 +42,5 @@ public class Båtforsikring extends Forsikring implements Serializable, Validerb
     private void readObject(ObjectInputStream objectInputStream) throws IOException , ClassNotFoundException{
         objectInputStream.defaultReadObject();
         this.båt = new SimpleObjectProperty<>((Båt) objectInputStream.readObject());
-    }
-
-    /**
-     * Validerer dette objektet etter satte valideringsregler.
-     * @return Returnerer true hvis gyldig.
-     */
-    public boolean isValid(){
-        return BåtforsikringValidator.BåtforsikringIsValid(this);
     }
 }

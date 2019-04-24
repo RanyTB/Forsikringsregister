@@ -1,8 +1,6 @@
 package com.rtbeb.controller;
 
 import com.rtbeb.model.base.Skademelding;
-import com.rtbeb.controller.forsikring.redigering.helper.RedigerforsikringHelper;
-import com.rtbeb.controller.forsikring.registrering.RegistrerNyForsikringController;
 import com.rtbeb.model.base.forsikring.Forsikring;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
@@ -147,56 +145,16 @@ public class KundeforholdController implements Initializable {
     private TableColumn<Forsikring, LocalDate> forsikringspremieColumn;
 
 
+
+
     private void setupForsikringsTable(){
 
         forsikringstypeColumn.setCellValueFactory(new PropertyValueFactory<>("forsikringstype"));
         datoOpprettetColumn.setCellValueFactory(new PropertyValueFactory<>("datoOpprettet"));
-        forsikringsbelopColumn.setCellValueFactory(new PropertyValueFactory<>("forsikringsbeløp"));
+        forsikringsbelopColumn.setCellValueFactory(new PropertyValueFactory<>("forsikringsbelop"));
         forsikringspremieColumn.setCellValueFactory(new PropertyValueFactory<>("forsikringspremie"));
 
         tableForsikringer.setItems(valgtKunde.getForsikringsListe());
-    }
-
-    @FXML
-    private void nyForsikringButtonClicked(ActionEvent event) {
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegistrerNyForsikring.fxml"));
-            RegistrerNyForsikringController controller = new RegistrerNyForsikringController(valgtKunde);
-            loader.setController(controller);
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
-        } catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void redigerForsikringButtonClicked(ActionEvent event){
-
-        Forsikring valgtForsikring = tableForsikringer.getSelectionModel().getSelectedItem();
-
-        RedigerforsikringHelper.openRedigeringScene(valgtForsikring, valgtKunde);
-    }
-
-    @FXML
-    private void slettForsikringButtonClicked(ActionEvent event){
-       Forsikring valgtForsikring = tableForsikringer.getSelectionModel().getSelectedItem();
-        //Genererer alert
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Slett forsikring");
-        alert.setHeaderText("Er du sikker på at du vil slette forsikringen?");
-
-        //Sletter forsikringen dersom brukeren trykker OK.
-        alert.showAndWait().ifPresent(respons -> {
-            if (respons == ButtonType.OK) {
-                valgtKunde.slettForsikring(valgtForsikring);
-            }
-        });
-
     }
 
 
@@ -221,7 +179,7 @@ public class KundeforholdController implements Initializable {
     private TableColumn<Skademelding, Integer> utbetaltErstatningsbeløpColumn;
 
     private void setupSkademeldingsTable(){
-
+      
       datoForSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("skademeldingsDato"));
       skadennummerColumn.setCellValueFactory(new PropertyValueFactory<>("skadenummer"));
       typeSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("typeSkade"));

@@ -8,23 +8,23 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public abstract class Forsikring implements Serializable, Validerbar {
+public abstract class Forsikring implements Serializable {
     private static final long serialVersionUID = 1;
 
 
     private transient StringProperty forsikringstype;
     private transient IntegerProperty forsikringspremie;
     private transient ObjectProperty<LocalDate> datoOpprettet;
-    private transient IntegerProperty forsikringsbeløp;
+    private transient IntegerProperty forsikringsbelop;
     private transient StringProperty forsikringsbetingelser;
 
 
 
-    public Forsikring(String forsikringstype, Integer forsikringspremie, Integer forsikringsbeløp, String forsikringsbetingelser) {
+    public Forsikring(String forsikringstype, Integer forsikringspremie, Integer forsikringsbelop, String forsikringsbetingelser) {
         this.forsikringstype = new SimpleStringProperty(forsikringstype);
         this.forsikringspremie = new SimpleIntegerProperty(forsikringspremie);
         this.datoOpprettet = new SimpleObjectProperty<>(LocalDate.now());
-        this.forsikringsbeløp = new SimpleIntegerProperty(forsikringsbeløp);
+        this.forsikringsbelop = new SimpleIntegerProperty(forsikringsbelop);
         this.forsikringsbetingelser = new SimpleStringProperty(forsikringsbetingelser);
     }
 
@@ -64,16 +64,16 @@ public abstract class Forsikring implements Serializable, Validerbar {
         this.datoOpprettet.set(datoOpprettet);
     }
 
-    public int getForsikringsbeløp() {
-        return forsikringsbeløp.get();
+    public int getForsikringsbelop() {
+        return forsikringsbelop.get();
     }
 
-    public IntegerProperty forsikringsbeløpProperty() {
-        return forsikringsbeløp;
+    public IntegerProperty forsikringsbelopProperty() {
+        return forsikringsbelop;
     }
 
-    public void setForsikringsbeløp(int forsikringsbeløp) {
-        this.forsikringsbeløp.set(forsikringsbeløp);
+    public void setForsikringsbelop(int forsikringsbelop) {
+        this.forsikringsbelop.set(forsikringsbelop);
     }
 
     public String getForsikringsbetingelser() {
@@ -94,7 +94,7 @@ public abstract class Forsikring implements Serializable, Validerbar {
         objectOutputStream.writeObject(getForsikringstype());
         objectOutputStream.writeObject(getForsikringspremie());
         objectOutputStream.writeObject(getDatoOpprettet());
-        objectOutputStream.writeObject(getForsikringsbeløp());
+        objectOutputStream.writeObject(getForsikringsbelop());
         objectOutputStream.writeObject(getForsikringsbetingelser());
     }
 
@@ -104,7 +104,7 @@ public abstract class Forsikring implements Serializable, Validerbar {
         this.forsikringstype = new SimpleStringProperty((String) objectInputStream.readObject());
         this.forsikringspremie = new SimpleIntegerProperty((Integer) objectInputStream.readObject());
         this.datoOpprettet = new SimpleObjectProperty<>((LocalDate) objectInputStream.readObject());
-        this.forsikringsbeløp = new SimpleIntegerProperty((Integer) objectInputStream.readObject());
+        this.forsikringsbelop = new SimpleIntegerProperty((Integer) objectInputStream.readObject());
         this.forsikringsbetingelser = new SimpleStringProperty((String) objectInputStream.readObject());
 
     }
