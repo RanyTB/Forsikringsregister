@@ -135,10 +135,9 @@ public class KundevisningController implements Initializable {
     @FXML
     private void clickOnTable(MouseEvent event){
 
-        //TODO kall dette noe annet enn actualevent?
         //Dersom det blir oppdaget dobbeltklikk på tabellen, åpnes kundeforhold for markert kunde.
-        tableKunder.setOnMouseClicked((MouseEvent actualevent) -> {
-            if (actualevent.getButton().equals(MouseButton.PRIMARY) && actualevent.getClickCount() == 2){
+        tableKunder.setOnMouseClicked((MouseEvent clickEvent) -> {
+            if (clickEvent.getButton().equals(MouseButton.PRIMARY) && clickEvent.getClickCount() == 2){
                 visValgtKunde(new ActionEvent());
             }
         });

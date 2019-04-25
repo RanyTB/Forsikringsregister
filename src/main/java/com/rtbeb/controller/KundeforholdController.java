@@ -15,6 +15,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -173,6 +175,17 @@ public class KundeforholdController implements Initializable {
         } catch(IOException e){
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void clickOnForsikringTable(MouseEvent event){
+
+        //Dersom det blir oppdaget dobbeltklikk på tabellen, åpnes redigering for markert forsikring.
+        tableForsikringer.setOnMouseClicked((MouseEvent clickEvent) -> {
+            if (clickEvent.getButton().equals(MouseButton.PRIMARY) && clickEvent.getClickCount() == 2){
+                redigerForsikringButtonClicked(new ActionEvent());
+            }
+        });
     }
 
     @FXML

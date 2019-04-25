@@ -106,13 +106,6 @@ public class RegistrerBåtforsikringController extends RegistrerForsikringContro
         }
     }
 
-    private void generateAlert(String message){
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Registreringsfeil");
-        alert.setHeaderText(message);
-        alert.showAndWait();
-    }
-
     /**
      * @return Returnerer en båtforsikring basert på innfylte felt. Forsikringen returneres uvalidert.
      */
@@ -138,13 +131,19 @@ public class RegistrerBåtforsikringController extends RegistrerForsikringContro
         return båtforsikring;
     }
 
-    //TODO fjern denne hvis fortsatt ikke brukt.
-        private String getFødselsdatoAsString(){
-        LocalDate date = dateFødselsdato.getValue();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMYY");
-        String fødselsdato = date.format(formatter);
+    private void generateAlert(String message){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Registreringsfeil");
+        alert.setHeaderText(message);
+        alert.showAndWait();
+    }
 
-        return fødselsdato;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        TextField[] numericFields = {txtForsikringspremie, txtForsikringsbeløp, txtLengde, txtÅrsmodell};
+        addNumericListeners(numericFields);
     }
 
     //-----------VALIDERING--------------------//
@@ -280,13 +279,5 @@ public class RegistrerBåtforsikringController extends RegistrerForsikringContro
             FieldStyler.setValidStyle(txtBetingelser);
         }
     }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        TextField[] numericFields = {txtForsikringspremie, txtForsikringsbeløp, txtLengde, txtÅrsmodell};
-        addNumericListeners(numericFields);
-    }
-
 
 }

@@ -64,7 +64,7 @@ public abstract class Forsikring implements Serializable, Validerbar {
         this.datoOpprettet.set(datoOpprettet);
     }
 
-    public int getForsikringsbeløp() {
+    public Integer getForsikringsbeløp() {
         return forsikringsbeløp.get();
     }
 
@@ -72,7 +72,7 @@ public abstract class Forsikring implements Serializable, Validerbar {
         return forsikringsbeløp;
     }
 
-    public void setForsikringsbeløp(int forsikringsbeløp) {
+    public void setForsikringsbeløp(Integer forsikringsbeløp) {
         this.forsikringsbeløp.set(forsikringsbeløp);
     }
 
