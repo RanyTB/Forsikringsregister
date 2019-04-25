@@ -5,26 +5,25 @@ import com.rtbeb.model.base.Skademelding;
 import com.rtbeb.model.validation.SkademeldingValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class RegistrerSkademeldingController implements Initializable {
+public class RedigerSkademeldingController implements Initializable {
 
     Kunde valgtKunde;
+    Skademelding valgtSkademelding;
     SkademeldingValidator skademeldingValidator;
 
-    RegistrerSkademeldingController(Kunde valgtKunde){
+
+    RedigerSkademeldingController(Kunde valgtKunde, Skademelding valgtSkademelding){
         this.valgtKunde = valgtKunde;
+        this.valgtSkademelding = valgtSkademelding;
     }
 
     @FXML
@@ -42,21 +41,20 @@ public class RegistrerSkademeldingController implements Initializable {
     @FXML
     private TextField txtUtbetaltErstatningsbeløp;
     @FXML
-    private Button btnRegistrerSkademelding;
+    private Button btnRedigerSkademelding;
     @FXML
     private Button backButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        bindLabelsWithCustomerInfo();
-
-    }
-
-    @FXML
-    private void bindLabelsWithCustomerInfo(){
-        //Binder TextFields til kundens datafelt.
         lblForsikringsnummer.textProperty().bind(valgtKunde.forsikringsnummerProperty().asString());
+        datePicker.setValue(valgtSkademelding.getSkademeldingsDato());
+        txtTypeSkade.setText(valgtSkademelding.getTypeSkade());
+        txtBeskrivelse.setText(valgtSkademelding.getBeskrivelse());
+        txtVitner.setText(valgtSkademelding.getVitner());
+        txtTakseringAvSkaden.setText(Integer.toString(valgtSkademelding.getTakseringAvSkaden()));
+        txtUtbetaltErstatningsbeløp.setText(Integer.toString(valgtSkademelding.getUtbetaltErstatningsbeløp()));
+
     }
 
     @FXML
@@ -121,10 +119,8 @@ public class RegistrerSkademeldingController implements Initializable {
         }
     }
 
-
-
     @FXML
-    private void registrerSkademeldingClicked(ActionEvent event){
+    private void redigerSkademeldingClicked(ActionEvent event){
         //Gjør om til LocalDate objekt
         LocalDate date = datePicker.getValue();
         String typeSkade = txtTypeSkade.getText();
@@ -133,30 +129,14 @@ public class RegistrerSkademeldingController implements Initializable {
         int takseringAvSkaden = Integer.parseInt(txtTakseringAvSkaden.getText());
         int utbetaltErstatningsbeløp = Integer.parseInt(txtUtbetaltErstatningsbeløp.getText());
 
+        valgtSkademelding.setSkademeldingsDato(date);
+        valgtSkademelding.setTypeSkade(typeSkade);
+        valgtSkademelding.setBeskrivelse(beskrivelse);
+        valgtSkademelding.setVitner(vitner);
+        valgtSkademelding.setTakseringAvSkaden(takseringAvSkaden);
+        valgtSkademelding.setUtbetaltErstatningsbeløp(utbetaltErstatningsbeløp);
 
-        Skademelding skademelding = new Skademelding(date, typeSkade,
-                beskrivelse, vitner, takseringAvSkaden, utbetaltErstatningsbeløp);
-
-        valgtKunde.addSkademelding(skademelding);
-
-        Stage thisStage = (Stage) btnRegistrerSkademelding.getScene().getWindow();
+        Stage thisStage = (Stage) btnRedigerSkademelding.getScene().getWindow();
         thisStage.close();
     }
-
-    @FXML
-    private void backButtonClicked(ActionEvent event){
-
-        try {
-
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Kundeforhold.fxml"));
-            Scene previousScene = new Scene(root);
-            Stage stage = (Stage) backButton.getScene().getWindow();
-            stage.setScene(previousScene);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
 }
