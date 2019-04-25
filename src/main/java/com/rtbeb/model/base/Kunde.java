@@ -47,14 +47,16 @@ public class Kunde implements Serializable {
         this.kundeOpprettelsesDato = new SimpleObjectProperty<>(this,"kundeOpprettelsesDato", LocalDate.now());
     }
 
-    //TODO Bruk denne for opprettelse av kunder ved fillesing fra csv.
+    /**
+     * Konstruktøren tillater innlesing av eksisterende kunder. Forsikringsnummer og kundeOpprettelsesDato settes i konstruktøren.
+     */
     public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer, long forsikringsnummer, LocalDate datoOpprettet) {
         this.fornavn = new SimpleStringProperty(this,"fornavn",fornavn);
         this.etternavn = new SimpleStringProperty(this,"etternavn",etternavn);
         this.fakturaadresse = new SimpleStringProperty(this,"fakturaadresse",fakturaadresse);
         this.postnummer = new SimpleStringProperty(this, "postnummer", postnummer);
-        this.forsikringsnummer = new SimpleLongProperty(this,"forsikringsnummer", forsikringnummerCounter.getAndIncrement());
-        this.kundeOpprettelsesDato = new SimpleObjectProperty<>(this,"kundeOpprettelsesDato", LocalDate.now());
+        this.forsikringsnummer = new SimpleLongProperty(this,"forsikringsnummer", forsikringsnummer);
+        this.kundeOpprettelsesDato = new SimpleObjectProperty<>(this,"kundeOpprettelsesDato", datoOpprettet);
     }
 
     //----------------KUNDEINFO-----------------------//
@@ -149,11 +151,15 @@ public class Kunde implements Serializable {
     }
 
     public void addForsikring(Forsikring forsikring) throws InvalidForsikringException {
-        if(ForsikringValidator.ForsikringIsValid(forsikring)){
+        if(forsikring.isValid()){
             this.forsikringsListe.add(forsikring);
         } else{
             throw new InvalidForsikringException("Ugyldig forsikring");
         }
+    }
+
+    public void slettForsikring(Forsikring forsikring){
+        forsikringsListe.remove(forsikring);
     }
 
     //--------------------FORSIKRINGER END-----------------//

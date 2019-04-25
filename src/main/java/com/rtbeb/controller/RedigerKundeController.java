@@ -47,6 +47,37 @@ public class RedigerKundeController implements Initializable {
         txtPostnummer.setText(kunde.getPostnummer());
     }
 
+
+    @FXML
+    private void redigerKunde(ActionEvent event){
+        String fornavn = txtFornavn.getText();
+        String etternavn = txtEtternavn.getText();
+        String fakturaadresse = txtAdresse.getText();
+        String postnummer = txtPostnummer.getText();
+
+        if (KundeValidator.fornavnIsValid(fornavn) && KundeValidator.etternavnIsValid(etternavn)
+        && KundeValidator.fakturaAdresseIsValid(fakturaadresse) && KundeValidator.postnummerIsValid(postnummer)){
+            kunde.setFornavn(fornavn);
+            kunde.setEtternavn(etternavn);
+            kunde.setFakturaadresse(fakturaadresse);
+            kunde.setPostnummer(postnummer);
+
+            Stage thisStage = (Stage) btnRedigerKunde.getScene().getWindow();
+            thisStage.close();
+        } else {
+
+        }
+
+    }
+
+    @FXML
+    private void lukkVindu(ActionEvent event){
+        Stage thisStage = (Stage) btnLukkVindu.getScene().getWindow();
+        thisStage.close();
+    }
+
+    //-----------VALIDERING----------//
+
     @FXML
     private void fornavnChanged(InputEvent event){
         String fornavn = txtFornavn.getText();
@@ -88,35 +119,6 @@ public class RedigerKundeController implements Initializable {
         } else{
             txtPostnummer.setStyle("-fx-border-color: green");
         }
-    }
-
-
-    @FXML
-    private void redigerKunde(ActionEvent event){
-        String fornavn = txtFornavn.getText();
-        String etternavn = txtEtternavn.getText();
-        String fakturaadresse = txtAdresse.getText();
-        String postnummer = txtPostnummer.getText();
-
-        if (KundeValidator.fornavnIsValid(fornavn) && KundeValidator.etternavnIsValid(etternavn)
-        && KundeValidator.fakturaAdresseIsValid(fakturaadresse) && KundeValidator.postnummerIsValid(postnummer)){
-            kunde.setFornavn(fornavn);
-            kunde.setEtternavn(etternavn);
-            kunde.setFakturaadresse(fakturaadresse);
-            kunde.setPostnummer(postnummer);
-
-            Stage thisStage = (Stage) btnRedigerKunde.getScene().getWindow();
-            thisStage.close();
-        } else {
-
-        }
-
-    }
-
-    @FXML
-    private void lukkVindu(ActionEvent event){
-        Stage thisStage = (Stage) btnLukkVindu.getScene().getWindow();
-        thisStage.close();
     }
 
 }

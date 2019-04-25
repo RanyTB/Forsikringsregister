@@ -2,15 +2,15 @@ package com.rtbeb.model.base;
 
 import com.rtbeb.model.base.exception.InvalidForsikringException;
 import com.rtbeb.model.base.exception.InvalidKundeException;
-import com.rtbeb.model.base.forsikring.Båt;
-import com.rtbeb.model.base.forsikring.Båtforsikring;
+import com.rtbeb.model.base.forsikring.Båt.Båt;
+import com.rtbeb.model.base.forsikring.Båt.Båtforsikring;
+import com.rtbeb.model.base.forsikring.Båt.Eier;
 import com.rtbeb.model.validation.KundeValidator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.io.Serializable;
 import java.util.Iterator;
 
 public class Kunderegister {
@@ -37,8 +37,8 @@ public class Kunderegister {
         kundeliste.addAll(kunde1, kunde2);
 
         //Tester opprettelse av båtforsikring
-        Eier eier = new Eier("Ola", "Nordmann", "200394");
-        Båt båt = new Båt(eier, "4444", "Tekst", "Tekst", "300", "2004", "400hk");
+        Eier eier = new Eier("Ola", "Nordmann", LocalDate.now().minusYears(10));
+        Båt båt = new Båt(eier, "pp4444", "Tekst", "Tekst", "300", "2004", "400hk");
         Båtforsikring båtforsikring = new Båtforsikring(20000, 300000, "roawijrawoj", båt);
 
         //Tester opprettelse av skademeldinge
