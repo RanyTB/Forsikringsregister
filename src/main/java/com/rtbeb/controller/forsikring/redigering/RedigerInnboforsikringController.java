@@ -62,10 +62,16 @@ public class RedigerInnboforsikringController extends RedigerforsikringControlle
         //Hvis forsikringen er gyldig, oppdateres den opprinnelige forsikringen.
         if (InnboForsikringValidator.innboForsikringIsValid(redigertInnboforsikring)){
             updateOpprinneligforsikring();
-
-            Stage stage = (Stage)btnNeste.getScene().getWindow();
-            stage.close();
+        } else{
+            generateAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
         }
+    }
+
+    private void generateAlert(String message){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Registreringsfeil");
+        alert.setHeaderText(message);
+        alert.showAndWait();
     }
 
     /**

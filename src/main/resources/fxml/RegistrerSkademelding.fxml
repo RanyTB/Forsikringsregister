@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="788.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" onKeyTyped="#utbetaltChanged" prefHeight="788.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Button fx:id="button" layoutX="262.0" layoutY="676.0" text="Registrer skademelding" />
+        <Button fx:id="btnRegistrerSkademelding" layoutX="262.0" layoutY="676.0" onAction="#registrerSkademeldingClicked" text="Registrer skademelding" />
         <Label fx:id="label" layoutX="277.0" layoutY="380.0" minHeight="16" minWidth="69" />
       <Label layoutX="83.0" layoutY="41.0" prefHeight="34.0" prefWidth="199.0" text="Skademelding">
          <font>
@@ -28,7 +28,7 @@
          </font>
       </Label>
       <Label fx:id="lblForsikringsnummer" layoutX="233.0" layoutY="110.0" prefHeight="17.0" prefWidth="86.0" text="Nummer" />
-      <DatePicker fx:id="datePicker" layoutX="85.0" layoutY="154.0" promptText="Dato" />
+      <DatePicker fx:id="datePicker" layoutX="85.0" layoutY="154.0" onAction="#dateChanged" promptText="Dato" />
       <Label layoutX="59.0" layoutY="212.0" prefHeight="17.0" prefWidth="80.0" text="Type skade">
          <font>
             <Font name="System Bold" size="13.0" />
@@ -54,10 +54,10 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <TextField fx:id="txtTypeSkade" layoutX="210.0" layoutY="207.0" prefHeight="27.0" prefWidth="148.0" />
-      <TextField fx:id="txtUtbetaltErstatningsbeløp" layoutX="230.0" layoutY="561.0" />
-      <TextField fx:id="txtTakseringAvSkaden" layoutX="217.0" layoutY="502.0" />
-      <TextArea fx:id="txtBeskrivelse" layoutX="210.0" layoutY="265.0" prefHeight="91.0" prefWidth="245.0" />
-      <TextArea fx:id="txtVitner" layoutX="212.0" layoutY="385.0" prefHeight="91.0" prefWidth="245.0" />
+      <TextField fx:id="txtTypeSkade" layoutX="210.0" layoutY="207.0" onKeyTyped="#typeSkadeChanged" prefHeight="27.0" prefWidth="148.0" />
+      <TextField fx:id="txtUtbetaltErstatningsbeløp" layoutX="230.0" layoutY="561.0" onKeyTyped="#utbetaltChanged" />
+      <TextField fx:id="txtTakseringAvSkaden" layoutX="217.0" layoutY="502.0" onKeyTyped="#takseringChanged" />
+      <TextArea fx:id="txtBeskrivelse" layoutX="210.0" layoutY="265.0" onKeyTyped="#beskrivelseChanged" prefHeight="91.0" prefWidth="245.0" />
+      <TextArea fx:id="txtVitner" layoutX="212.0" layoutY="385.0" onKeyTyped="#vitneChanged" prefHeight="91.0" prefWidth="245.0" />
     </children>
 </AnchorPane>
