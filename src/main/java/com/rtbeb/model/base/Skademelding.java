@@ -21,18 +21,18 @@ public class Skademelding implements Serializable {
     private transient StringProperty typeSkade;
     private transient StringProperty beskrivelse;
     private transient StringProperty vitner;
-    private transient IntegerProperty takseringAvSkaden;
-    private transient IntegerProperty utbetaltErstatningsbeløp;
+    private transient StringProperty takseringAvSkaden;
+    private transient StringProperty utbetaltErstatningsbeløp;
 
     public Skademelding(LocalDate skademeldingsDato, String typeSkade, String beskrivelse, String vitner,
-                        Integer takseringAvSkaden, Integer utbetaltErstatningsbeløp){
+                        String takseringAvSkaden, String utbetaltErstatningsbeløp){
         this.skademeldingsDato = new SimpleObjectProperty<LocalDate>(this, "skademeldingsDato", skademeldingsDato);
         this.skadenummer = new SimpleLongProperty(this, "skadenummer", skadenummerCounter.getAndIncrement());
         this.typeSkade = new SimpleStringProperty(this, "typeSkade", typeSkade);
         this.beskrivelse = new SimpleStringProperty(this, "beskrivelse", beskrivelse);
         this.vitner = new SimpleStringProperty(this, "vitner", vitner);
-        this.takseringAvSkaden = new SimpleIntegerProperty(this, "takseringAvSkaden", takseringAvSkaden);
-        this.utbetaltErstatningsbeløp = new SimpleIntegerProperty(this, "utbetaltErstatningsbeløp", utbetaltErstatningsbeløp);
+        this.takseringAvSkaden = new SimpleStringProperty(this, "takseringAvSkaden", takseringAvSkaden);
+        this.utbetaltErstatningsbeløp = new SimpleStringProperty(this, "utbetaltErstatningsbeløp", utbetaltErstatningsbeløp);
 
     }
 
@@ -96,27 +96,27 @@ public class Skademelding implements Serializable {
         this.vitner.set(vitner);
     }
 
-    public void setTakseringAvSkaden(int takseringAvSkaden) {
+    public void setTakseringAvSkaden(String takseringAvSkaden) {
         this.takseringAvSkaden.set(takseringAvSkaden);
     }
 
-    public IntegerProperty takseringAvSkadenProperty() {
+    public StringProperty takseringAvSkadenProperty() {
         return takseringAvSkaden;
     }
 
-    public int getTakseringAvSkaden() {
+    public String getTakseringAvSkaden() {
         return takseringAvSkaden.get();
     }
 
-    public int getUtbetaltErstatningsbeløp() {
+    public String getUtbetaltErstatningsbeløp() {
         return utbetaltErstatningsbeløp.get();
     }
 
-    public IntegerProperty utbetaltErstatningsbeløpProperty() {
+    public StringProperty utbetaltErstatningsbeløpProperty() {
         return utbetaltErstatningsbeløp;
     }
 
-    public void setUtbetaltErstatningsbeløp(int utbetaltErstatningsbeløp) {
+    public void setUtbetaltErstatningsbeløp(String utbetaltErstatningsbeløp) {
         this.utbetaltErstatningsbeløp.set(utbetaltErstatningsbeløp);
     }
 
@@ -140,7 +140,7 @@ public class Skademelding implements Serializable {
         this.typeSkade = new SimpleStringProperty((String) objectInputStream.readObject());
         this.beskrivelse = new SimpleStringProperty((String) objectInputStream.readObject());
         this.vitner = new SimpleStringProperty((String) objectInputStream.readObject());
-        this.takseringAvSkaden = new SimpleIntegerProperty((Integer) objectInputStream.readObject());
-        this.utbetaltErstatningsbeløp = new SimpleIntegerProperty((Integer) objectInputStream.readObject());
+        this.takseringAvSkaden = new SimpleStringProperty((String) objectInputStream.readObject());
+        this.utbetaltErstatningsbeløp = new SimpleStringProperty((String) objectInputStream.readObject());
     }
 }
