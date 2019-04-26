@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public class SkademeldingValidator {
     static String textRegex = "[a-zæøåA-ZÆØÅ\\-\\ ]{2,50}+";
     static String textOgTallRegex = "[a-zøæåA-ZÆØÅ0-9\\-\\ ]{2,100}+";
-    static String tallRegex = "\\d{0,8}";
+    static String tallRegex = "\\d{1,8}";
 
     /*public static boolean textIsValid(String hvaSomSkalValideres, int maksTekstLengde){
         if (hvaSomSkalValideres.length() > maksTekstLengde){

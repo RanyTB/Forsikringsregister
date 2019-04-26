@@ -6,6 +6,7 @@ import com.rtbeb.model.validation.SkademeldingValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -66,9 +67,14 @@ public class UtbetalErstatningController implements Initializable {
         String erstatningsBeløp = txtUtbetaltErstatningsbeløp.getText();
 
         if (skademeldingValidator.tallIsValid(erstatningsBeløp)){
-            int beløp = Integer.parseInt(erstatningsBeløp);
             skademelding.setUtbetaltErstatningsbeløp(erstatningsBeløp);
-            //Skademelding skademelding = new Skademelding(ubetaltErstatning);
+
+            Stage thisStage = (Stage) btnUtbetalErstatning.getScene().getWindow();
+            thisStage.close();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Ugyldig input");
+            alert.setTitle("Feil ved utbetaling");
+            alert.showAndWait();
         }
     }
 
