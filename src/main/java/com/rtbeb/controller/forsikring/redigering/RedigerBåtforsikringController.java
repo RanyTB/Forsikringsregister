@@ -105,12 +105,13 @@ public class RedigerBåtforsikringController extends RedigerforsikringController
 
             if( redigertBåtforsikring.isValid() ) {
                 updateOpprinneligforsikring();
+
+                //Lukk stage hvis forsikring blir registrert OK.
+                Stage stage = (Stage) btnNeste.getScene().getWindow();
+                stage.close();
             } else{
                 generateAlert("Kunne ikke redigere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
             }
-            //Lukk stage hvis forsikring blir registrert OK.
-            Stage stage = (Stage) btnNeste.getScene().getWindow();
-            stage.close();
         } catch (NumberFormatException e) {
             generateAlert("Kunne ikke redigere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
         }
