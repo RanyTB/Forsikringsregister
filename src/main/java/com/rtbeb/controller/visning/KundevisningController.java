@@ -1,4 +1,4 @@
-package com.rtbeb.controller;
+package com.rtbeb.controller.visning;
 
 import java.io.*;
 import java.net.URL;

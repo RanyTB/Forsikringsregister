@@ -3,5 +3,7 @@ module forsikringsregister {
     requires javafx.fxml;
 
     opens com.rtbeb to javafx.fxml;
-    exports com.rtbeb.controller;
+    exports com.rtbeb.controller.redigering;
+    exports com.rtbeb.controller.registrering;
+    exports com.rtbeb.controller.visning;
 }

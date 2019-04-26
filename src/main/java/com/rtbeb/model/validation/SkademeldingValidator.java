@@ -1,6 +1,6 @@
 package com.rtbeb.model.validation;
 
-import com.rtbeb.model.base.Skademelding;
+import com.rtbeb.model.base.forsikring.Skademelding;
 
 import java.time.LocalDate;
 import java.util.regex.Pattern;

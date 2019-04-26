@@ -1,8 +1,7 @@
-package com.rtbeb.controller.forsikring.redigering;
+package com.rtbeb.controller.redigering;
 
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
-import com.rtbeb.model.base.exception.InvalidForsikringException;
 import com.rtbeb.model.base.forsikring.Reise.Reiseforsikring;
 import com.rtbeb.model.validation.ForsikringValidator;
 import com.rtbeb.model.validation.ReiseforsikringValidator;

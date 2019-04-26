@@ -1,4 +1,4 @@
-package com.rtbeb.controller.forsikring.redigering;
+package com.rtbeb.controller.redigering;
 
 import com.rtbeb.model.base.Kunde;
 import javafx.fxml.Initializable;

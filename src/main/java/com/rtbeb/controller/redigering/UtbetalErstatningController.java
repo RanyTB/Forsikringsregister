@@ -1,7 +1,7 @@
-package com.rtbeb.controller;
+package com.rtbeb.controller.redigering;
 
 import com.rtbeb.model.base.Kunde;
-import com.rtbeb.model.base.Skademelding;
+import com.rtbeb.model.base.forsikring.Skademelding;
 import com.rtbeb.model.validation.SkademeldingValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +22,7 @@ public class UtbetalErstatningController implements Initializable {
     Skademelding skademelding;
     SkademeldingValidator skademeldingValidator;
 
-    UtbetalErstatningController(Kunde valgtKunde, Skademelding skademelding){
+    public UtbetalErstatningController(Kunde valgtKunde, Skademelding skademelding){
         this.valgtKunde = valgtKunde;
         this.skademelding = skademelding;
     }

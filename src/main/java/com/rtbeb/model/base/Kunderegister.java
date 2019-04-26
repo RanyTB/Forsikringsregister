@@ -5,6 +5,7 @@ import com.rtbeb.model.base.exception.InvalidKundeException;
 import com.rtbeb.model.base.forsikring.Båt.Båt;
 import com.rtbeb.model.base.forsikring.Båt.Båtforsikring;
 import com.rtbeb.model.base.forsikring.Båt.Eier;
+import com.rtbeb.model.base.forsikring.Skademelding;
 import com.rtbeb.model.validation.KundeValidator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

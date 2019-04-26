@@ -1,8 +1,8 @@
-package com.rtbeb.controller.forsikring.redigering.helper;
+package com.rtbeb.controller.redigering.helper;
 
-import com.rtbeb.controller.forsikring.redigering.RedigerBåtforsikringController;
-import com.rtbeb.controller.forsikring.redigering.RedigerInnboforsikringController;
-import com.rtbeb.controller.forsikring.redigering.RedigerReiseforsikringController;
+import com.rtbeb.controller.redigering.RedigerBåtforsikringController;
+import com.rtbeb.controller.redigering.RedigerInnboforsikringController;
+import com.rtbeb.controller.redigering.RedigerReiseforsikringController;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.forsikring.Bolig.Innboforsikring;
 import com.rtbeb.model.base.forsikring.Båt.Båtforsikring;

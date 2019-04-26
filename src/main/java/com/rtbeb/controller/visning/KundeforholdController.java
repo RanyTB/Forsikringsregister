@@ -1,14 +1,17 @@
-package com.rtbeb.controller;
+package com.rtbeb.controller.visning;
 
 
-import com.rtbeb.controller.forsikring.redigering.helper.RedigerforsikringHelper;
-import com.rtbeb.controller.forsikring.registrering.RegistrerNyForsikringController;
-import com.rtbeb.model.base.Skademelding;
+import com.rtbeb.controller.redigering.RedigerKundeController;
+import com.rtbeb.controller.redigering.RedigerSkademeldingController;
+import com.rtbeb.controller.redigering.UtbetalErstatningController;
+import com.rtbeb.controller.redigering.helper.RedigerforsikringHelper;
+import com.rtbeb.controller.registrering.RegistrerNyForsikringController;
+import com.rtbeb.controller.registrering.RegistrerSkademeldingController;
+import com.rtbeb.model.base.forsikring.Skademelding;
 import com.rtbeb.model.base.forsikring.Forsikring;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

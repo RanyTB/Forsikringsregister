@@ -1,19 +1,15 @@
-package com.rtbeb.controller;
+package com.rtbeb.controller.registrering;
 
 import com.rtbeb.model.base.Kunde;
-import com.rtbeb.model.base.Skademelding;
+import com.rtbeb.model.base.forsikring.Skademelding;
 import com.rtbeb.model.validation.SkademeldingValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -23,7 +19,7 @@ public class RegistrerSkademeldingController implements Initializable {
     Kunde valgtKunde;
     SkademeldingValidator skademeldingValidator;
 
-    RegistrerSkademeldingController(Kunde valgtKunde){
+    public RegistrerSkademeldingController(Kunde valgtKunde){
         this.valgtKunde = valgtKunde;
     }
 

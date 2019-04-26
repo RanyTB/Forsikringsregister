@@ -1,7 +1,7 @@
-package com.rtbeb.controller;
+package com.rtbeb.controller.redigering;
 
 import com.rtbeb.model.base.Kunde;
-import com.rtbeb.model.base.Skademelding;
+import com.rtbeb.model.base.forsikring.Skademelding;
 import com.rtbeb.model.validation.SkademeldingValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,7 +21,7 @@ public class RedigerSkademeldingController implements Initializable {
     SkademeldingValidator skademeldingValidator;
 
 
-    RedigerSkademeldingController(Kunde valgtKunde, Skademelding valgtSkademelding){
+    public RedigerSkademeldingController(Kunde valgtKunde, Skademelding valgtSkademelding){
         this.valgtKunde = valgtKunde;
         this.valgtSkademelding = valgtSkademelding;
     }

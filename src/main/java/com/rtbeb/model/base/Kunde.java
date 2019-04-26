@@ -1,9 +1,8 @@
 package com.rtbeb.model.base;
 
 import com.rtbeb.model.base.exception.InvalidForsikringException;
-import com.rtbeb.model.base.exception.InvalidSkademeldingException;
 import com.rtbeb.model.base.forsikring.Forsikring;
-import com.rtbeb.model.validation.ForsikringValidator;
+import com.rtbeb.model.base.forsikring.Skademelding;
 import javafx.beans.Observable;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -36,7 +35,7 @@ public class Kunde implements Serializable {
 
     /*Skademeldingsliste med extractor. Dette sørger for at update event blir trigget når utbetalt erstatningsbeløp blir endret.
     Se her: https://stackoverflow.com/questions/31687642/callback-and-extractors-for-javafx-observablelist*/
-    private transient ObservableList<Skademelding> skademeldinger = FXCollections.observableArrayList( skademelding ->
+    private transient ObservableList<Skademelding> skademeldinger = FXCollections.observableArrayList(skademelding ->
             new Observable[] {skademelding.utbetaltErstatningsbeløpProperty()});
 
     public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer) {
