@@ -8,6 +8,7 @@ import com.rtbeb.model.base.forsikring.Forsikring;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -317,12 +318,18 @@ public class KundeforholdController implements Initializable {
 
 
     private void setupUbetalteErstatningerTable(){
+        //Lager et filter for å hente ut ubetalte skademeldinger
         FilteredList<Skademelding> filteredList = new FilteredList<>(valgtKunde.getSkademeldinger());
+
+        filteredList.setPredicate(skademelding -> {
+            return Integer.parseInt(skademelding.getUtbetaltErstatningsbeløp()) == 0;
+        });
+
         ubetaltDatoForSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("skademeldingsDato"));
         ubetaltSkadennummerColumn.setCellValueFactory(new PropertyValueFactory<>("skadenummer"));
         ubetaltTypeSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("typeSkade"));
         ubetaltTakseringAvSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("takseringAvSkaden"));
-        tableUbetalteErstatninger.setItems(valgtKunde.getSkademeldinger());
+        tableUbetalteErstatninger.setItems(filteredList);
 
     }
 

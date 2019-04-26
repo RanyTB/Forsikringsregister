@@ -67,10 +67,8 @@ public class UtbetalErstatningController implements Initializable {
 
         if (skademeldingValidator.tallIsValid(erstatningsBeløp)){
             int beløp = Integer.parseInt(erstatningsBeløp);
-            if (beløp > 0){
-                skademelding.setUtbetaltErstatningsbeløp(erstatningsBeløp);
-                //Skademelding skademelding = new Skademelding(ubetaltErstatning);
-            }
+            skademelding.setUtbetaltErstatningsbeløp(erstatningsBeløp);
+            //Skademelding skademelding = new Skademelding(ubetaltErstatning);
         }
     }
 
