@@ -56,13 +56,22 @@ public class RedigerInnboforsikringController extends RedigerforsikringControlle
     @FXML
     private void redigerInnboforsikring(ActionEvent event) {
 
-        //Oppretter ny forsikring for validering.
-        Innboforsikring redigertInnboforsikring = generateInnboforsikring();
+        try {
+            //Oppretter ny forsikring for validering.
+            Innboforsikring redigertInnboforsikring = generateInnboforsikring();
 
-        //Hvis forsikringen er gyldig, oppdateres den opprinnelige forsikringen.
-        if( redigertInnboforsikring.isValid() ){
-            updateOpprinneligforsikring();
-        } else{
+            //Hvis forsikringen er gyldig, oppdateres den opprinnelige forsikringen.
+            if( redigertInnboforsikring.isValid() ){
+
+                updateOpprinneligforsikring();
+
+                //Lukk stage hvis forsikring blir registrert OK.
+                Stage stage = (Stage) btnNeste.getScene().getWindow();
+                stage.close();
+            } else{
+                generateAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
+            }
+        } catch (NumberFormatException e) {
             generateAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
         }
     }

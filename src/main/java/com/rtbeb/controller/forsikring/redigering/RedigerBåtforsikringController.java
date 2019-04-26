@@ -100,16 +100,20 @@ public class RedigerBåtforsikringController extends RedigerforsikringController
     private void redigerBåtforsikring(ActionEvent event){
 
 
+        try {
             Båtforsikring redigertBåtforsikring = generateBåtforsikring();
 
-        if( redigertBåtforsikring.isValid() ) {
-            updateOpprinneligforsikring();
-        } else{
+            if( redigertBåtforsikring.isValid() ) {
+                updateOpprinneligforsikring();
+            } else{
+                generateAlert("Kunne ikke redigere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
+            }
+            //Lukk stage hvis forsikring blir registrert OK.
+            Stage stage = (Stage) btnNeste.getScene().getWindow();
+            stage.close();
+        } catch (NumberFormatException e) {
             generateAlert("Kunne ikke redigere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
         }
-        //Lukk stage hvis forsikring blir registrert OK.
-        Stage stage = (Stage) btnNeste.getScene().getWindow();
-        stage.close();
     }
 
     /**
