@@ -121,6 +121,26 @@ public class RedigerSkademeldingController implements Initializable {
 
     @FXML
     private void redigerSkademeldingClicked(ActionEvent event){
+        Skademelding skademelding = generateSkademelding();
+
+        if (skademeldingValidator.skademeldingIsValid(skademelding)){
+            valgtSkademelding.setSkademeldingsDato(datePicker.getValue());
+            valgtSkademelding.setTypeSkade(txtTypeSkade.getText());
+            valgtSkademelding.setBeskrivelse(txtBeskrivelse.getText());
+            valgtSkademelding.setVitner(txtVitner.getText());
+            valgtSkademelding.setTakseringAvSkaden(txtTakseringAvSkaden.getText());
+            valgtSkademelding.setUtbetaltErstatningsbeløp(txtUtbetaltErstatningsbeløp.getText());
+
+            Stage thisStage = (Stage) btnRedigerSkademelding.getScene().getWindow();
+            thisStage.close();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Ugyldig input");
+            alert.setTitle("Feil ved registrering");
+            alert.showAndWait();
+        }
+    }
+
+    private Skademelding generateSkademelding(){
         //Gjør om til LocalDate objekt
         LocalDate date = datePicker.getValue();
         String typeSkade = txtTypeSkade.getText();
@@ -129,22 +149,15 @@ public class RedigerSkademeldingController implements Initializable {
         String takseringAvSkaden = txtTakseringAvSkaden.getText();
         String utbetaltErstatningsbeløp = txtUtbetaltErstatningsbeløp.getText();
 
+        Skademelding skademelding = new Skademelding(date, typeSkade,
+                beskrivelse, vitner, takseringAvSkaden, utbetaltErstatningsbeløp);
 
-        if (skademeldingValidator.dateIsValid(date) && skademeldingValidator.textIsValid(typeSkade)
-        && skademeldingValidator.textOgTallIsValid(beskrivelse) && skademeldingValidator.textOgTallIsValid(vitner)
-        && skademeldingValidator.tallIsValid(takseringAvSkaden) && skademeldingValidator.tallIsValid(utbetaltErstatningsbeløp)){
-            valgtSkademelding.setSkademeldingsDato(date);
-            valgtSkademelding.setTypeSkade(typeSkade);
-            valgtSkademelding.setBeskrivelse(beskrivelse);
-            valgtSkademelding.setVitner(vitner);
-            valgtSkademelding.setTakseringAvSkaden(takseringAvSkaden);
-            valgtSkademelding.setUtbetaltErstatningsbeløp(utbetaltErstatningsbeløp);
+        return skademelding;
+    }
 
-            Stage thisStage = (Stage) btnRedigerSkademelding.getScene().getWindow();
-            thisStage.close();
-        } else {
-
-        }
-
+    @FXML
+    private void backButtonClicked(ActionEvent event){
+        Stage thisStage = (Stage) backButton.getScene().getWindow();
+        thisStage.close();
     }
 }

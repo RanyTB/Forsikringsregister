@@ -142,7 +142,6 @@ public class RegistrerSkademeldingController implements Initializable {
         }else {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Ugyldig input");
             alert.setTitle("Feil ved registrering");
-
             alert.showAndWait();
         }
 
@@ -150,18 +149,8 @@ public class RegistrerSkademeldingController implements Initializable {
 
     @FXML
     private void backButtonClicked(ActionEvent event){
-
-        try {
-
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Kundeforhold.fxml"));
-            Scene previousScene = new Scene(root);
-            Stage stage = (Stage) backButton.getScene().getWindow();
-            stage.setScene(previousScene);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        Stage thisStage = (Stage) backButton.getScene().getWindow();
+        thisStage.close();
     }
 
 }

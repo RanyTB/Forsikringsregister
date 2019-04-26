@@ -48,6 +48,11 @@ public class Kunderegister {
         kunde1.addSkademelding(skademelding1);
         kunde1.addSkademelding(skademelding2);
 
+        Skademelding ubetaltErstatning1 = new Skademelding(LocalDate.now(), "Påkjørlse", "Påkjørt fra babord", "Truls tlf 12738492", "50000", "0");
+        Skademelding ubetaltErstatning2 = new Skademelding(LocalDate.now(), "Brann", "Brann fra sikringsskap", "Linda tlf 89372645", "70000", "0");
+
+        kunde1.addUbetalteErstatninger(ubetaltErstatning1);
+        kunde1.addUbetalteErstatninger(ubetaltErstatning2);
 
         //Tester innsetting av båtforsikring i et kundeobjekt.
         try {

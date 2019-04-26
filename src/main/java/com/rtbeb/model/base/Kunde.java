@@ -36,7 +36,7 @@ public class Kunde implements Serializable {
 
     //TODO Implementer observable-lister over skademeldinger og ubetalte erstatninger.
     private transient ObservableList<Skademelding> skademeldinger = FXCollections.observableArrayList();
-    //private ObservableList<UbetaltErstatning> ubetalteErstatninger;
+    private transient ObservableList<Skademelding> ubetalteErstatninger = FXCollections.observableArrayList();
 
     public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer) {
         this.fornavn = new SimpleStringProperty(this,"fornavn",fornavn);
@@ -189,16 +189,27 @@ public class Kunde implements Serializable {
 
     //--------------------SKADEMELDINGER END---------------------//
 
+    //---------------UBETALT ERSTATNING-----------------//
 
-    /*
-    public ObservableList<UbetaltErstatning> getUbetalteErstatninger() {
-        return ubetalteErstatninger;
+    public ObservableList<Skademelding> getUbetalteErstatninger(){ return ubetalteErstatninger;}
+
+    public ArrayList<Skademelding> getUbetalteErstatningerAsArrayList(){
+        return new ArrayList<Skademelding>(getUbetalteErstatninger());
     }
 
-    public void setUbetalteErstatninger(ObservableList<UbetaltErstatning> ubetalteErstatninger) {
+    public void setUbetalteErstatninger(ObservableList<Skademelding> ubetalteErstatninger){
         this.ubetalteErstatninger = ubetalteErstatninger;
     }
-    ----------------------------------------------------------------------------------------------*/
+
+    public void addUbetalteErstatninger(Skademelding ubetaltErstatning){
+        this.ubetalteErstatninger.add(ubetaltErstatning);
+    }
+
+    public void slettUbetalteErstatninger(Skademelding ubetaltErstatning){
+        this.ubetalteErstatninger.remove(ubetaltErstatning);
+    }
+
+    //---------------UBETALT ERSTATNING END-----------------//
 
 
     //Egendefinert serialisering
