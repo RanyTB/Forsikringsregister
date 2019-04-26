@@ -70,11 +70,10 @@ public class RegistrerSkademeldingController implements Initializable {
 
     }
 
-
     @FXML
     private void typeSkadeChanged(InputEvent event){
         String typeSkade = txtTypeSkade.getText();
-        if(skademeldingValidator.textIsValid(typeSkade, 20)){
+        if(skademeldingValidator.textIsValid(typeSkade)){
             txtTypeSkade.setStyle("-fx-border-color: green");
         } else {
             txtTypeSkade.setStyle("-fx-border-color: red");
@@ -84,7 +83,7 @@ public class RegistrerSkademeldingController implements Initializable {
     @FXML
     private void beskrivelseChanged(InputEvent event){
         String beskrivelse = txtBeskrivelse.getText();
-        if(skademeldingValidator.textOgTallIsValid(beskrivelse, 200)){
+        if(skademeldingValidator.textOgTallIsValid(beskrivelse)){
             txtBeskrivelse.setStyle("-fx-border-color: green");
         } else {
             txtBeskrivelse.setStyle("-fx-border-color: red");
@@ -94,7 +93,7 @@ public class RegistrerSkademeldingController implements Initializable {
     @FXML
     private void vitneChanged(InputEvent event){
         String vitner = txtVitner.getText();
-        if(skademeldingValidator.textOgTallIsValid(vitner, 100)){
+        if(skademeldingValidator.textOgTallIsValid(vitner)){
             txtVitner.setStyle("-fx-border-color: green");
         } else {
             txtVitner.setStyle("-fx-border-color: red");
@@ -104,7 +103,7 @@ public class RegistrerSkademeldingController implements Initializable {
     @FXML
     private void takseringChanged(InputEvent event){
         String takseringAvSkaden = txtTakseringAvSkaden.getText();
-        if(skademeldingValidator.tallIsValid(takseringAvSkaden, 8)){
+        if(skademeldingValidator.tallIsValid(takseringAvSkaden)){
             txtTakseringAvSkaden.setStyle("-fx-border-color: green");
         } else {
             txtTakseringAvSkaden.setStyle("-fx-border-color: red");
@@ -114,14 +113,12 @@ public class RegistrerSkademeldingController implements Initializable {
     @FXML
     private void utbetaltChanged(InputEvent event){
         String utbetaltErstatningsbeløp = txtUtbetaltErstatningsbeløp.getText();
-        if(skademeldingValidator.tallIsValid(utbetaltErstatningsbeløp, 8)){
+        if(skademeldingValidator.tallIsValid(utbetaltErstatningsbeløp)){
             txtUtbetaltErstatningsbeløp.setStyle("-fx-border-color: green");
         } else {
             txtUtbetaltErstatningsbeløp.setStyle("-fx-border-color: red");
         }
     }
-
-
 
     @FXML
     private void registrerSkademeldingClicked(ActionEvent event){
@@ -130,33 +127,30 @@ public class RegistrerSkademeldingController implements Initializable {
         String typeSkade = txtTypeSkade.getText();
         String beskrivelse = txtBeskrivelse.getText();
         String vitner = txtVitner.getText();
-        int takseringAvSkaden = Integer.parseInt(txtTakseringAvSkaden.getText());
-        int utbetaltErstatningsbeløp = Integer.parseInt(txtUtbetaltErstatningsbeløp.getText());
-
+        String takseringAvSkaden = txtTakseringAvSkaden.getText();
+        String utbetaltErstatningsbeløp = txtUtbetaltErstatningsbeløp.getText();
 
         Skademelding skademelding = new Skademelding(date, typeSkade,
                 beskrivelse, vitner, takseringAvSkaden, utbetaltErstatningsbeløp);
 
-        valgtKunde.addSkademelding(skademelding);
+        if (skademeldingValidator.skademeldingIsValid(skademelding)){
 
-        Stage thisStage = (Stage) btnRegistrerSkademelding.getScene().getWindow();
-        thisStage.close();
+            valgtKunde.addSkademelding(skademelding);
+            Stage thisStage = (Stage) btnRegistrerSkademelding.getScene().getWindow();
+            thisStage.close();
+
+        }else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Ugyldig input");
+            alert.setTitle("Feil ved registrering");
+            alert.showAndWait();
+        }
+
     }
 
     @FXML
     private void backButtonClicked(ActionEvent event){
-
-        try {
-
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Kundeforhold.fxml"));
-            Scene previousScene = new Scene(root);
-            Stage stage = (Stage) backButton.getScene().getWindow();
-            stage.setScene(previousScene);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        Stage thisStage = (Stage) backButton.getScene().getWindow();
+        thisStage.close();
     }
 
 }

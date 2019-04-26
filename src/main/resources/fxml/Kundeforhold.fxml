@@ -152,6 +152,24 @@
                                  </children></AnchorPane>
                         </content>
                       </Tab>
+                        <Tab text="Ubetalt erstatning">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="368.0" prefWidth="683.0">
+                                 <children>
+                                    <TableView fx:id="tableUbetalteErstatninger" layoutX="45.0" layoutY="36.0" prefHeight="242.0" prefWidth="549.0">
+                                       <columns>
+                                          <TableColumn fx:id="ubetaltDatoForSkadeColumn" prefWidth="82.0" text="Dato" />
+                                          <TableColumn fx:id="ubetaltSkadennummerColumn" prefWidth="127.0" text="Skadenummer" />
+                                          <TableColumn fx:id="ubetaltTypeSkadeColumn" prefWidth="187.0" text="Type skade" />
+                                          <TableColumn fx:id="ubetaltTakseringAvSkadeColumn" prefWidth="152.0" text="Taksering" />
+                                       </columns>
+                                    </TableView>
+                                    <Button layoutX="45.0" layoutY="289.0" mnemonicParsing="false" onAction="#ubetalteErstatningButtonClicked" prefHeight="27.0" prefWidth="210.0" text="Utbetal erstatning" />
+                                    <Button layoutX="404.0" layoutY="289.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="190.0" text="Slett erstatning" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
                     </tabs>
                   </TabPane>
                   <Button fx:id="backButton" layoutX="30.0" layoutY="595.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="30.0" prefWidth="67.0" text="Tilbake" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" />

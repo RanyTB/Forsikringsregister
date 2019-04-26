@@ -55,15 +55,19 @@ public class RedigerKundeController implements Initializable {
         String fakturaadresse = txtAdresse.getText();
         String postnummer = txtPostnummer.getText();
 
-        //TODO fiks bug her, hvor man bypasser validering av kunden.
+        if (KundeValidator.fornavnIsValid(fornavn) && KundeValidator.etternavnIsValid(etternavn)
+        && KundeValidator.fakturaAdresseIsValid(fakturaadresse) && KundeValidator.postnummerIsValid(postnummer)){
+            kunde.setFornavn(fornavn);
+            kunde.setEtternavn(etternavn);
+            kunde.setFakturaadresse(fakturaadresse);
+            kunde.setPostnummer(postnummer);
 
-        kunde.setFornavn(fornavn);
-        kunde.setEtternavn(etternavn);
-        kunde.setFakturaadresse(fakturaadresse);
-        kunde.setPostnummer(postnummer);
+            Stage thisStage = (Stage) btnRedigerKunde.getScene().getWindow();
+            thisStage.close();
+        } else {
 
-        Stage thisStage = (Stage) btnRedigerKunde.getScene().getWindow();
-        thisStage.close();
+        }
+
     }
 
     @FXML

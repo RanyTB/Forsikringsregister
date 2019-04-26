@@ -7,6 +7,8 @@ import com.rtbeb.model.base.Skademelding;
 import com.rtbeb.model.base.forsikring.Forsikring;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -120,6 +122,7 @@ public class KundeforholdController implements Initializable {
         bindLabelsWithCustomerInfo();
         setupForsikringsTable();
         setupSkademeldingsTable();
+        setupUbetalteErstatningerTable();
     }
 
     private void bindLabelsWithCustomerInfo(){
@@ -308,5 +311,79 @@ public class KundeforholdController implements Initializable {
     }
 
     //---------------Skademeldinger end-----------------//
+
+    //---------------Ubetalt erstatning-----------------//
+
+    @FXML
+    private TableView<Skademelding> tableUbetalteErstatninger;
+
+    @FXML
+    private TableColumn<Skademelding, LocalDate> ubetaltDatoForSkadeColumn;
+
+    @FXML
+    private TableColumn<Skademelding, Integer> ubetaltSkadennummerColumn;
+
+    @FXML
+    private TableColumn<Skademelding, String> ubetaltTypeSkadeColumn;
+
+    @FXML
+    private TableColumn<Skademelding, Integer> ubetaltTakseringAvSkadeColumn;
+
+
+    private void setupUbetalteErstatningerTable(){
+        //Lager et filter for å hente ut ubetalte skademeldinger
+        FilteredList<Skademelding> filteredList = new FilteredList<>(valgtKunde.getSkademeldinger());
+
+        //Predicate som filtrerer listen med skademeldinger basert på om det er utbetalt beløp eller ikke.
+        filteredList.setPredicate(skademelding -> {
+            return Integer.parseInt(skademelding.getUtbetaltErstatningsbeløp()) == 0;
+        });
+
+        ubetaltDatoForSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("skademeldingsDato"));
+        ubetaltSkadennummerColumn.setCellValueFactory(new PropertyValueFactory<>("skadenummer"));
+        ubetaltTypeSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("typeSkade"));
+        ubetaltTakseringAvSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("takseringAvSkaden"));
+        tableUbetalteErstatninger.setItems(filteredList);
+
+    }
+
+    @FXML
+    private void ubetalteErstatningButtonClicked(ActionEvent event) {
+        Skademelding valgtUbetaltErstatning = tableUbetalteErstatninger.getSelectionModel().getSelectedItem();
+
+        UtbetalErstatningController utbetalErstatningController = new UtbetalErstatningController(valgtKunde, valgtUbetaltErstatning);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UtbetalErstatning.fxml"));
+
+        //Setter loaderens kontroller til kontroller-instansen. fx:controller er ikke satt i FXML-filen.
+        loader.setController(utbetalErstatningController);
+
+        //Loader FXML-hierarkiet
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Oppretter ny scene
+        Scene scene = new Scene(root);
+
+        //Oppretter ny stage
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+
+    }
+
+    @FXML
+    private void slettUbetalteErstatningButtonClicked(ActionEvent event){
+        Skademelding skademelding = tableSkademeldinger.getSelectionModel().getSelectedItem();
+        System.out.println("Valgt forsikringsnummer: " + skademelding.getSkadenummer());
+        valgtKunde.slettSkademelding(skademelding);
+    }
+
+    //---------------Ubetalt erstatning end-----------------//
+
 
 }

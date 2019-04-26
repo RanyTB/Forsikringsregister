@@ -52,8 +52,8 @@ public class RedigerSkademeldingController implements Initializable {
         txtTypeSkade.setText(valgtSkademelding.getTypeSkade());
         txtBeskrivelse.setText(valgtSkademelding.getBeskrivelse());
         txtVitner.setText(valgtSkademelding.getVitner());
-        txtTakseringAvSkaden.setText(Integer.toString(valgtSkademelding.getTakseringAvSkaden()));
-        txtUtbetaltErstatningsbeløp.setText(Integer.toString(valgtSkademelding.getUtbetaltErstatningsbeløp()));
+        txtTakseringAvSkaden.setText(valgtSkademelding.getTakseringAvSkaden());
+        txtUtbetaltErstatningsbeløp.setText(valgtSkademelding.getUtbetaltErstatningsbeløp());
 
     }
 
@@ -72,7 +72,7 @@ public class RedigerSkademeldingController implements Initializable {
     @FXML
     private void typeSkadeChanged(InputEvent event){
         String typeSkade = txtTypeSkade.getText();
-        if(skademeldingValidator.textIsValid(typeSkade, 20)){
+        if(skademeldingValidator.textIsValid(typeSkade)){
             txtTypeSkade.setStyle("-fx-border-color: green");
         } else {
             txtTypeSkade.setStyle("-fx-border-color: red");
@@ -82,7 +82,7 @@ public class RedigerSkademeldingController implements Initializable {
     @FXML
     private void beskrivelseChanged(InputEvent event){
         String beskrivelse = txtBeskrivelse.getText();
-        if(skademeldingValidator.textOgTallIsValid(beskrivelse, 200)){
+        if(skademeldingValidator.textOgTallIsValid(beskrivelse)){
             txtBeskrivelse.setStyle("-fx-border-color: green");
         } else {
             txtBeskrivelse.setStyle("-fx-border-color: red");
@@ -92,7 +92,7 @@ public class RedigerSkademeldingController implements Initializable {
     @FXML
     private void vitneChanged(InputEvent event){
         String vitner = txtVitner.getText();
-        if(skademeldingValidator.textOgTallIsValid(vitner, 100)){
+        if(skademeldingValidator.textOgTallIsValid(vitner)){
             txtVitner.setStyle("-fx-border-color: green");
         } else {
             txtVitner.setStyle("-fx-border-color: red");
@@ -102,7 +102,7 @@ public class RedigerSkademeldingController implements Initializable {
     @FXML
     private void takseringChanged(InputEvent event){
         String takseringAvSkaden = txtTakseringAvSkaden.getText();
-        if(skademeldingValidator.tallIsValid(takseringAvSkaden, 8)){
+        if(skademeldingValidator.tallIsValid(takseringAvSkaden)){
             txtTakseringAvSkaden.setStyle("-fx-border-color: green");
         } else {
             txtTakseringAvSkaden.setStyle("-fx-border-color: red");
@@ -112,7 +112,7 @@ public class RedigerSkademeldingController implements Initializable {
     @FXML
     private void utbetaltChanged(InputEvent event){
         String utbetaltErstatningsbeløp = txtUtbetaltErstatningsbeløp.getText();
-        if(skademeldingValidator.tallIsValid(utbetaltErstatningsbeløp, 8)){
+        if(skademeldingValidator.tallIsValid(utbetaltErstatningsbeløp)){
             txtUtbetaltErstatningsbeløp.setStyle("-fx-border-color: green");
         } else {
             txtUtbetaltErstatningsbeløp.setStyle("-fx-border-color: red");
@@ -121,22 +121,43 @@ public class RedigerSkademeldingController implements Initializable {
 
     @FXML
     private void redigerSkademeldingClicked(ActionEvent event){
+        Skademelding skademelding = generateSkademelding();
+
+        if (skademeldingValidator.skademeldingIsValid(skademelding)){
+            valgtSkademelding.setSkademeldingsDato(datePicker.getValue());
+            valgtSkademelding.setTypeSkade(txtTypeSkade.getText());
+            valgtSkademelding.setBeskrivelse(txtBeskrivelse.getText());
+            valgtSkademelding.setVitner(txtVitner.getText());
+            valgtSkademelding.setTakseringAvSkaden(txtTakseringAvSkaden.getText());
+            valgtSkademelding.setUtbetaltErstatningsbeløp(txtUtbetaltErstatningsbeløp.getText());
+
+            Stage thisStage = (Stage) btnRedigerSkademelding.getScene().getWindow();
+            thisStage.close();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Ugyldig input");
+            alert.setTitle("Feil ved registrering");
+            alert.showAndWait();
+        }
+    }
+
+    private Skademelding generateSkademelding(){
         //Gjør om til LocalDate objekt
         LocalDate date = datePicker.getValue();
         String typeSkade = txtTypeSkade.getText();
         String beskrivelse = txtBeskrivelse.getText();
         String vitner = txtVitner.getText();
-        int takseringAvSkaden = Integer.parseInt(txtTakseringAvSkaden.getText());
-        int utbetaltErstatningsbeløp = Integer.parseInt(txtUtbetaltErstatningsbeløp.getText());
+        String takseringAvSkaden = txtTakseringAvSkaden.getText();
+        String utbetaltErstatningsbeløp = txtUtbetaltErstatningsbeløp.getText();
 
-        valgtSkademelding.setSkademeldingsDato(date);
-        valgtSkademelding.setTypeSkade(typeSkade);
-        valgtSkademelding.setBeskrivelse(beskrivelse);
-        valgtSkademelding.setVitner(vitner);
-        valgtSkademelding.setTakseringAvSkaden(takseringAvSkaden);
-        valgtSkademelding.setUtbetaltErstatningsbeløp(utbetaltErstatningsbeløp);
+        Skademelding skademelding = new Skademelding(date, typeSkade,
+                beskrivelse, vitner, takseringAvSkaden, utbetaltErstatningsbeløp);
 
-        Stage thisStage = (Stage) btnRedigerSkademelding.getScene().getWindow();
+        return skademelding;
+    }
+
+    @FXML
+    private void backButtonClicked(ActionEvent event){
+        Stage thisStage = (Stage) backButton.getScene().getWindow();
         thisStage.close();
     }
 }
