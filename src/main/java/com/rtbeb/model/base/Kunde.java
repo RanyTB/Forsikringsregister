@@ -4,6 +4,7 @@ import com.rtbeb.model.base.exception.InvalidForsikringException;
 import com.rtbeb.model.base.exception.InvalidSkademeldingException;
 import com.rtbeb.model.base.forsikring.Forsikring;
 import com.rtbeb.model.validation.ForsikringValidator;
+import javafx.beans.Observable;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,11 +32,12 @@ public class Kunde implements Serializable {
     private transient LongProperty forsikringsnummer;
     private transient ObjectProperty<LocalDate> kundeOpprettelsesDato;
 
-    //TODO Eirik: implementer lagring og lesing av denne:
     private transient ObservableList<Forsikring> forsikringsListe = FXCollections.observableArrayList();
 
-    //TODO Implementer observable-lister over skademeldinger og ubetalte erstatninger.
-    private transient ObservableList<Skademelding> skademeldinger = FXCollections.observableArrayList();
+    /*Skademeldingsliste med extractor. Dette sørger for at update event blir trigget når utbetalt erstatningsbeløp blir endret.
+    Se her: https://stackoverflow.com/questions/31687642/callback-and-extractors-for-javafx-observablelist*/
+    private transient ObservableList<Skademelding> skademeldinger = FXCollections.observableArrayList( skademelding ->
+            new Observable[] {skademelding.utbetaltErstatningsbeløpProperty()});
 
     public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer) {
         this.fornavn = new SimpleStringProperty(this,"fornavn",fornavn);

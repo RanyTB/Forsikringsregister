@@ -321,6 +321,7 @@ public class KundeforholdController implements Initializable {
         //Lager et filter for å hente ut ubetalte skademeldinger
         FilteredList<Skademelding> filteredList = new FilteredList<>(valgtKunde.getSkademeldinger());
 
+        //Predicate som filtrerer listen med skademeldinger basert på om det er utbetalt beløp eller ikke.
         filteredList.setPredicate(skademelding -> {
             return Integer.parseInt(skademelding.getUtbetaltErstatningsbeløp()) == 0;
         });
