@@ -18,12 +18,12 @@ import java.util.ResourceBundle;
 public class UtbetalErstatningController implements Initializable {
 
     Kunde valgtKunde;
-    Skademelding ubetaltErstatning;
-    SkademeldingValidator ubetaltErstatningValidator;
+    Skademelding skademelding;
+    SkademeldingValidator skademeldingValidator;
 
-    UtbetalErstatningController(Kunde valgtKunde, Skademelding ubetaltErstatning){
+    UtbetalErstatningController(Kunde valgtKunde, Skademelding skademelding){
         this.valgtKunde = valgtKunde;
-        this.ubetaltErstatning = ubetaltErstatning;
+        this.skademelding = skademelding;
     }
 
     @FXML
@@ -46,7 +46,7 @@ public class UtbetalErstatningController implements Initializable {
     @FXML
     private void utbetaltChanged(InputEvent event){
         String erstatningsBeløp = txtUtbetaltErstatningsbeløp.getText();
-        if (ubetaltErstatningValidator.tallIsValid(erstatningsBeløp)){
+        if (skademeldingValidator.tallIsValid(erstatningsBeløp)){
             txtUtbetaltErstatningsbeløp.setStyle("-fx-border-color: green");
         }else {
             txtUtbetaltErstatningsbeløp.setStyle("-fx-border-color: red");
@@ -56,8 +56,8 @@ public class UtbetalErstatningController implements Initializable {
     @FXML
     private void bindLabelsWithCustomerInfo(){
         //Binder TextFields til kundens datafelt.
-        lblSkademeldingsnummer.textProperty().bind(ubetaltErstatning.skadenummerProperty().asString());
-        lblTakseringAvSkaden.textProperty().bind(ubetaltErstatning.takseringAvSkadenProperty());
+        lblSkademeldingsnummer.textProperty().bind(skademelding.skadenummerProperty().asString());
+        lblTakseringAvSkaden.textProperty().bind(skademelding.takseringAvSkadenProperty());
 
     }
 
@@ -65,10 +65,10 @@ public class UtbetalErstatningController implements Initializable {
     private void utbetalErstatningClicked(ActionEvent event){
         String erstatningsBeløp = txtUtbetaltErstatningsbeløp.getText();
 
-        if (ubetaltErstatningValidator.tallIsValid(erstatningsBeløp)){
+        if (skademeldingValidator.tallIsValid(erstatningsBeløp)){
             int beløp = Integer.parseInt(erstatningsBeløp);
             if (beløp > 0){
-                ubetaltErstatning.setUtbetaltErstatningsbeløp(erstatningsBeløp);
+                skademelding.setUtbetaltErstatningsbeløp(erstatningsBeløp);
                 //Skademelding skademelding = new Skademelding(ubetaltErstatning);
             }
         }
