@@ -294,7 +294,11 @@ public class KundeforholdController implements Initializable {
         //Oppretter ny stage
         Stage stage = new Stage();
         stage.setScene(scene);
-        stage.show();
+
+        //Bruker showAndWait() for å oppdatere ubetalte erstatninger etter redigering.
+        stage.showAndWait();
+
+        refreshUbetalteErstatningerList();
     }
 
     //---------------Skademeldinger end-----------------//
@@ -317,12 +321,13 @@ public class KundeforholdController implements Initializable {
     private TableColumn<Skademelding, Integer> ubetaltTakseringAvSkadeColumn;
 
 
-    private void setupUbetalteErstatningerTable(){
-        //Lager et filter for å hente ut ubetalte skademeldinger
-        FilteredList<Skademelding> filteredList = new FilteredList<>(valgtKunde.getSkademeldinger());
+    FilteredList<Skademelding> filteredList;
 
-        filteredList.setPredicate(skademelding -> {
-            return Integer.parseInt(skademelding.getUtbetaltErstatningsbeløp()) == 0;
+
+    private void setupUbetalteErstatningerTable(){
+
+        filteredList = new FilteredList<>(valgtKunde.getSkademeldinger(), skademelding -> {
+            return Integer.parseInt(skademelding.getUtbetaltErstatningsbeløp()) ==0;
         });
 
         ubetaltDatoForSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("skademeldingsDato"));
@@ -330,8 +335,19 @@ public class KundeforholdController implements Initializable {
         ubetaltTypeSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("typeSkade"));
         ubetaltTakseringAvSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("takseringAvSkaden"));
         tableUbetalteErstatninger.setItems(filteredList);
-
     }
+
+    private void refreshUbetalteErstatningerList(){
+        filteredList.setPredicate(skademelding -> {
+            return true;
+        });
+
+        filteredList.setPredicate(skademelding -> {
+            return Integer.parseInt(skademelding.getUtbetaltErstatningsbeløp()) == 0;
+        });
+    }
+
+
 
     @FXML
     private void ubetalteErstatningButtonClicked(ActionEvent event) {
@@ -358,8 +374,11 @@ public class KundeforholdController implements Initializable {
         //Oppretter ny stage
         Stage stage = new Stage();
         stage.setScene(scene);
-        stage.show();
 
+        //Setter showAndWait() for å oppdatere ubetalte erstatninger etter redigering.
+        stage.showAndWait();
+
+        refreshUbetalteErstatningerList();
     }
 
     @FXML
