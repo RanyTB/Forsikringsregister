@@ -102,6 +102,13 @@ public class RegistrerReiseforsikringController extends RegistrerForsikringContr
                 forsikringsbetingelser, forsikringsområde, forsikringssum);
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        TextField[] numericFields = {txtForsikringspremie, txtForsikringsbeløp, txtForsikringssum};
+        addNumericListeners(numericFields);
+    }
+
     //-----------VALIDERING---------//
 
     @FXML
@@ -158,13 +165,6 @@ public class RegistrerReiseforsikringController extends RegistrerForsikringContr
         } else{
             FieldStyler.setValidStyle(txtForsikringssum);
         }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        TextField[] numericFields = {txtForsikringspremie, txtForsikringsbeløp, txtForsikringssum};
-        addNumericListeners(numericFields);
     }
 
 }

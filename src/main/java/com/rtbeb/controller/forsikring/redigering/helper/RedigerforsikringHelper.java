@@ -2,10 +2,12 @@ package com.rtbeb.controller.forsikring.redigering.helper;
 
 import com.rtbeb.controller.forsikring.redigering.RedigerBåtforsikringController;
 import com.rtbeb.controller.forsikring.redigering.RedigerInnboforsikringController;
+import com.rtbeb.controller.forsikring.redigering.RedigerReiseforsikringController;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.forsikring.Bolig.Innboforsikring;
 import com.rtbeb.model.base.forsikring.Båt.Båtforsikring;
 import com.rtbeb.model.base.forsikring.Forsikring;
+import com.rtbeb.model.base.forsikring.Reise.Reiseforsikring;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,6 +28,10 @@ public class RedigerforsikringHelper {
         } else if(forsikring instanceof Båtforsikring){
             FXMLLoader loader = new FXMLLoader(RedigerforsikringHelper.class.getResource("/fxml/redigerBåtforsikring.fxml"));
             loader.setController(new RedigerBåtforsikringController(kunde, (Båtforsikring) forsikring));
+            openScene(loader);
+        } else if(forsikring instanceof Reiseforsikring){
+            FXMLLoader loader = new FXMLLoader(RedigerforsikringHelper.class.getResource("/fxml/redigerReiseforsikring.fxml"));
+            loader.setController(new RedigerReiseforsikringController(kunde, (Reiseforsikring) forsikring));
             openScene(loader);
         }
     }

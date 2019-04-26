@@ -35,7 +35,7 @@ public class Reiseforsikring extends Forsikring implements Serializable, Valider
         this.forsikringsområde.set(forsikringsområde);
     }
 
-    public int getForsikringssum() {
+    public Integer getForsikringssum() {
         return forsikringssum.get();
     }
 
@@ -43,7 +43,7 @@ public class Reiseforsikring extends Forsikring implements Serializable, Valider
         return forsikringssum;
     }
 
-    public void setForsikringssum(int forsikringssum) {
+    public void setForsikringssum(Integer forsikringssum) {
         this.forsikringssum.set(forsikringssum);
     }
 
