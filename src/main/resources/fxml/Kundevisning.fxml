@@ -58,7 +58,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="ol" mnemonicParsing="false" onAction="#opprettNyKunde" prefHeight="35.0" prefWidth="300.0" text="Ny kunde" GridPane.columnIndex="1" />
+            <Button fx:id="btnOpprettNyKunde" mnemonicParsing="false" onAction="#opprettNyKunde" prefHeight="35.0" prefWidth="300.0" text="Ny kunde" GridPane.columnIndex="1" />
               <Button fx:id="btnVisValgtKunde" onAction="#visValgtKunde" prefHeight="35.0" prefWidth="300.0" text="Vis kundeforhold for valgt kunde" />
             <Button onAction="#testButtonAction" prefHeight="35.0" prefWidth="300.0" text="Test endring av kunde" GridPane.columnIndex="2" />
          </children>

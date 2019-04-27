@@ -6,8 +6,9 @@ import java.util.ResourceBundle;
 
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
-import com.rtbeb.model.filemanagement.Context;
-import com.rtbeb.model.filemanagement.Jobj;
+import com.rtbeb.model.filemanagement.exception.InvalidFileTypeException;
+import com.rtbeb.model.filemanagement.read.RegisterReader;
+import com.rtbeb.model.filemanagement.write.RegisterWriter;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
@@ -16,9 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.scene.input.MouseButton;
@@ -57,34 +56,70 @@ public class KundevisningController implements Initializable {
     @FXML
     private TableView<Kunde> tableKunder;
 
+    @FXML
+    private MenuItem btnÅpneFil;
+    @FXML
+    private MenuItem btnLagreTilFil;
+    @FXML
+    private Button btnOpprettNyKunde;
+    @FXML
+    private Button btnVisValgtKunde;
+
     /**
      * @author Eirik Bøyum
      */
     @FXML
-    private void openFile() throws  Exception, IOException{
+    private void openFile() {
         //TODO implementer FileChooser her
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(new Stage());
 
-        String extension = file.getName().substring(file.getName().lastIndexOf("."));
+        if( file != null ){
 
-        Context context;
-        if (extension.equals(".jobj")){
-            context = new Context(new Jobj());
-            context.readStrategy(file.getPath());
+            try{
+                //En ny tråd settes opp med to Runnable funksjoner som blir kalt når tråden er ferdig med å kjøre.
+                Thread readThread = new Thread( new RegisterReader(file.getPath(), this::generateFileLoadedAlert, this::activateButtons) );
+                deactivateButtons();
+                readThread.start();
 
-        } else if (extension.equals(".csv")){
+            } catch (InvalidFileTypeException e){
 
-        } else {
-            System.out.println("Feil filtype");
+                System.err.println(e.getMessage());
+            }
         }
+    }
+
+    /**
+     * Deaktiverer knapper og menyikoner.
+     */
+    private void deactivateButtons(){
+        btnÅpneFil.setDisable(true);
+        btnLagreTilFil.setDisable(true);
+        btnOpprettNyKunde.setDisable(true);
+        btnVisValgtKunde.setDisable(true);
+    }
+
+    /**
+     * Aktiverer knapper og menyikoner.
+     */
+    private void activateButtons(){
+        btnÅpneFil.setDisable(false);
+        btnLagreTilFil.setDisable(false);
+        btnOpprettNyKunde.setDisable(false);
+        btnVisValgtKunde.setDisable(false);
+    }
+
+    private void generateFileLoadedAlert(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Registeret ble lastet inn.");
+        alert.show();
     }
 
     /**
      * @author Eirik Bøyum
      */
     @FXML
-    private void saveFile(ActionEvent event) throws IOException {
+    private void saveFile(ActionEvent event) {
 
         FileChooser fileChooser = new FileChooser();
 
@@ -96,25 +131,23 @@ public class KundevisningController implements Initializable {
         fileChooser.getExtensionFilters().addAll(extensionFilterJOBJ, extensionFilterCSV);
         File file = fileChooser.showSaveDialog(new Stage());
 
-        String extension = file.getName().substring(file.getName().lastIndexOf("."));
+        if ( file != null ) {
+            try {
 
-        //test
-        System.out.println("Filendelse: " + extension);
+                Thread saveThread = new Thread( new RegisterWriter(file.getPath(), this::generateFileSavedAlert, this::activateButtons) );
+                deactivateButtons();
+                saveThread.start();
 
-        Context context;
-        if (extension.equals(".jobj")){
-            context = new Context(new Jobj());
-            context.writeStrategy(file.getPath());
-
-        } else if (extension.equals(".csv")){
-
-        } else {
-            System.out.println("Feil filtype");
+            } catch (InvalidFileTypeException e) {
+                e.printStackTrace();
+            }
         }
+    }
 
-        //Context context = new Context(new Jobj());
-        //context.fileStrategy(file.getPath());
-
+    private void generateFileSavedAlert(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Kunderegisteret ble lagret");
+        alert.show();
     }
 
 
