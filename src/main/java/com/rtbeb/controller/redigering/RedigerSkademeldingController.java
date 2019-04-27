@@ -1,5 +1,6 @@
 package com.rtbeb.controller.redigering;
 
+import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.forsikring.Skademelding;
 import com.rtbeb.model.validation.SkademeldingValidator;
@@ -14,11 +15,14 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+/**
+ * @author Eirik Bøyum
+ */
 public class RedigerSkademeldingController implements Initializable {
 
-    Kunde valgtKunde;
-    Skademelding valgtSkademelding;
-    SkademeldingValidator skademeldingValidator;
+    private Kunde valgtKunde;
+    private Skademelding valgtSkademelding;
+    private SkademeldingValidator skademeldingValidator;
 
 
     public RedigerSkademeldingController(Kunde valgtKunde, Skademelding valgtSkademelding){
@@ -61,9 +65,9 @@ public class RedigerSkademeldingController implements Initializable {
     private void dateChanged(ActionEvent event){
         LocalDate date = datePicker.getValue();
         if(skademeldingValidator.dateIsValid(date)){
-            datePicker.setStyle("-fx-border-color: green");
+            FieldStyler.setValidStyle(datePicker);
         } else {
-            datePicker.setStyle("-fx-border-color: red");
+            FieldStyler.setInvalidStyle(datePicker);
         }
 
     }
@@ -73,9 +77,9 @@ public class RedigerSkademeldingController implements Initializable {
     private void typeSkadeChanged(InputEvent event){
         String typeSkade = txtTypeSkade.getText();
         if(skademeldingValidator.textIsValid(typeSkade)){
-            txtTypeSkade.setStyle("-fx-border-color: green");
+            FieldStyler.setValidStyle(txtTypeSkade);
         } else {
-            txtTypeSkade.setStyle("-fx-border-color: red");
+            FieldStyler.setInvalidStyle(txtTypeSkade);
         }
     }
 
@@ -83,9 +87,9 @@ public class RedigerSkademeldingController implements Initializable {
     private void beskrivelseChanged(InputEvent event){
         String beskrivelse = txtBeskrivelse.getText();
         if(skademeldingValidator.textOgTallIsValid(beskrivelse)){
-            txtBeskrivelse.setStyle("-fx-border-color: green");
+            FieldStyler.setValidStyle(txtBeskrivelse);
         } else {
-            txtBeskrivelse.setStyle("-fx-border-color: red");
+            FieldStyler.setInvalidStyle(txtBeskrivelse);
         }
     }
 
@@ -93,9 +97,9 @@ public class RedigerSkademeldingController implements Initializable {
     private void vitneChanged(InputEvent event){
         String vitner = txtVitner.getText();
         if(skademeldingValidator.textOgTallIsValid(vitner)){
-            txtVitner.setStyle("-fx-border-color: green");
+            FieldStyler.setValidStyle(txtVitner);
         } else {
-            txtVitner.setStyle("-fx-border-color: red");
+            FieldStyler.setInvalidStyle(txtVitner);
         }
     }
 
@@ -103,9 +107,9 @@ public class RedigerSkademeldingController implements Initializable {
     private void takseringChanged(InputEvent event){
         String takseringAvSkaden = txtTakseringAvSkaden.getText();
         if(skademeldingValidator.tallIsValid(takseringAvSkaden)){
-            txtTakseringAvSkaden.setStyle("-fx-border-color: green");
+            FieldStyler.setValidStyle(txtTakseringAvSkaden);
         } else {
-            txtTakseringAvSkaden.setStyle("-fx-border-color: red");
+            FieldStyler.setInvalidStyle(txtTakseringAvSkaden);
         }
     }
 
@@ -113,9 +117,9 @@ public class RedigerSkademeldingController implements Initializable {
     private void utbetaltChanged(InputEvent event){
         String utbetaltErstatningsbeløp = txtUtbetaltErstatningsbeløp.getText();
         if(skademeldingValidator.tallIsValid(utbetaltErstatningsbeløp)){
-            txtUtbetaltErstatningsbeløp.setStyle("-fx-border-color: green");
+            FieldStyler.setValidStyle(txtUtbetaltErstatningsbeløp);
         } else {
-            txtUtbetaltErstatningsbeløp.setStyle("-fx-border-color: red");
+            FieldStyler.setInvalidStyle(txtUtbetaltErstatningsbeløp);
         }
     }
 
@@ -149,10 +153,8 @@ public class RedigerSkademeldingController implements Initializable {
         String takseringAvSkaden = txtTakseringAvSkaden.getText();
         String utbetaltErstatningsbeløp = txtUtbetaltErstatningsbeløp.getText();
 
-        Skademelding skademelding = new Skademelding(date, typeSkade,
+        return new Skademelding(date, typeSkade,
                 beskrivelse, vitner, takseringAvSkaden, utbetaltErstatningsbeløp);
-
-        return skademelding;
     }
 
     @FXML

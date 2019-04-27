@@ -4,11 +4,14 @@ import com.rtbeb.model.base.Kunde;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
-public abstract class RegistrerForsikringController implements Initializable {
+/**
+ * Abstrakt klasse for registrering av Forsikringer. Her kan felles funksjonalitet implementeres.
+ */
+abstract class RegistrerForsikringController implements Initializable {
 
     protected Kunde kunde;
 
-    public RegistrerForsikringController(Kunde kunde){
+    RegistrerForsikringController(Kunde kunde){
         this.kunde = kunde;
     }
 
@@ -16,7 +19,8 @@ public abstract class RegistrerForsikringController implements Initializable {
      * Legger til listeneres på TextFields slik at det kun kan skrives inn tall i disse.
      * @param numericFields TextField som kun skal inneholde tall.
      */
-    public void addNumericListeners(TextField[] numericFields){
+
+    void addNumericRestrictionsToTextFields(TextField[] numericFields){
 
         for(TextField numericField : numericFields){
 

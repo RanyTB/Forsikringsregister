@@ -8,6 +8,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+/**
+ * Base-klassen for forsikringer.
+ * @author Rany Tarek Bouorm - s236210
+ */
 public abstract class Forsikring implements Serializable, Validerbar {
     private static final long serialVersionUID = 1;
 

@@ -1,5 +1,6 @@
 package com.rtbeb.controller.registrering;
 
+import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
 import com.rtbeb.model.base.exception.InvalidKundeException;
@@ -16,9 +17,13 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Kontroller for registrering av nye kunder.
+ * @author Rany Tarek Bouorm - s236210
+ */
 public class RegistrerKundeController implements Initializable {
 
-    Kunderegister kunderegister = Kunderegister.getInstance();
+    private Kunderegister kunderegister = Kunderegister.getInstance();
 
     @FXML
     TextField txtFornavn;
@@ -68,9 +73,9 @@ public class RegistrerKundeController implements Initializable {
 
         String fornavn = txtFornavn.getText();
         if(!KundeValidator.fornavnIsValid(fornavn)){
-            txtFornavn.setStyle("-fx-border-color: red");
+            FieldStyler.setInvalidStyle(txtFornavn);
         } else{
-            txtFornavn.setStyle("-fx-border-color: green");
+            FieldStyler.setValidStyle(txtFornavn);
         }
     }
 
@@ -79,9 +84,9 @@ public class RegistrerKundeController implements Initializable {
 
         String etternavn = txtEtternavn.getText();
         if(!KundeValidator.etternavnIsValid(etternavn)){
-            txtEtternavn.setStyle("-fx-border-color: red");
+            FieldStyler.setInvalidStyle(txtEtternavn);
         } else{
-            txtEtternavn.setStyle("-fx-border-color: green");
+            FieldStyler.setValidStyle(txtEtternavn);
         }
     }
 
@@ -90,9 +95,9 @@ public class RegistrerKundeController implements Initializable {
 
         String adresse = txtAdresse.getText();
         if(!KundeValidator.fakturaAdresseIsValid(adresse)){
-            txtAdresse.setStyle("-fx-border-color: red");
+            FieldStyler.setInvalidStyle(txtAdresse);
         } else{
-            txtAdresse.setStyle("-fx-border-color: green");
+            FieldStyler.setValidStyle(txtAdresse);
         }
     }
 
@@ -101,9 +106,9 @@ public class RegistrerKundeController implements Initializable {
 
         String postnummer = txtPostnummer.getText();
         if(!KundeValidator.postnummerIsValid(postnummer)){
-            txtPostnummer.setStyle("-fx-border-color: red");
+            FieldStyler.setInvalidStyle(txtPostnummer);
         } else{
-            txtPostnummer.setStyle("-fx-border-color: green");
+            FieldStyler.setValidStyle(txtPostnummer);
         }
 
     }

@@ -25,9 +25,15 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+/**
+ * Entry-point for programmet. Viser en oversikt over alle kunder, tillater sletting og redigering av kunder
+ * og dobbeltklikk på kunder for å vise kundeforholdet.
+ * @author Rany Tarek Bouorm - s236210
+ * @author Eirik Bøyum - -saveFile() og openFile()
+ */
 public class KundevisningController implements Initializable {
 
-    /*Deklarerer kunderegisteret her*/
+    // Kunderegisteret representert.
     private Kunderegister kunderegister;
 
     @FXML
@@ -51,6 +57,9 @@ public class KundevisningController implements Initializable {
     @FXML
     private TableView<Kunde> tableKunder;
 
+    /**
+     * @author Eirik Bøyum
+     */
     @FXML
     private void openFile() throws  Exception, IOException{
         //TODO implementer FileChooser her
@@ -69,12 +78,14 @@ public class KundevisningController implements Initializable {
         } else {
             System.out.println("Feil filtype");
         }
-
-
     }
 
+    /**
+     * @author Eirik Bøyum
+     */
     @FXML
     private void saveFile(ActionEvent event) throws IOException {
+
         FileChooser fileChooser = new FileChooser();
 
         FileChooser.ExtensionFilter extensionFilterJOBJ
@@ -155,14 +166,15 @@ public class KundevisningController implements Initializable {
                 Kilder/inspirasjon for sending av parametre til kontroller:
                 https://github.com/jalopezsuarez/javafx-screens/blob/master/javafx-screens/src/com/vemovi/javafx/NavigationController.java
                 https://stackoverflow.com/questions/14187963/passing-parameters-javafx-fxml
-                 */
+                */
 
                 //Oppretter en ny kontroller-instans og setter kunde til den valgte kunden.
                 KundeforholdController kundeforholdController = new KundeforholdController(valgtKunde);
 
+                //Oppretter en FXMLLoader med fxml-filen.
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Kundeforhold.fxml"));
 
-                //Setter loaderens kontroller til kontroller-instansen. fx:controller er ikke satt i FXML-filen.
+                //Setter loaderens kontroller til kontroller-instansen da fx:controller er ikke satt i FXML-filen.
                 loader.setController(kundeforholdController);
 
                 //Loader FXML-hierarkiet
@@ -185,16 +197,16 @@ public class KundevisningController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        setUpTableKunder();
+    }
+
+    /**
+     * Setter opp kundetabellen med tilhørende søkefunksjonalitet og sortering.
+     */
+    private void setUpTableKunder(){
 
         //Henter Singleton instansen av kunderegisteret
         kunderegister = Kunderegister.getInstance();
-
-        //TODO Fjern gammel setItems som har blitt erstattet av FilteredListen under.
-        //Setter data for tabellen til kunderegisterets liste over kunder
-        //tableKunder.setItems(kunderegister.getKundeliste());
-
-        //Wrapper kundeListen fra kunderegisteret (observablelisten) i en FilteredList for å støtte søkefunksjonalitet.
-        FilteredList<Kunde> filteredList = new FilteredList<>(kunderegister.getKundeliste());
 
         //Kolonne for forsikringsnummer
         forsikringsnummerColumn.setCellValueFactory(new PropertyValueFactory<>("forsikringsnummer"));
@@ -218,6 +230,9 @@ public class KundevisningController implements Initializable {
         https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableView.html
         */
 
+        //Wrapper kundeListen fra kunderegisteret (observablelisten) i en FilteredList for å støtte søkefunksjonalitet.
+        FilteredList<Kunde> filteredList = new FilteredList<>(kunderegister.getKundeliste());
+
         //Setter opp en listener for søkefeltet (txtSearch), slik at filteret oppdateres hver gang man skriver noe nytt.
         txtSearch.textProperty().addListener((observable,oldValue,newValue) -> {
             filteredList.setPredicate(kunde -> {
@@ -227,7 +242,7 @@ public class KundevisningController implements Initializable {
                     return true;
                 }
 
-                //Teksten som skal søkes på omgjøres til lowercase.
+                //Teksten som skal søkes på omgjøres til lowercase for sammenligning.
                 String lowerCaseFilter = newValue.toLowerCase();
 
                 //Sammenligner lowerCaseFilter med fornavn, etternavn og forsikringsnummer.
@@ -250,8 +265,6 @@ public class KundevisningController implements Initializable {
         sortedList.comparatorProperty().bind(tableKunder.comparatorProperty());
         //Setter tabellens data-source til sortedList.
         tableKunder.setItems(sortedList);
-
-
     }
 
 }

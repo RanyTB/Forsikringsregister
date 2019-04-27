@@ -1,5 +1,6 @@
 package com.rtbeb.model.base.forsikring;
 
+import com.rtbeb.model.validation.SkademeldingValidator;
 import javafx.beans.property.*;
 
 import java.io.IOException;
@@ -10,7 +11,10 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Skademelding implements Serializable {
+/**
+ * @author Eirik bøyum
+ */
+public class Skademelding implements Serializable, Validerbar {
     private static final long serialVersionUID = 1;
 
     //Counteren sørger for threadsafe utdeling av skadenummer til nye skademeldinger med metoden getAndIncrement();
@@ -26,7 +30,7 @@ public class Skademelding implements Serializable {
 
     public Skademelding(LocalDate skademeldingsDato, String typeSkade, String beskrivelse, String vitner,
                         String takseringAvSkaden, String utbetaltErstatningsbeløp){
-        this.skademeldingsDato = new SimpleObjectProperty<LocalDate>(this, "skademeldingsDato", skademeldingsDato);
+        this.skademeldingsDato = new SimpleObjectProperty<>(this, "skademeldingsDato", skademeldingsDato);
         this.skadenummer = new SimpleLongProperty(this, "skadenummer", skadenummerCounter.getAndIncrement());
         this.typeSkade = new SimpleStringProperty(this, "typeSkade", typeSkade);
         this.beskrivelse = new SimpleStringProperty(this, "beskrivelse", beskrivelse);
@@ -142,5 +146,10 @@ public class Skademelding implements Serializable {
         this.vitner = new SimpleStringProperty((String) objectInputStream.readObject());
         this.takseringAvSkaden = new SimpleStringProperty((String) objectInputStream.readObject());
         this.utbetaltErstatningsbeløp = new SimpleStringProperty((String) objectInputStream.readObject());
+    }
+
+    @Override
+    public boolean isValid() {
+        return SkademeldingValidator.skademeldingIsValid(this);
     }
 }

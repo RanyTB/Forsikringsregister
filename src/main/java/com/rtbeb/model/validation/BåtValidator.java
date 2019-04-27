@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 /**
+ * @author Rany Tarek Bouorm - s236210
  * Validering av båter. Inkluderer validering av båt-objekter og validering av enkelte båtdata
  * for bruk i UI-feedback på inputfelter.
  */
@@ -15,8 +16,12 @@ public class BåtValidator {
     private static String merkeRegex = "^[a-zæøåA-ZÆØÅ\\d \\-]{2,50}$";
     private static String modellRegex = "^[a-zæøåA-ZÆØÅ\\- \\d]{2,50}$";
     private static String lengdeRegex = "^[0-9]{1,10}$";
-    //private static String årsmodellRegex = "^(19)[0-9]{2}|(20)[0-1][0-9]$";
 
+    /**
+     * Validerer om et båt-objekt er gyldig i forhold til klassens regler.
+     * @param båt Båten som skal valideres
+     * @return True hvis alle felt er gyldie.
+     */
     public static boolean båtIsValid(Båt båt){
         String registreringsnummer = båt.getRegistreringsnummer();
         String merke = båt.getMerke();
@@ -24,60 +29,42 @@ public class BåtValidator {
         String lengde = båt.getLengde();
         String årsmodell = båt.getÅrsmodell();
 
-        if(registreringsnummerIsValid(registreringsnummer) && merkeIsValid(merke) &&
-            modellIsValid(modell) && lengdeIsValid(lengde) && årsmodellIsValid(årsmodell)){
-            return true;
-        }
-        return false;
+        return registreringsnummerIsValid(registreringsnummer) && merkeIsValid(merke) &&
+                modellIsValid(modell) && lengdeIsValid(lengde) && årsmodellIsValid(årsmodell);
     }
 
     public static boolean registreringsnummerIsValid(String registreringsnummer){
-        if(Pattern.matches(registreringsnummerRegex, registreringsnummer)){
-            return true;
-        }
-        return false;
+        return Pattern.matches(registreringsnummerRegex, registreringsnummer);
     }
     public static boolean merkeIsValid(String merke){
-        if(Pattern.matches(merkeRegex,merke)){
-            return true;
-        }
-        return false;
+        return Pattern.matches(merkeRegex, merke);
     }
     public static boolean modellIsValid(String modell){
-        if(Pattern.matches(modellRegex,modell)){
-            return true;
-        }
-        return false;
+        return Pattern.matches(modellRegex, modell);
     }
     public static boolean lengdeIsValid(String lengde){
-        if(Pattern.matches(lengdeRegex,lengde)){
-            return true;
-        }
-        return false;
+        return Pattern.matches(lengdeRegex, lengde);
     }
     public static boolean årsmodellIsValid(String årsmodell){
 
-        int årsmodellParsed = 0;
+        int årsmodellParsed;
+
         try{
             årsmodellParsed = Integer.parseInt(årsmodell);
-        } catch(NumberFormatException e){}
+        } catch(NumberFormatException e){
+            return false;
+        }
 
         int detteÅret = LocalDate.now().getYear();
 
         if(årsmodell.isEmpty()){
             return false;
         }
-        else if(årsmodellParsed <= detteÅret && årsmodellParsed > 1900){
-            return true;
-        }
-        return false;
+        else return årsmodellParsed <= detteÅret && årsmodellParsed > 1900;
     }
 
     public static boolean motorinfoIsValid(String motorinfo){
-        if(!motorinfo.isEmpty()){
-            return true;
-        }
-        return false;
+        return ! motorinfo.isEmpty();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.rtbeb.controller.redigering;
 
+import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.forsikring.Skademelding;
 import com.rtbeb.model.validation.SkademeldingValidator;
@@ -16,11 +17,14 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * @author Eirik Bøyum
+ */
 public class UtbetalErstatningController implements Initializable {
 
-    Kunde valgtKunde;
-    Skademelding skademelding;
-    SkademeldingValidator skademeldingValidator;
+    private Kunde valgtKunde;
+    private Skademelding skademelding;
+    private SkademeldingValidator skademeldingValidator;
 
     public UtbetalErstatningController(Kunde valgtKunde, Skademelding skademelding){
         this.valgtKunde = valgtKunde;
@@ -48,9 +52,9 @@ public class UtbetalErstatningController implements Initializable {
     private void utbetaltChanged(InputEvent event){
         String erstatningsBeløp = txtUtbetaltErstatningsbeløp.getText();
         if (skademeldingValidator.tallIsValid(erstatningsBeløp)){
-            txtUtbetaltErstatningsbeløp.setStyle("-fx-border-color: green");
+            FieldStyler.setValidStyle(txtUtbetaltErstatningsbeløp);
         }else {
-            txtUtbetaltErstatningsbeløp.setStyle("-fx-border-color: red");
+            FieldStyler.setInvalidStyle(txtUtbetaltErstatningsbeløp);
         }
     }
 

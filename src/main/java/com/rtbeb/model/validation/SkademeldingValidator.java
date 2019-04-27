@@ -5,10 +5,13 @@ import com.rtbeb.model.base.forsikring.Skademelding;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 
+/**
+ *  @author Eirik Bøyum
+ */
 public class SkademeldingValidator {
-    static String textRegex = "[a-zæøåA-ZÆØÅ\\-\\ ]{2,50}+";
-    static String textOgTallRegex = "[a-zøæåA-ZÆØÅ0-9\\-\\ ]{2,100}+";
-    static String tallRegex = "\\d{1,8}";
+    private static String textRegex = "[a-zæøåA-ZÆØÅ\\- ]{2,50}+";
+    private static String textOgTallRegex = "[a-zøæåA-ZÆØÅ0-9\\- ]{2,100}+";
+    private static String tallRegex = "\\d{1,8}";
 
     /*public static boolean textIsValid(String hvaSomSkalValideres, int maksTekstLengde){
         if (hvaSomSkalValideres.length() > maksTekstLengde){

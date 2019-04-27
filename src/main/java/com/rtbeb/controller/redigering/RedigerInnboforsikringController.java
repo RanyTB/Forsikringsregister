@@ -16,9 +16,13 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Kontroller for redigering av innboforsikringer.
+ * @author Rany Tarek Bouorm - s236210
+ */
 public class RedigerInnboforsikringController extends RedigerforsikringController {
 
-    Innboforsikring opprinneligInnboforsikring;
+    private Innboforsikring opprinneligInnboforsikring;
 
     public RedigerInnboforsikringController(Kunde kunde, Innboforsikring innboforsikring) {
         super(kunde);
@@ -76,12 +80,6 @@ public class RedigerInnboforsikringController extends RedigerforsikringControlle
         }
     }
 
-    private void generateAlert(String message){
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Registreringsfeil");
-        alert.setHeaderText(message);
-        alert.showAndWait();
-    }
 
     /**
      * Oppdaterer opprinnelig forsikring til de redigerte feltene.

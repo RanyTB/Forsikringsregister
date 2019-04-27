@@ -18,9 +18,13 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+/**
+ * Kontroller for registrering av båtforsikringer.
+ * @author Rany Tarek Bouorm - s236210
+ */
 public class RegistrerBåtforsikringController extends RegistrerForsikringController implements Initializable {
 
-    public RegistrerBåtforsikringController(Kunde kunde){
+    RegistrerBåtforsikringController(Kunde kunde){
         super(kunde);
     }
 
@@ -125,9 +129,8 @@ public class RegistrerBåtforsikringController extends RegistrerForsikringContro
 
         Eier eier = new Eier(fornavn,etternavn,fødselsDato);
         Båt båt = new Båt(eier,registreringsnummer, merke, modell,lengde,årsmodell,motorinfo);
-        Båtforsikring båtforsikring = new Båtforsikring(forsikringspremie,forsikringsbeløp,betingelser,båt);
 
-        return båtforsikring;
+        return new Båtforsikring(forsikringspremie,forsikringsbeløp,betingelser,båt);
     }
 
     private void generateAlert(String message){
@@ -141,8 +144,9 @@ public class RegistrerBåtforsikringController extends RegistrerForsikringContro
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        //Felt som kun skal inneholde tall.
         TextField[] numericFields = {txtForsikringspremie, txtForsikringsbeløp, txtLengde, txtÅrsmodell};
-        addNumericListeners(numericFields);
+        addNumericRestrictionsToTextFields(numericFields);
     }
 
     //-----------VALIDERING--------------------//

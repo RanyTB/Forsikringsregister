@@ -14,9 +14,13 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Kontroller for redigering av reiseforsikring
+ * @author Rany Tarek Bouorm - s236210
+ */
 public class RedigerReiseforsikringController extends RedigerforsikringController {
 
-    Reiseforsikring opprinneligforsikring;
+    private Reiseforsikring opprinneligforsikring;
 
     public RedigerReiseforsikringController(Kunde kunde, Reiseforsikring opprinneligforsikring) {
         super(kunde);
@@ -24,6 +28,7 @@ public class RedigerReiseforsikringController extends RedigerforsikringControlle
     }
 
     @FXML
+    private
     Button btnNeste;
 
 
@@ -71,9 +76,7 @@ public class RedigerReiseforsikringController extends RedigerforsikringControlle
     @FXML
     private void redigerReiseforsikring(ActionEvent event) {
 
-        //TODO Se om dette kan implementeres annerledes
         try {
-
             Reiseforsikring reiseforsikring = generateReiseforsikring();
 
             if (reiseforsikring.isValid()) {
@@ -83,16 +86,14 @@ public class RedigerReiseforsikringController extends RedigerforsikringControlle
                 Stage stage = (Stage) btnNeste.getScene().getWindow();
                 stage.close();
             } else {
-                generateAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
+                generateAlert("Kunne ikke redigere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
             }
         } catch (NumberFormatException e) {
+
             //Fanger NumberFormatException som oppstår dersom numeriske felt står tomme.
-            generateAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
+            generateAlert("Kunne ikke redigere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
 
         }
-
-
-
     }
 
     private Reiseforsikring generateReiseforsikring() throws NumberFormatException {
@@ -116,12 +117,6 @@ public class RedigerReiseforsikringController extends RedigerforsikringControlle
         opprinneligforsikring.setForsikringssum(Integer.parseInt(txtForsikringssum.getText()));
     }
 
-    private void generateAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Registreringsfeil");
-        alert.setHeaderText(message);
-        alert.showAndWait();
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -136,7 +131,7 @@ public class RedigerReiseforsikringController extends RedigerforsikringControlle
 
         txtForsikringspremie.setText(opprinneligforsikring.getForsikringspremie().toString());
         txtForsikringsbeløp.setText(opprinneligforsikring.getForsikringsbeløp().toString());
-        txtBetingelser.setText(opprinneligforsikring.getForsikringsbetingelser().toString());
+        txtBetingelser.setText(opprinneligforsikring.getForsikringsbetingelser());
         txtForsikringsområde.setText(opprinneligforsikring.getForsikringsområde());
         txtForsikringssum.setText(opprinneligforsikring.getForsikringssum().toString());
     }

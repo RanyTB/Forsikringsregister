@@ -14,22 +14,23 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Kunderegisteret er en Singleton-klasse som fungerer som systemets register. Registeret inneholder alle
+ * kundeobjektene.
+ */
 public class Kunderegister {
 
-    //private static final long serialVersionUID = 1;
+    private final ObservableList<Kunde> kundeliste = FXCollections.observableArrayList();
 
-    private ObservableList<Kunde> kundeliste = FXCollections.observableArrayList();
-
-    //Singleton klasse med privat konstruktør. Instanse hentes med getInstance();
     private static Kunderegister instance = new Kunderegister();
 
     public static Kunderegister getInstance(){
         return instance;
     }
 
+    //TODO fjern eller kommenter ut konstruktør når testing er fullført
     private Kunderegister(){
 
-        //TODO fjern konstruktør når testing er fullført
         //Konstruktøren brukes foreløpig bare til testing for å initialisere kunderegisteret med dummy-kunder.
 
         //Tester innsetting av kunder i kunderegisteret
@@ -64,6 +65,11 @@ public class Kunderegister {
 
     }
 
+    /**
+     * Validerer og setter inn en kunde i kunderegisteret
+     * @param kunde Kunden som skal settes inn.
+     * @throws InvalidKundeException dersom kunden er ugyldig.
+     */
     public void insertKunde(Kunde kunde) throws InvalidKundeException {
         if(KundeValidator.kundeIsValid(kunde)) {
             kundeliste.add(kunde);
@@ -72,21 +78,22 @@ public class Kunderegister {
         }
     }
 
+    /**
+     * Sletter en kunde fre kunderegisteret.
+     * @param kunde Kunden som skal slettes.
+     */
     public void deleteKunde(Kunde kunde){
 
-        //TODO Fjern iterator, bruk remove().
-        Iterator<Kunde> iterator = kundeliste.iterator();
-
-        while(iterator.hasNext()){
-            Kunde currentKunde = iterator.next();
-            if (currentKunde == kunde){
-                iterator.remove();
-                break;
-            }
-        }
+        kundeliste.remove(kunde);
     }
 
 
+    /**
+     * Brukes for å sette en ny kundeliste. F.eks etter import fra fil.
+     * Metoden fjerner alle objekter i kundelisten og legger til de nye objektene.
+     * Det kreves dermed ikke at Listeneres binder seg til kundelisten på nytt.
+     * @param kundeliste kundelisten som skal settes.
+     */
     public void setKundeliste(ArrayList<Kunde> kundeliste){
 
         //TODO Se over implementasjonen av denne setmetoden.

@@ -10,6 +10,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+/**
+ * Reiseforsikringsklasse.
+ * @author Rany Tarek Bouorm - s236210
+ */
 public class Reiseforsikring extends Forsikring implements Serializable, Validerbar {
 
     private transient StringProperty forsikringsområde;
@@ -47,7 +51,7 @@ public class Reiseforsikring extends Forsikring implements Serializable, Valider
         this.forsikringssum.set(forsikringssum);
     }
 
-    //Egendefinert serialisering
+    //Egendefinert serialisering.
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
         objectOutputStream.defaultWriteObject();
         objectOutputStream.writeObject(getForsikringsområde());

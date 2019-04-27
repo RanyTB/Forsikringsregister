@@ -16,9 +16,14 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
+/**
+ * Kontroller for registrering av Reiseforsikring
+ * @author Rany Tarek Bouorm - s236210
+ */
 public class RegistrerReiseforsikringController extends RegistrerForsikringController implements Initializable {
 
-    public RegistrerReiseforsikringController(Kunde kunde){
+    RegistrerReiseforsikringController(Kunde kunde){
         super(kunde);
     }
 
@@ -106,7 +111,7 @@ public class RegistrerReiseforsikringController extends RegistrerForsikringContr
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         TextField[] numericFields = {txtForsikringspremie, txtForsikringsbeløp, txtForsikringssum};
-        addNumericListeners(numericFields);
+        addNumericRestrictionsToTextFields(numericFields);
     }
 
     //-----------VALIDERING---------//

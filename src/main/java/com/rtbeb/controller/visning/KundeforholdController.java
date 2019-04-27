@@ -29,9 +29,15 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+/**
+ * Kontroller for kundeforholdsvisningen. Valgt kunde settes med kontrollerens konstruktør.
+ * FXML-filen og Kontrolleren må bindes.
+ * @author Rany Tarek Bouorm - s236210
+ * @author Eirik Bøyum - Markerte deler med Skademelding og Ubetalteerstatniger.
+ */
 public class KundeforholdController implements Initializable {
 
-    Kunde valgtKunde;
+    private Kunde valgtKunde;
 
     KundeforholdController(Kunde valgtKunde){
         this.valgtKunde = valgtKunde;
@@ -53,7 +59,7 @@ public class KundeforholdController implements Initializable {
     private Button btnNySkademelding;
 
     @FXML
-    Button backButton;
+    private Button backButton;
 
     @FXML
     private void redigerKundeClicked() throws IOException {
@@ -221,6 +227,9 @@ public class KundeforholdController implements Initializable {
 
 
     //---------------Skademeldinger-----------------//
+    /**
+     * @author Eirik Bøyum
+     */
 
     @FXML
     private TableView<Skademelding> tableSkademeldinger;
@@ -253,28 +262,30 @@ public class KundeforholdController implements Initializable {
 
     @FXML
     private void nySkademeldingButtonClicked(ActionEvent event) {
-        RegistrerSkademeldingController registrerSkademeldingController = new RegistrerSkademeldingController(valgtKunde);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegistrerSkademelding.fxml"));
-
-        //Setter loaderens kontroller til kontroller-instansen. fx:controller er ikke satt i FXML-filen.
-        loader.setController(registrerSkademeldingController);
-
-        //Loader FXML-hierarkiet
-        Parent root = null;
         try {
-            root = loader.load();
+            RegistrerSkademeldingController registrerSkademeldingController = new RegistrerSkademeldingController(valgtKunde);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegistrerSkademelding.fxml"));
+
+            //Setter loaderens kontroller til kontroller-instansen. fx:controller er ikke satt i FXML-filen.
+            loader.setController(registrerSkademeldingController);
+
+
+            //Loader FXML-hierarkiet
+            Parent root = loader.load();
+
+            //Oppretter ny scene
+            Scene scene = new Scene(root);
+
+            //Oppretter ny stage
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //Oppretter ny scene
-        Scene scene = new Scene(root);
-
-        //Oppretter ny stage
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
 
     }
 
@@ -287,35 +298,40 @@ public class KundeforholdController implements Initializable {
 
     @FXML
     private void redigerSkademeldingButtonClicked(ActionEvent event){
-        Skademelding valgtSkademelding = tableSkademeldinger.getSelectionModel().getSelectedItem();
 
-        RedigerSkademeldingController redigerSkademeldingController = new RedigerSkademeldingController(valgtKunde, valgtSkademelding);
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RedigerSkademelding.fxml"));
-
-        //Setter loaderens kontroller til kontroller-instansen. fx:controller er ikke satt i FXML-filen.
-        loader.setController(redigerSkademeldingController);
-
-        //Loader FXML-hierarkiet
-        Parent root = null;
         try {
-            root = loader.load();
+            Skademelding valgtSkademelding = tableSkademeldinger.getSelectionModel().getSelectedItem();
+
+            RedigerSkademeldingController redigerSkademeldingController = new RedigerSkademeldingController(valgtKunde, valgtSkademelding);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RedigerSkademelding.fxml"));
+
+            //Setter loaderens kontroller til kontroller-instansen. fx:controller er ikke satt i FXML-filen.
+            loader.setController(redigerSkademeldingController);
+
+            //Loader FXML-hierarkiet
+            Parent root = loader.load();
+
+            //Oppretter ny scene
+            Scene scene = new Scene(root);
+
+            //Oppretter ny stage
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //Oppretter ny scene
-        Scene scene = new Scene(root);
-
-        //Oppretter ny stage
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
     }
 
     //---------------Skademeldinger end-----------------//
 
     //---------------Ubetalt erstatning-----------------//
+
+    /**
+     * @author Eirik Bøyum
+     */
 
     @FXML
     private TableView<Skademelding> tableUbetalteErstatninger;
@@ -338,9 +354,7 @@ public class KundeforholdController implements Initializable {
         FilteredList<Skademelding> filteredList = new FilteredList<>(valgtKunde.getSkademeldinger());
 
         //Predicate som filtrerer listen med skademeldinger basert på om det er utbetalt beløp eller ikke.
-        filteredList.setPredicate(skademelding -> {
-            return Integer.parseInt(skademelding.getUtbetaltErstatningsbeløp()) == 0;
-        });
+        filteredList.setPredicate(skademelding -> Integer.parseInt(skademelding.getUtbetaltErstatningsbeløp()) == 0);
 
         ubetaltDatoForSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("skademeldingsDato"));
         ubetaltSkadennummerColumn.setCellValueFactory(new PropertyValueFactory<>("skadenummer"));
@@ -352,30 +366,31 @@ public class KundeforholdController implements Initializable {
 
     @FXML
     private void ubetalteErstatningButtonClicked(ActionEvent event) {
-        Skademelding valgtUbetaltErstatning = tableUbetalteErstatninger.getSelectionModel().getSelectedItem();
 
-        UtbetalErstatningController utbetalErstatningController = new UtbetalErstatningController(valgtKunde, valgtUbetaltErstatning);
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UtbetalErstatning.fxml"));
-
-        //Setter loaderens kontroller til kontroller-instansen. fx:controller er ikke satt i FXML-filen.
-        loader.setController(utbetalErstatningController);
-
-        //Loader FXML-hierarkiet
-        Parent root = null;
         try {
-            root = loader.load();
+            Skademelding valgtUbetaltErstatning = tableUbetalteErstatninger.getSelectionModel().getSelectedItem();
+
+            UtbetalErstatningController utbetalErstatningController = new UtbetalErstatningController(valgtKunde, valgtUbetaltErstatning);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UtbetalErstatning.fxml"));
+
+            //Setter loaderens kontroller til kontroller-instansen. fx:controller er ikke satt i FXML-filen.
+            loader.setController(utbetalErstatningController);
+
+            //Loader FXML-hierarkiet
+            Parent root = loader.load();
+
+            //Oppretter ny scene
+            Scene scene = new Scene(root);
+
+            //Oppretter ny stage
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        //Oppretter ny scene
-        Scene scene = new Scene(root);
-
-        //Oppretter ny stage
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
 
     }
 

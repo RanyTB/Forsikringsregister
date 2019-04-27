@@ -15,6 +15,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Hjelpeklasse for redigering. Sørger for åpning av riktig scene basert på hvilken forsikring som skal redigeres.
+ * @author Rany Tarek Bouorm - s236210
+ */
 public class RedigerforsikringHelper {
 
     public static void openRedigeringScene(Forsikring forsikring, Kunde kunde){

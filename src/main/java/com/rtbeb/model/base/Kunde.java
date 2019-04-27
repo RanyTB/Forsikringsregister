@@ -3,6 +3,8 @@ package com.rtbeb.model.base;
 import com.rtbeb.model.base.exception.InvalidForsikringException;
 import com.rtbeb.model.base.forsikring.Forsikring;
 import com.rtbeb.model.base.forsikring.Skademelding;
+import com.rtbeb.model.base.forsikring.Validerbar;
+import com.rtbeb.model.validation.KundeValidator;
 import javafx.beans.Observable;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -16,7 +18,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Kunde implements Serializable {
+/**
+ * Klasse for Kunde. Brukes som hovedobjektet i registreringssystemet. Kunden er objektet som
+ * innehar alle forsikringer og skademeldinger.
+ * Klassen bruker properties, som fungerer som en wrapper for feltene, med muligheten
+ * for å binde listeners. Dette gjør at en TableView automatisk vil oppdatere properties
+ * som får nye verdier.
+ */
+
+public class Kunde implements Serializable, Validerbar {
     private static final long serialVersionUID = 1;
     /*Kundeklassen bruker properties, som fungerer som en wrapper for klassene med muligheten
     for å binde listeners. Dette gjør at en TableView automatisk vil oppdatere properties
@@ -143,14 +153,17 @@ public class Kunde implements Serializable {
         return forsikringsListe;
     }
     public ArrayList<Forsikring> getForsikringsListeAsArrayList(){
-        return new ArrayList<Forsikring>(getForsikringsListe());
+
+        return new ArrayList<>(getForsikringsListe());
     }
 
     public void setForsikringsListe(ObservableList<Forsikring> forsikringsListe) {
+
         this.forsikringsListe = forsikringsListe;
     }
 
     public void addForsikring(Forsikring forsikring) throws InvalidForsikringException {
+
         if(forsikring.isValid()){
             this.forsikringsListe.add(forsikring);
         } else{
@@ -171,7 +184,7 @@ public class Kunde implements Serializable {
     }
 
     public ArrayList<Skademelding> getSkademeldingerAsArrayList(){
-        return new ArrayList<Skademelding>(getSkademeldinger());
+        return new ArrayList<>(getSkademeldinger());
     }
 
     public void setSkademeldinger(ObservableList<Skademelding> skademeldinger) {
@@ -211,9 +224,13 @@ public class Kunde implements Serializable {
         this.fakturaadresse = new SimpleStringProperty((String) objectInputStream.readObject());
         this.postnummer = new SimpleStringProperty((String) objectInputStream.readObject());
         this.forsikringsnummer = new SimpleLongProperty((Long) objectInputStream.readObject());
-        this.kundeOpprettelsesDato = new SimpleObjectProperty<LocalDate>((LocalDate) objectInputStream.readObject());
+        this.kundeOpprettelsesDato = new SimpleObjectProperty<>((LocalDate) objectInputStream.readObject());
         this.forsikringsListe = FXCollections.observableArrayList( (ArrayList<Forsikring>) objectInputStream.readObject());
         this.skademeldinger = FXCollections.observableArrayList( (ArrayList<Skademelding>) objectInputStream.readObject());
     }
 
+    @Override
+    public boolean isValid() {
+        return KundeValidator.kundeIsValid(this);
+    }
 }
