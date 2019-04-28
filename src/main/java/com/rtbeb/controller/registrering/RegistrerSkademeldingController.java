@@ -1,7 +1,8 @@
-package com.rtbeb.controller;
+package com.rtbeb.controller.registrering;
 
+import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
-import com.rtbeb.model.base.Skademelding;
+import com.rtbeb.model.base.forsikring.Skademelding;
 import com.rtbeb.model.validation.SkademeldingValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,16 +15,17 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class RedigerSkademeldingController implements Initializable {
+/**
+ * Kontroller for registrering av Skademelding.
+ * @author Eirik Bøyum
+ */
+public class RegistrerSkademeldingController implements Initializable {
 
-    Kunde valgtKunde;
-    Skademelding valgtSkademelding;
-    SkademeldingValidator skademeldingValidator;
+    private Kunde valgtKunde;
+    private SkademeldingValidator skademeldingValidator;
 
-
-    RedigerSkademeldingController(Kunde valgtKunde, Skademelding valgtSkademelding){
+    public RegistrerSkademeldingController(Kunde valgtKunde){
         this.valgtKunde = valgtKunde;
-        this.valgtSkademelding = valgtSkademelding;
     }
 
     @FXML
@@ -41,41 +43,40 @@ public class RedigerSkademeldingController implements Initializable {
     @FXML
     private TextField txtUtbetaltErstatningsbeløp;
     @FXML
-    private Button btnRedigerSkademelding;
+    private Button btnRegistrerSkademelding;
     @FXML
     private Button backButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        lblForsikringsnummer.textProperty().bind(valgtKunde.forsikringsnummerProperty().asString());
-        datePicker.setValue(valgtSkademelding.getSkademeldingsDato());
-        txtTypeSkade.setText(valgtSkademelding.getTypeSkade());
-        txtBeskrivelse.setText(valgtSkademelding.getBeskrivelse());
-        txtVitner.setText(valgtSkademelding.getVitner());
-        txtTakseringAvSkaden.setText(valgtSkademelding.getTakseringAvSkaden());
-        txtUtbetaltErstatningsbeløp.setText(valgtSkademelding.getUtbetaltErstatningsbeløp());
 
+        bindLabelsWithCustomerInfo();
+    }
+
+    @FXML
+    private void bindLabelsWithCustomerInfo(){
+        //Binder TextFields til kundens datafelt.
+        lblForsikringsnummer.textProperty().bind(valgtKunde.forsikringsnummerProperty().asString());
     }
 
     @FXML
     private void dateChanged(ActionEvent event){
         LocalDate date = datePicker.getValue();
         if(skademeldingValidator.dateIsValid(date)){
-            datePicker.setStyle("-fx-border-color: green");
+            FieldStyler.setValidStyle(datePicker);
         } else {
-            datePicker.setStyle("-fx-border-color: red");
+            FieldStyler.setInvalidStyle(datePicker);
         }
 
     }
-
 
     @FXML
     private void typeSkadeChanged(InputEvent event){
         String typeSkade = txtTypeSkade.getText();
         if(skademeldingValidator.textIsValid(typeSkade)){
-            txtTypeSkade.setStyle("-fx-border-color: green");
+            FieldStyler.setValidStyle(txtTypeSkade);
         } else {
-            txtTypeSkade.setStyle("-fx-border-color: red");
+            FieldStyler.setInvalidStyle(txtTypeSkade);
         }
     }
 
@@ -83,9 +84,9 @@ public class RedigerSkademeldingController implements Initializable {
     private void beskrivelseChanged(InputEvent event){
         String beskrivelse = txtBeskrivelse.getText();
         if(skademeldingValidator.textOgTallIsValid(beskrivelse)){
-            txtBeskrivelse.setStyle("-fx-border-color: green");
+            FieldStyler.setValidStyle(txtBeskrivelse);
         } else {
-            txtBeskrivelse.setStyle("-fx-border-color: red");
+            FieldStyler.setInvalidStyle(txtBeskrivelse);
         }
     }
 
@@ -93,9 +94,9 @@ public class RedigerSkademeldingController implements Initializable {
     private void vitneChanged(InputEvent event){
         String vitner = txtVitner.getText();
         if(skademeldingValidator.textOgTallIsValid(vitner)){
-            txtVitner.setStyle("-fx-border-color: green");
+            FieldStyler.setValidStyle(txtVitner);
         } else {
-            txtVitner.setStyle("-fx-border-color: red");
+            FieldStyler.setInvalidStyle(txtVitner);
         }
     }
 
@@ -103,9 +104,9 @@ public class RedigerSkademeldingController implements Initializable {
     private void takseringChanged(InputEvent event){
         String takseringAvSkaden = txtTakseringAvSkaden.getText();
         if(skademeldingValidator.tallIsValid(takseringAvSkaden)){
-            txtTakseringAvSkaden.setStyle("-fx-border-color: green");
+            FieldStyler.setValidStyle(txtTakseringAvSkaden);
         } else {
-            txtTakseringAvSkaden.setStyle("-fx-border-color: red");
+            FieldStyler.setInvalidStyle(txtTakseringAvSkaden);
         }
     }
 
@@ -113,14 +114,14 @@ public class RedigerSkademeldingController implements Initializable {
     private void utbetaltChanged(InputEvent event){
         String utbetaltErstatningsbeløp = txtUtbetaltErstatningsbeløp.getText();
         if(skademeldingValidator.tallIsValid(utbetaltErstatningsbeløp)){
-            txtUtbetaltErstatningsbeløp.setStyle("-fx-border-color: green");
+            FieldStyler.setValidStyle(txtUtbetaltErstatningsbeløp);
         } else {
-            txtUtbetaltErstatningsbeløp.setStyle("-fx-border-color: red");
+            FieldStyler.setInvalidStyle(txtUtbetaltErstatningsbeløp);
         }
     }
 
     @FXML
-    private void redigerSkademeldingClicked(ActionEvent event){
+    private void registrerSkademeldingClicked(ActionEvent event){
         //Gjør om til LocalDate objekt
         LocalDate date = datePicker.getValue();
         String typeSkade = txtTypeSkade.getText();
@@ -129,22 +130,26 @@ public class RedigerSkademeldingController implements Initializable {
         String takseringAvSkaden = txtTakseringAvSkaden.getText();
         String utbetaltErstatningsbeløp = txtUtbetaltErstatningsbeløp.getText();
 
+        Skademelding skademelding = new Skademelding(date, typeSkade,
+                beskrivelse, vitner, takseringAvSkaden, utbetaltErstatningsbeløp);
 
-        if (skademeldingValidator.dateIsValid(date) && skademeldingValidator.textIsValid(typeSkade)
-        && skademeldingValidator.textOgTallIsValid(beskrivelse) && skademeldingValidator.textOgTallIsValid(vitner)
-        && skademeldingValidator.tallIsValid(takseringAvSkaden) && skademeldingValidator.tallIsValid(utbetaltErstatningsbeløp)){
-            valgtSkademelding.setSkademeldingsDato(date);
-            valgtSkademelding.setTypeSkade(typeSkade);
-            valgtSkademelding.setBeskrivelse(beskrivelse);
-            valgtSkademelding.setVitner(vitner);
-            valgtSkademelding.setTakseringAvSkaden(takseringAvSkaden);
-            valgtSkademelding.setUtbetaltErstatningsbeløp(utbetaltErstatningsbeløp);
+        if (skademelding.isValid()){
 
-            Stage thisStage = (Stage) btnRedigerSkademelding.getScene().getWindow();
+            valgtKunde.addSkademelding(skademelding);
+            Stage thisStage = (Stage) btnRegistrerSkademelding.getScene().getWindow();
             thisStage.close();
-        } else {
 
+        }else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Ugyldig input");
+            alert.setTitle("Feil ved registrering");
+            alert.showAndWait();
         }
-
     }
+
+    @FXML
+    private void backButtonClicked(ActionEvent event){
+        Stage thisStage = (Stage) backButton.getScene().getWindow();
+        thisStage.close();
+    }
+
 }

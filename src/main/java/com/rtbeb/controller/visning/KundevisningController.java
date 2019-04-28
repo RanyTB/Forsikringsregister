@@ -1,4 +1,4 @@
-package com.rtbeb.controller;
+package com.rtbeb.controller.visning;
 
 import java.io.*;
 import java.net.URL;
@@ -6,8 +6,9 @@ import java.util.ResourceBundle;
 
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
-import com.rtbeb.model.filemanagement.Context;
-import com.rtbeb.model.filemanagement.Jobj;
+import com.rtbeb.model.filemanagement.exception.InvalidFileTypeException;
+import com.rtbeb.model.filemanagement.read.RegisterReader;
+import com.rtbeb.model.filemanagement.write.RegisterWriter;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
@@ -16,18 +17,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+/**
+ * Entry-point for programmet. Viser en oversikt over alle kunder, tillater sletting og redigering av kunder
+ * og dobbeltklikk på kunder for å vise kundeforholdet.
+ * @author Rany Tarek Bouorm - s236210
+ * @author Eirik Bøyum - -saveFile() og openFile()
+ */
 public class KundevisningController implements Initializable {
 
-    /*Deklarerer kunderegisteret her*/
+    // Kunderegisteret representert.
     private Kunderegister kunderegister;
 
     @FXML
@@ -52,29 +57,70 @@ public class KundevisningController implements Initializable {
     private TableView<Kunde> tableKunder;
 
     @FXML
-    private void openFile() throws  Exception, IOException{
+    private MenuItem btnÅpneFil;
+    @FXML
+    private MenuItem btnLagreTilFil;
+    @FXML
+    private Button btnOpprettNyKunde;
+    @FXML
+    private Button btnVisValgtKunde;
+
+    /**
+     * @author Eirik Bøyum
+     */
+    @FXML
+    private void openFile() {
         //TODO implementer FileChooser her
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(new Stage());
 
-        String extension = file.getName().substring(file.getName().lastIndexOf("."));
+        if( file != null ){
 
-        Context context;
-        if (extension.equals(".jobj")){
-            context = new Context(new Jobj());
-            context.readStrategy(file.getPath());
+            try{
+                //En ny tråd settes opp med to Runnable funksjoner som blir kalt når tråden er ferdig med å kjøre.
+                Thread readThread = new Thread( new RegisterReader(file.getPath(), this::generateFileLoadedAlert, this::activateButtons) );
+                deactivateButtons();
+                readThread.start();
 
-        } else if (extension.equals(".csv")){
+            } catch (InvalidFileTypeException e){
 
-        } else {
-            System.out.println("Feil filtype");
+                System.err.println(e.getMessage());
+            }
         }
-
-
     }
 
+    /**
+     * Deaktiverer knapper og menyikoner.
+     */
+    private void deactivateButtons(){
+        btnÅpneFil.setDisable(true);
+        btnLagreTilFil.setDisable(true);
+        btnOpprettNyKunde.setDisable(true);
+        btnVisValgtKunde.setDisable(true);
+    }
+
+    /**
+     * Aktiverer knapper og menyikoner.
+     */
+    private void activateButtons(){
+        btnÅpneFil.setDisable(false);
+        btnLagreTilFil.setDisable(false);
+        btnOpprettNyKunde.setDisable(false);
+        btnVisValgtKunde.setDisable(false);
+    }
+
+    private void generateFileLoadedAlert(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Registeret ble lastet inn.");
+        alert.show();
+    }
+
+    /**
+     * @author Eirik Bøyum
+     */
     @FXML
-    private void saveFile(ActionEvent event) throws IOException {
+    private void saveFile(ActionEvent event) {
+
         FileChooser fileChooser = new FileChooser();
 
         FileChooser.ExtensionFilter extensionFilterJOBJ
@@ -85,25 +131,23 @@ public class KundevisningController implements Initializable {
         fileChooser.getExtensionFilters().addAll(extensionFilterJOBJ, extensionFilterCSV);
         File file = fileChooser.showSaveDialog(new Stage());
 
-        String extension = file.getName().substring(file.getName().lastIndexOf("."));
+        if ( file != null ) {
+            try {
 
-        //test
-        System.out.println("Filendelse: " + extension);
+                Thread saveThread = new Thread( new RegisterWriter(file.getPath(), this::generateFileSavedAlert, this::activateButtons) );
+                deactivateButtons();
+                saveThread.start();
 
-        Context context;
-        if (extension.equals(".jobj")){
-            context = new Context(new Jobj());
-            context.writeStrategy(file.getPath());
-
-        } else if (extension.equals(".csv")){
-
-        } else {
-            System.out.println("Feil filtype");
+            } catch (InvalidFileTypeException e) {
+                e.printStackTrace();
+            }
         }
+    }
 
-        //Context context = new Context(new Jobj());
-        //context.fileStrategy(file.getPath());
-
+    private void generateFileSavedAlert(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Kunderegisteret ble lagret");
+        alert.show();
     }
 
 
@@ -135,10 +179,9 @@ public class KundevisningController implements Initializable {
     @FXML
     private void clickOnTable(MouseEvent event){
 
-        //TODO kall dette noe annet enn actualevent?
         //Dersom det blir oppdaget dobbeltklikk på tabellen, åpnes kundeforhold for markert kunde.
-        tableKunder.setOnMouseClicked((MouseEvent actualevent) -> {
-            if (actualevent.getButton().equals(MouseButton.PRIMARY) && actualevent.getClickCount() == 2){
+        tableKunder.setOnMouseClicked((MouseEvent clickEvent) -> {
+            if (clickEvent.getButton().equals(MouseButton.PRIMARY) && clickEvent.getClickCount() == 2){
                 visValgtKunde(new ActionEvent());
             }
         });
@@ -156,14 +199,15 @@ public class KundevisningController implements Initializable {
                 Kilder/inspirasjon for sending av parametre til kontroller:
                 https://github.com/jalopezsuarez/javafx-screens/blob/master/javafx-screens/src/com/vemovi/javafx/NavigationController.java
                 https://stackoverflow.com/questions/14187963/passing-parameters-javafx-fxml
-                 */
+                */
 
                 //Oppretter en ny kontroller-instans og setter kunde til den valgte kunden.
                 KundeforholdController kundeforholdController = new KundeforholdController(valgtKunde);
 
+                //Oppretter en FXMLLoader med fxml-filen.
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Kundeforhold.fxml"));
 
-                //Setter loaderens kontroller til kontroller-instansen. fx:controller er ikke satt i FXML-filen.
+                //Setter loaderens kontroller til kontroller-instansen da fx:controller er ikke satt i FXML-filen.
                 loader.setController(kundeforholdController);
 
                 //Loader FXML-hierarkiet
@@ -186,16 +230,16 @@ public class KundevisningController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        setUpTableKunder();
+    }
+
+    /**
+     * Setter opp kundetabellen med tilhørende søkefunksjonalitet og sortering.
+     */
+    private void setUpTableKunder(){
 
         //Henter Singleton instansen av kunderegisteret
         kunderegister = Kunderegister.getInstance();
-
-        //TODO Fjern gammel setItems som har blitt erstattet av FilteredListen under.
-        //Setter data for tabellen til kunderegisterets liste over kunder
-        //tableKunder.setItems(kunderegister.getKundeliste());
-
-        //Wrapper kundeListen fra kunderegisteret (observablelisten) i en FilteredList for å støtte søkefunksjonalitet.
-        FilteredList<Kunde> filteredList = new FilteredList<>(kunderegister.getKundeliste());
 
         //Kolonne for forsikringsnummer
         forsikringsnummerColumn.setCellValueFactory(new PropertyValueFactory<>("forsikringsnummer"));
@@ -219,6 +263,9 @@ public class KundevisningController implements Initializable {
         https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableView.html
         */
 
+        //Wrapper kundeListen fra kunderegisteret (observablelisten) i en FilteredList for å støtte søkefunksjonalitet.
+        FilteredList<Kunde> filteredList = new FilteredList<>(kunderegister.getKundeliste());
+
         //Setter opp en listener for søkefeltet (txtSearch), slik at filteret oppdateres hver gang man skriver noe nytt.
         txtSearch.textProperty().addListener((observable,oldValue,newValue) -> {
             filteredList.setPredicate(kunde -> {
@@ -228,7 +275,7 @@ public class KundevisningController implements Initializable {
                     return true;
                 }
 
-                //Teksten som skal søkes på omgjøres til lowercase.
+                //Teksten som skal søkes på omgjøres til lowercase for sammenligning.
                 String lowerCaseFilter = newValue.toLowerCase();
 
                 //Sammenligner lowerCaseFilter med fornavn, etternavn og forsikringsnummer.
@@ -251,8 +298,6 @@ public class KundevisningController implements Initializable {
         sortedList.comparatorProperty().bind(tableKunder.comparatorProperty());
         //Setter tabellens data-source til sortedList.
         tableKunder.setItems(sortedList);
-
-
     }
 
 }

@@ -1,4 +1,4 @@
-package com.rtbeb.controller.forsikring.registrering;
+package com.rtbeb.controller.registrering;
 
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
@@ -20,9 +20,13 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Kontroller for registrering av Innboforsikring.
+ * @author Rany Tarek Bouorm
+ */
 public class RegistrerInnboForsikringController extends RegistrerForsikringController implements Initializable {
 
-    Innboforsikring.Brukstype brukstype;
+    private Innboforsikring.Brukstype brukstype;
 
     public RegistrerInnboForsikringController(Kunde kunde, Innboforsikring.Brukstype brukstype){
         super(kunde);
@@ -138,7 +142,7 @@ public class RegistrerInnboForsikringController extends RegistrerForsikringContr
 
         TextField[] numericFields = {txtPostnummer,txtByggeår,txtStørrelse, txtForsikringsbeløpBygning,
                 txtForsikringsbeløpInnbo, txtForsikringspremie, txtForsikringsbeløp};
-        addNumericListeners(numericFields);
+        addNumericRestrictionsToTextFields(numericFields);
     }
 
 
@@ -198,26 +202,6 @@ public class RegistrerInnboForsikringController extends RegistrerForsikringContr
             FieldStyler.setValidStyle(txtForsikringsbeløpBygning);
             updateForsikringsbeløp();
         }
-
-    }
-
-    /**
-     * Metoden oppdaterer forsikringsbeløpet slik at det blir satt til summen av forsikringsbeløpet for innbo og bygning.
-     */
-    private void updateForsikringsbeløp(){
-
-        String forsikringbeløpInnbo = txtForsikringsbeløpInnbo.getText();
-        String forsikringsbeløpBygning = txtForsikringsbeløpBygning.getText();
-
-        try{
-
-        int forsikringbeløpInnboParsed = Integer.parseInt(forsikringbeløpInnbo);
-        int forsikringsbeløpBygningParsed = Integer.parseInt(forsikringsbeløpBygning);
-
-        int forsikringsbeløp = forsikringbeløpInnboParsed + forsikringsbeløpBygningParsed;
-        txtForsikringsbeløp.setText(String.valueOf(forsikringsbeløp));
-
-        } catch(NumberFormatException e){ /*Dette oppstår kun hvis et av feltene ikke er fylt ut.*/}
     }
 
     @FXML
@@ -232,6 +216,26 @@ public class RegistrerInnboForsikringController extends RegistrerForsikringContr
             updateForsikringsbeløp();
         }
     }
+
+    /**
+     * Metoden oppdaterer forsikringsbeløpet slik at det blir satt til summen av forsikringsbeløpet for innbo og bygning.
+     */
+    private void updateForsikringsbeløp(){
+
+        String forsikringbeløpInnbo = txtForsikringsbeløpInnbo.getText();
+        String forsikringsbeløpBygning = txtForsikringsbeløpBygning.getText();
+
+        try{
+
+            int forsikringbeløpInnboParsed = Integer.parseInt(forsikringbeløpInnbo);
+            int forsikringsbeløpBygningParsed = Integer.parseInt(forsikringsbeløpBygning);
+
+            int forsikringsbeløp = forsikringbeløpInnboParsed + forsikringsbeløpBygningParsed;
+            txtForsikringsbeløp.setText(String.valueOf(forsikringsbeløp));
+
+        } catch(NumberFormatException e){ /*Dette oppstår kun hvis et av feltene ikke er fylt ut.*/}
+    }
+
     @FXML
     private void forsikringspremieChanged(InputEvent event){
         String forsikringspremie = txtForsikringspremie.getText();

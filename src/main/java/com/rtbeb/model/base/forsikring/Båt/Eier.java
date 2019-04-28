@@ -1,5 +1,7 @@
 package com.rtbeb.model.base.forsikring.Båt;
 
+import com.rtbeb.model.base.forsikring.Validerbar;
+import com.rtbeb.model.validation.EierValidator;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,7 +13,11 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Eier implements Serializable {
+/**
+ * Klasse for Båteier.
+ * @author Rany Tarek Bouorm - s236210
+ */
+public class Eier implements Serializable, Validerbar {
     private static final long serialVersionUID = 1;
 
     private transient StringProperty fornavn;
@@ -74,5 +80,10 @@ public class Eier implements Serializable {
         this.fornavn = new SimpleStringProperty((String) objectInputStream.readObject());
         this.etternavn = new SimpleStringProperty((String) objectInputStream.readObject());
         this.fødselsdato = new SimpleObjectProperty<>((LocalDate) objectInputStream.readObject());
+    }
+
+    @Override
+    public boolean isValid() {
+        return EierValidator.EierIsValid(this);
     }
 }

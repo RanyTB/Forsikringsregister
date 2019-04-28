@@ -1,4 +1,4 @@
-package com.rtbeb.controller.forsikring.redigering;
+package com.rtbeb.controller.redigering;
 
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
@@ -16,9 +16,13 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Kontroller for redigering av innboforsikringer.
+ * @author Rany Tarek Bouorm - s236210
+ */
 public class RedigerInnboforsikringController extends RedigerforsikringController {
 
-    Innboforsikring opprinneligInnboforsikring;
+    private Innboforsikring opprinneligInnboforsikring;
 
     public RedigerInnboforsikringController(Kunde kunde, Innboforsikring innboforsikring) {
         super(kunde);
@@ -56,23 +60,26 @@ public class RedigerInnboforsikringController extends RedigerforsikringControlle
     @FXML
     private void redigerInnboforsikring(ActionEvent event) {
 
-        //Oppretter ny forsikring for validering.
-        Innboforsikring redigertInnboforsikring = generateInnboforsikring();
+        try {
+            //Oppretter ny forsikring for validering.
+            Innboforsikring redigertInnboforsikring = generateInnboforsikring();
 
-        //Hvis forsikringen er gyldig, oppdateres den opprinnelige forsikringen.
-        if (InnboForsikringValidator.innboForsikringIsValid(redigertInnboforsikring)){
-            updateOpprinneligforsikring();
-        } else{
+            //Hvis forsikringen er gyldig, oppdateres den opprinnelige forsikringen.
+            if( redigertInnboforsikring.isValid() ){
+
+                updateOpprinneligforsikring();
+
+                //Lukk stage hvis forsikring blir registrert OK.
+                Stage stage = (Stage) btnNeste.getScene().getWindow();
+                stage.close();
+            } else{
+                generateAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
+            }
+        } catch (NumberFormatException e) {
             generateAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
         }
     }
 
-    private void generateAlert(String message){
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Registreringsfeil");
-        alert.setHeaderText(message);
-        alert.showAndWait();
-    }
 
     /**
      * Oppdaterer opprinnelig forsikring til de redigerte feltene.

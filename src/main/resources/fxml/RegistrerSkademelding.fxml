@@ -21,7 +21,7 @@
             <Font name="System Bold" size="29.0" />
          </font>
       </Label>
-      <Button fx:id="button1" layoutX="93.0" layoutY="677.0" text="Tilbake" />
+      <Button fx:id="backButton" layoutX="93.0" layoutY="677.0" onAction="#backButtonClicked" text="Tilbake" />
       <Label layoutX="85.0" layoutY="110.0" prefHeight="17.0" prefWidth="124.0" text="Forsikringsnummer">
          <font>
             <Font name="System Bold" size="13.0" />

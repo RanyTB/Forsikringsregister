@@ -1,28 +1,34 @@
-package com.rtbeb.controller.forsikring.registrering;
+package com.rtbeb.controller.redigering;
 
 import com.rtbeb.controller.helper.FieldStyler;
-import com.rtbeb.model.base.forsikring.Båt.Eier;
 import com.rtbeb.model.base.Kunde;
-import com.rtbeb.model.base.exception.InvalidForsikringException;
 import com.rtbeb.model.base.forsikring.Båt.Båt;
 import com.rtbeb.model.base.forsikring.Båt.Båtforsikring;
-import com.rtbeb.model.validation.*;
+import com.rtbeb.model.base.forsikring.Båt.Eier;
+import com.rtbeb.model.validation.BåtValidator;
+import com.rtbeb.model.validation.EierValidator;
+import com.rtbeb.model.validation.ForsikringValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class RegistrerBåtforsikringController extends RegistrerForsikringController implements Initializable {
+/**
+ * Kontroller for redigering av båtforsikringer.
+ * @author Rany Tarek Bouorm - s236210
+ */
+public class RedigerBåtforsikringController extends RedigerforsikringController {
 
-    public RegistrerBåtforsikringController(Kunde kunde){
+    private Båtforsikring opprinneligforsikring;
+
+    public RedigerBåtforsikringController(Kunde kunde, Båtforsikring opprinneligforsikring){
         super(kunde);
+        this.opprinneligforsikring = opprinneligforsikring;
     }
 
     @FXML
@@ -91,26 +97,24 @@ public class RegistrerBåtforsikringController extends RegistrerForsikringContro
     }
 
     @FXML
-    private void registrerBåtforsikring(ActionEvent event){
+    private void redigerBåtforsikring(ActionEvent event){
+
 
         try {
-            Båtforsikring båtforsikring = generateBåtforsikring();
-            kunde.addForsikring(båtforsikring);
+            Båtforsikring redigertBåtforsikring = generateBåtforsikring();
 
-            //Lukk stage hvis forsikring blir registrert OK.
-            Stage stage = (Stage) btnNeste.getScene().getWindow();
-            stage.close();
+            if( redigertBåtforsikring.isValid() ) {
+                updateOpprinneligforsikring();
 
-        } catch (InvalidForsikringException|NumberFormatException e) {
-            generateAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
+                //Lukk stage hvis forsikring blir registrert OK.
+                Stage stage = (Stage) btnNeste.getScene().getWindow();
+                stage.close();
+            } else{
+                generateAlert("Kunne ikke redigere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
+            }
+        } catch (NumberFormatException e) {
+            generateAlert("Kunne ikke redigere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
         }
-    }
-
-    private void generateAlert(String message){
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Registreringsfeil");
-        alert.setHeaderText(message);
-        alert.showAndWait();
     }
 
     /**
@@ -133,18 +137,52 @@ public class RegistrerBåtforsikringController extends RegistrerForsikringContro
 
         Eier eier = new Eier(fornavn,etternavn,fødselsDato);
         Båt båt = new Båt(eier,registreringsnummer, merke, modell,lengde,årsmodell,motorinfo);
-        Båtforsikring båtforsikring = new Båtforsikring(forsikringspremie,forsikringsbeløp,betingelser,båt);
 
-        return båtforsikring;
+        return new Båtforsikring(forsikringspremie,forsikringsbeløp,betingelser,båt);
     }
 
-    //TODO fjern denne hvis fortsatt ikke brukt.
-        private String getFødselsdatoAsString(){
-        LocalDate date = dateFødselsdato.getValue();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMYY");
-        String fødselsdato = date.format(formatter);
+    private void updateOpprinneligforsikring(){
+        opprinneligforsikring.getBåt().setRegistreringsnummer( txtRegistreringsnummer.getText() );
+        opprinneligforsikring.getBåt().setMerke( txtMerke.getText() );
+        opprinneligforsikring.getBåt().setModell( txtModell.getText() );
+        opprinneligforsikring.getBåt().setLengde( txtLengde.getText() );
+        opprinneligforsikring.getBåt().setÅrsmodell( txtÅrsmodell.getText() );
+        opprinneligforsikring.getBåt().setMotorinfo( txtMotorinfo.getText() );
+        opprinneligforsikring.getBåt().getEier().setFornavn( txtFornavn.getText() );
+        opprinneligforsikring.getBåt().getEier().setEtternavn(txtEtternavn.getText() );
+        opprinneligforsikring.getBåt().getEier().setFødselsdato( dateFødselsdato.getValue() );
+        opprinneligforsikring.setForsikringspremie( Integer.parseInt(txtForsikringspremie.getText()) );
+        opprinneligforsikring.setForsikringsbeløp( Integer.parseInt(txtForsikringsbeløp.getText()) );
+        opprinneligforsikring.setForsikringsbetingelser( txtBetingelser.getText() );
+    }
 
-        return fødselsdato;
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        //initialiserer tekstfelt med opprinnelige verdier.
+        initTextFields();
+
+        TextField[] numericFields = {txtForsikringspremie, txtForsikringsbeløp, txtLengde, txtÅrsmodell};
+        addNumericListeners(numericFields);
+    }
+
+    /**
+     * Setter opp tekstfelt i dette viewet til data fra den opprinnelige forsikringen.
+     */
+    private void initTextFields(){
+        txtRegistreringsnummer.setText( opprinneligforsikring.getBåt().getRegistreringsnummer() );
+        txtMerke.setText( opprinneligforsikring.getBåt().getMerke() );
+        txtModell.setText( opprinneligforsikring.getBåt().getModell() );
+        txtLengde.setText( opprinneligforsikring.getBåt().getLengde() );
+        txtÅrsmodell.setText( opprinneligforsikring.getBåt().getÅrsmodell() );
+        txtMotorinfo.setText( opprinneligforsikring.getBåt().getMotorinfo() );
+        txtFornavn.setText( opprinneligforsikring.getBåt().getEier().getFornavn() );
+        txtEtternavn.setText( opprinneligforsikring.getBåt().getEier().getEtternavn() );
+        dateFødselsdato.setValue( opprinneligforsikring.getBåt().getEier().getFødselsdato() );
+        txtForsikringspremie.setText( opprinneligforsikring.getForsikringspremie().toString() );
+        txtForsikringsbeløp.setText( opprinneligforsikring.getForsikringsbeløp().toString() );
+        txtBetingelser.setText( opprinneligforsikring.getForsikringsbetingelser() );
+
     }
 
     //-----------VALIDERING--------------------//
@@ -280,13 +318,5 @@ public class RegistrerBåtforsikringController extends RegistrerForsikringContro
             FieldStyler.setValidStyle(txtBetingelser);
         }
     }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        TextField[] numericFields = {txtForsikringspremie, txtForsikringsbeløp, txtLengde, txtÅrsmodell};
-        addNumericListeners(numericFields);
-    }
-
 
 }

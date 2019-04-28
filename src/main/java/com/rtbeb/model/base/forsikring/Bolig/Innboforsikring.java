@@ -10,6 +10,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+/**
+ * Klasse for innboforsikring.
+ * @author Rany Tarek Bouorm - s236210
+ */
 public class Innboforsikring extends Forsikring implements Serializable, Validerbar {
 
     private Brukstype brukstype;
@@ -37,7 +41,7 @@ public class Innboforsikring extends Forsikring implements Serializable, Valider
 
         private String forsikringstype;
 
-        private Brukstype(String forsikringsstype){
+        Brukstype(String forsikringsstype){
             this.forsikringstype = forsikringsstype;
         }
 

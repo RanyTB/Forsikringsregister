@@ -10,6 +10,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+/**
+ * Klasse for båtforsikring.
+ * @author Rany Tarek Bouorm - s236210
+ */
 public class Båtforsikring extends Forsikring implements Serializable, Validerbar {
     private static final long serialVersionUID = 1;
 
@@ -51,6 +55,7 @@ public class Båtforsikring extends Forsikring implements Serializable, Validerb
      * Validerer dette objektet etter satte valideringsregler.
      * @return Returnerer true hvis gyldig.
      */
+    @Override
     public boolean isValid(){
         return BåtforsikringValidator.BåtforsikringIsValid(this);
     }

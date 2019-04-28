@@ -1,4 +1,4 @@
-package com.rtbeb.controller.forsikring.registrering;
+package com.rtbeb.controller.registrering;
 
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
@@ -16,9 +16,14 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
+/**
+ * Kontroller for registrering av Reiseforsikring
+ * @author Rany Tarek Bouorm - s236210
+ */
 public class RegistrerReiseforsikringController extends RegistrerForsikringController implements Initializable {
 
-    public RegistrerReiseforsikringController(Kunde kunde){
+    RegistrerReiseforsikringController(Kunde kunde){
         super(kunde);
     }
 
@@ -102,6 +107,13 @@ public class RegistrerReiseforsikringController extends RegistrerForsikringContr
                 forsikringsbetingelser, forsikringsområde, forsikringssum);
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        TextField[] numericFields = {txtForsikringspremie, txtForsikringsbeløp, txtForsikringssum};
+        addNumericRestrictionsToTextFields(numericFields);
+    }
+
     //-----------VALIDERING---------//
 
     @FXML
@@ -158,13 +170,6 @@ public class RegistrerReiseforsikringController extends RegistrerForsikringContr
         } else{
             FieldStyler.setValidStyle(txtForsikringssum);
         }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        TextField[] numericFields = {txtForsikringspremie, txtForsikringsbeløp, txtForsikringssum};
-        addNumericListeners(numericFields);
     }
 
 }
