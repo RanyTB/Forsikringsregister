@@ -91,6 +91,10 @@ public abstract class Forsikring implements Serializable, Validerbar {
     public void setForsikringsbetingelser(String forsikringsbetingelser) {
         this.forsikringsbetingelser.set(forsikringsbetingelser);
     }
+    public String toStringForsikring(){
+        String forsirking = "\"" + "";
+        return forsirking;
+    }
 
     //Egendefinert serialisering
     private void writeObject(ObjectOutputStream objectOutputStream) throws IOException {
