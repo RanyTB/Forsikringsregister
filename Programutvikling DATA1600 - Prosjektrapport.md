@@ -52,7 +52,7 @@ Gruppen, bestående av Rany Tarek Bouorm og Eirik Bøyum, kom til enighet om å 
 
 Første gruppemøte ble holdt 2. April 2019. Her ble oppgaven gjennomgått og det ble gjort rede for de forskjellige bruksscenarioene gruppen så for seg. Basert på dette ble det utarbeidet noen skisser over de forskjellige vinduene programmet skulle ha. Medlemmene kom også til enighet om forarbeidet som skulle gjøres på dette møtet.
 
-Forarbeid
+##### Forarbeid
 
 * En oppgave kalt "NotepadFX" som var lagt ut på ressurssiden i emnet, hvor en imitasjon av Notepad skulle implementeres i Java med fillagring og bruk av tråder. 
 * Gjennomgåelse av [Oracle sin tutorial](https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/table-view.htm) på bruk av TableView.
@@ -71,4 +71,14 @@ Etter at disse ble implementert, begynte arbeidet med å implementere visning (T
 Oppgaven med å implementere TableView, registrering og redigering ble tildelt Rany, mens oppgaven i filhåndtering ble tildelt Eirik. Etterhvert ble det klart at Eirik hadde utfordringer med å utføre den tildelte oppgaven, da han ikke hadde skrevet klassene som skulle lagres. Her var blant annet bruken av properties forvirrende. Dette ble løst ved å jobbe med denne delen av oppgaven sammen i form av parprogrammering. Filhåndtering med filtypen "CSV" ble forskjøvet til slutt, og Eirik fikk i oppgave å implementere funksjonalitet for skademeldinger og ubetalte erstatninger, slik at han også fikk erfaring med blant annet JavaFX, TableView og bruk av properties.
 
 
+
+* Belyse de delene av oppgaven dere er spesielt fornøyd med.
+  * Ryddigheten i kode, navngivning av metoder, bruk av hjelpemetoder for å forbedre lesbarhet hvor dette er mulig.
+  * Implementasjonen av TableView og hvordan dette oppdateres i sanntid.
+  * Implementasjonen av ubetalte erstatninger istedenfor å ha dette som en egen klasse.
+* Diskusjon rundt elementer som dere mener kunne ha blitt gjennomført bedre og/eller
+  aspekter i besvarelsen dere ikke er helt fornøyd med.
+* Utdyp hva dere har lært i henhold til prosjektarbeid og hva dere vil gjøre annerledes for deres
+  neste store gruppeprosjekt.
+* Beskrivelse av arbeidet som har blitt uført for hvert medle
 
