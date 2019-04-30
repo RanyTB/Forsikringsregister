@@ -2,10 +2,6 @@
 
 ## Innledning
 
-
-
-### Bakgrunn
-
 I faget Programutvikling DATA1600 - Våren 2019, ble det gitt i semesteroppgave å utvikle et registreringssystem. Arbeidet skal foregå over 5 uker og forventet arbeidsmengde er 50-60 timer per person. Det var tre alternativer å velge mellom, henholdsvis et registreringssystem for forsikring, vikarbyrå eller kulturhus.
 
 Gruppen, bestående av Rany Tarek Bouorm og Eirik Bøyum, valgte oppgaven om forsikring. 
@@ -38,6 +34,7 @@ Et registreringssystem for forsikringer skal implementeres. Oppgavens vedlegg li
 | [Scene Builder](<https://gluonhq.com/products/scene-builder/>) | Grafisk grensesnitt for produksjon av FXML filer. Brukt for å lage brukergrensesnittene i programmet. |
 | [Maven](https://maven.apache.org/)                           | Prosjekthåndteringsverktøy. Brukt til å integrere JavaFX og JUnit i prosjektet. |
 | [Git](https://git-scm.com/)                                  | Versjonskontrollssystem. Brukt til å holde orden på prosjektet med historikk og muligheten for å reversere endringer. |
+| [GitHub Dekstop](https://desktop.github.com/)                | Grafisk brukergrensesnitt for bruk av git. Brukt som supplement til git kommandolinje. |
 | [Evernote](https://evernote.com/)                            | Notatprogram. Brukt til å skrive sammendrag av gruppemøter og til å dele informasjon mellom gruppemedlemmene. |
 | [Typora](https://typora.io/)                                 | Enkelt program for produksjon av Markdown dokumenter. Brukt til denne rapporten. |
 
@@ -52,23 +49,31 @@ Gruppen, bestående av Rany Tarek Bouorm og Eirik Bøyum, kom til enighet om å 
 
 Første gruppemøte ble holdt 2. April 2019. Her ble oppgaven gjennomgått og det ble gjort rede for de forskjellige bruksscenarioene gruppen så for seg. Basert på dette ble det utarbeidet noen skisser over de forskjellige vinduene programmet skulle ha. Medlemmene kom også til enighet om forarbeidet som skulle gjøres på dette møtet.
 
-##### Forarbeid
+##### Utført forarbeid
 
 * En oppgave kalt "NotepadFX" som var lagt ut på ressurssiden i emnet, hvor en imitasjon av Notepad skulle implementeres i Java med fillagring og bruk av tråder. 
 * Gjennomgåelse av [Oracle sin tutorial](https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/table-view.htm) på bruk av TableView.
 * Oppsett av "hello world" modulbasert Maven-prosjekt i IntelliJ med JavaFX som dependency.
 * Lesing av deler av boken [Clean Code: A Handbook of Agile Software Craftmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) og sammendrag av denne.
-* Lesing om designmønstre, spesielt "strategy" mønsteret, men også "factory" og "state".
+* Lesing om vanlige designmønstre, spesielt "strategy" mønsteret, men også "factory" og "state".
 
-Punktene listet over ble gjort av minst ett gruppemedlem, og gjorde gruppen bedre rustet til å planlegge oppgaven, da det ga erfaring med mange av de forskjellige funksjonalitetene som skulle implementeres.
+Punktene listet over ble gjort av minst ett gruppemedlem og videreformidlet. Dette gjorde gruppen bedre rustet til å planlegge oppgaven, da det ga erfaring med noen av de forskjellige funksjonalitetene som skulle implementeres og verktøyene som skulle brukes.
 
 ##### Videre arbeid
 
-Etter forarbeidet ble prosjektet satt opp i [git](<https://git-scm.com/>). Gruppen kom til enighet om at det vil være naturlig å starte med å opprette klassen for kunde og en klasse for kunderegister, som skal fungere som en Singleton klasse hvor programmets data er lagret. 
+Etter forarbeidet ble prosjektet satt opp i [git](<https://git-scm.com/>). Gruppen kom til enighet om at det vil være naturlig å starte med å opprette klassen for kunde og en klasse for kunderegister som skal fungere som en Singleton klasse hvor programmets data er lagret. 
 
 Etter at disse ble implementert, begynte arbeidet med å implementere visning (TableView), registrering og redigering av kunder, samt lagring og innlesing av disse til og fra fil. Deretter ble dette utvidet ved å legge til forsikringer og skademeldinger.
 
 Oppgaven med å implementere TableView, registrering og redigering ble tildelt Rany, mens oppgaven i filhåndtering ble tildelt Eirik. Etterhvert ble det klart at Eirik hadde utfordringer med å utføre den tildelte oppgaven, da han ikke hadde skrevet klassene som skulle lagres. Her var blant annet bruken av properties forvirrende. Dette ble løst ved å jobbe med denne delen av oppgaven sammen i form av parprogrammering. Filhåndtering med filtypen "CSV" ble forskjøvet til slutt, og Eirik fikk i oppgave å implementere funksjonalitet for skademeldinger og ubetalte erstatninger, slik at han også fikk erfaring med blant annet JavaFX, TableView og bruk av properties.
+
+<div style="page-break-after: always;"></div>
+
+### Resultater
+
+Arbeidet resulterte til slutt i et fungerende registreringssystem for kunder, forsikringer og skademeldinger. Programmet er objektorientert, og relaterte elementer er abstrahert ut i egne klasser. For eksempel har en båtforsikring en båt, og båten har en eier, slik at når en båtforsikring skal opprettes, vil man i konstruktøren kun sette verdiene på felt arvet fra klassen Forsikring, og Båten som skal forsikres. Dette begrenser lengde på konstruktørene betraktelig i forhold til å ha alle feltene relatert til Båt og Eier rett i Båtforsikring-klassen.
+
+I oppgaven har vi lagt stor vekt på lesbarheten av kode og bruk av Javadocs, som forenkler utviklingsprosessen og muliggjør utvidelse av programmet senere. Vi har også forsøkt å holde oss til [SOLID-prinsippene](https://en.wikipedia.org/wiki/SOLID), spesielt 
 
 
 
@@ -80,5 +85,15 @@ Oppgaven med å implementere TableView, registrering og redigering ble tildelt R
   aspekter i besvarelsen dere ikke er helt fornøyd med.
 * Utdyp hva dere har lært i henhold til prosjektarbeid og hva dere vil gjøre annerledes for deres
   neste store gruppeprosjekt.
-* Beskrivelse av arbeidet som har blitt uført for hvert medle
+* Beskrivelse av arbeidet som har blitt uført for hvert medlem.
+
+
+
+### Forslag til forbedringer
+
+* Effektivitet:
+* Utseende:
+* Kodekvalitet
+* Utvidbarhet: F.eks hvis man skal legge til en ny forsikringstype, hvor mye må gjøres? 
+* 
 
