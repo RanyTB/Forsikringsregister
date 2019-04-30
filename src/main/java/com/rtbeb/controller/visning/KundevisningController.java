@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.rtbeb.controller.helper.FXMLStyler;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
 import com.rtbeb.model.filemanagement.exception.InvalidFileTypeException;
@@ -28,12 +29,18 @@ import javafx.stage.Stage;
  * Entry-point for programmet. Viser en oversikt over alle kunder, tillater sletting og redigering av kunder
  * og dobbeltklikk på kunder for å vise kundeforholdet.
  * @author Rany Tarek Bouorm - s236210
- * @author Eirik Bøyum - -saveFile() og openFile()
+ * @author Eirik Bøyum - Filbehandlingsmetoder
  */
 public class KundevisningController implements Initializable {
 
     // Kunderegisteret representert.
     private Kunderegister kunderegister;
+
+    @FXML
+    Label lblTitle;
+
+    @FXML
+    Label lblSøk;
 
     @FXML
     TextField txtSearch;
@@ -65,9 +72,6 @@ public class KundevisningController implements Initializable {
     @FXML
     private Button btnVisValgtKunde;
 
-    /**
-     * @author Eirik Bøyum
-     */
     @FXML
     private void openFile() {
         //TODO implementer FileChooser her
@@ -115,9 +119,6 @@ public class KundevisningController implements Initializable {
         alert.show();
     }
 
-    /**
-     * @author Eirik Bøyum
-     */
     @FXML
     private void saveFile(ActionEvent event) {
 
@@ -150,23 +151,13 @@ public class KundevisningController implements Initializable {
         alert.show();
     }
 
-
-    @FXML
-    private void testButtonAction(ActionEvent event) {
-        //TODO Implementer denne som en test og fjern den herfra.
-        //Lag ny kunde og test tableview.
-        System.out.println("You clicked me!");
-
-        //Test for om data blir endret i tabellen når de endres i kundeobjektet:
-        kunderegister.getKundeliste().get(0).setFornavn("Test");
-        kunderegister.getKundeliste().get(1).setEtternavn("Test");
-    }
-
     @FXML
     private void opprettNyKunde(ActionEvent event){
         try{
+            //Åpner kundescene
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/NyKunde.fxml"));
             Scene kundeScene = new Scene(root);
+            FXMLStyler.addDefaultStyleSheet(kundeScene);
             Stage newStage = new Stage();
             newStage.setScene(kundeScene);
             newStage.show();
@@ -213,8 +204,9 @@ public class KundevisningController implements Initializable {
                 //Loader FXML-hierarkiet
                 Parent root = loader.load();
 
-                //Oppretter ny scene
+                //Oppretter ny scene og setter css stylesheet
                 Scene scene = new Scene(root);
+                FXMLStyler.addDefaultStyleSheet(scene);
 
                 //Henter nåværende vindu
                 Stage stage = (Stage) tableKunder.getScene().getWindow();
@@ -237,6 +229,8 @@ public class KundevisningController implements Initializable {
      * Setter opp kundetabellen med tilhørende søkefunksjonalitet og sortering.
      */
     private void setUpTableKunder(){
+
+        tableKunder.setPlaceholder( new Label("Det er ingen elementer i tabbellen. Elementer kan importeres via Fil -> Åpne fil"));
 
         //Henter Singleton instansen av kunderegisteret
         kunderegister = Kunderegister.getInstance();

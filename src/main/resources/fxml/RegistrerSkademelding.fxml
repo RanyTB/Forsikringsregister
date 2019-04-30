@@ -1,63 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" onKeyTyped="#utbetaltChanged" prefHeight="788.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="Pane" onKeyTyped="#utbetaltChanged" prefHeight="733.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Button fx:id="btnRegistrerSkademelding" layoutX="262.0" layoutY="676.0" onAction="#registrerSkademeldingClicked" text="Registrer skademelding" />
         <Label fx:id="label" layoutX="277.0" layoutY="380.0" minHeight="16" minWidth="69" />
-      <Label layoutX="83.0" layoutY="41.0" prefHeight="34.0" prefWidth="199.0" text="Skademelding">
+      <Label id="titleLabel" layoutX="83.0" layoutY="41.0" prefHeight="34.0" prefWidth="199.0" text="Skademelding" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="30.0">
          <font>
             <Font name="System Bold" size="29.0" />
          </font>
       </Label>
-      <Button fx:id="backButton" layoutX="93.0" layoutY="677.0" onAction="#backButtonClicked" text="Tilbake" />
-      <Label layoutX="85.0" layoutY="110.0" prefHeight="17.0" prefWidth="124.0" text="Forsikringsnummer">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblForsikringsnummer" layoutX="233.0" layoutY="110.0" prefHeight="17.0" prefWidth="86.0" text="Nummer" />
-      <DatePicker fx:id="datePicker" layoutX="85.0" layoutY="154.0" onAction="#dateChanged" promptText="Dato" />
-      <Label layoutX="59.0" layoutY="212.0" prefHeight="17.0" prefWidth="80.0" text="Type skade">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <Label layoutX="58.0" layoutY="256.0" prefHeight="17.0" prefWidth="71.0" text="Beskrivelse">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <Label layoutX="67.0" layoutY="388.0" prefHeight="17.0" prefWidth="45.0" text="Vitner">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <Label layoutX="36.0" layoutY="508.0" prefHeight="17.0" prefWidth="134.0" text="Taksering av skaden">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <Label layoutX="31.0" layoutY="565.0" prefHeight="17.0" prefWidth="164.0" text="Utbetalt erstatningsbeløp">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtTypeSkade" layoutX="210.0" layoutY="207.0" onKeyTyped="#typeSkadeChanged" prefHeight="27.0" prefWidth="148.0" />
-      <TextField fx:id="txtUtbetaltErstatningsbeløp" layoutX="230.0" layoutY="561.0" onKeyTyped="#utbetaltChanged" />
-      <TextField fx:id="txtTakseringAvSkaden" layoutX="217.0" layoutY="502.0" onKeyTyped="#takseringChanged" />
-      <TextArea fx:id="txtBeskrivelse" layoutX="210.0" layoutY="265.0" onKeyTyped="#beskrivelseChanged" prefHeight="91.0" prefWidth="245.0" />
-      <TextArea fx:id="txtVitner" layoutX="212.0" layoutY="385.0" onKeyTyped="#vitneChanged" prefHeight="91.0" prefWidth="245.0" />
+      <GridPane layoutX="85.0" layoutY="167.0" prefHeight="540.0" prefWidth="515.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="249.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow="SOMETIMES" />
+          <RowConstraints vgrow="SOMETIMES" />
+          <RowConstraints vgrow="SOMETIMES" />
+          <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label prefHeight="17.0" prefWidth="80.0" styleClass="descLabel" text="Type skade" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label prefHeight="17.0" prefWidth="71.0" styleClass="descLabel" text="Beskrivelse" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label prefHeight="17.0" prefWidth="45.0" styleClass="descLabel" text="Vitner" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label prefHeight="17.0" prefWidth="134.0" styleClass="descLabel" text="Taksering av skaden" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label prefHeight="17.0" prefWidth="164.0" styleClass="descLabel" text="Utbetalt erstatningsbeløp" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtTypeSkade" onKeyTyped="#typeSkadeChanged" prefHeight="27.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextArea fx:id="txtBeskrivelse" onKeyTyped="#beskrivelseChanged" prefHeight="195.0" prefWidth="291.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </TextArea>
+            <TextArea fx:id="txtVitner" onKeyTyped="#vitneChanged" prefHeight="91.0" prefWidth="243.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </TextArea>
+            <TextField fx:id="txtTakseringAvSkaden" maxWidth="-Infinity" onKeyTyped="#takseringChanged" prefHeight="31.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="txtUtbetaltErstatningsbeløp" maxWidth="-Infinity" onKeyTyped="#utbetaltChanged" prefHeight="31.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </TextField>
+            <DatePicker fx:id="datePicker" onAction="#dateChanged" promptText="Dato" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </DatePicker>
+            <Label prefHeight="17.0" prefWidth="80.0" styleClass="descLabel" text="Dato" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label prefHeight="17.0" prefWidth="124.0" styleClass="descLabel" text="Forsikringsnummer">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblForsikringsnummer" prefHeight="17.0" prefWidth="86.0" text="Nummer" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </Label>
+         </children>
+      </GridPane>
+        <Button fx:id="btnRegistrerSkademelding" layoutX="409.0" layoutY="543.0" onAction="#registrerSkademeldingClicked" text="Registrer skademelding" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0" />
+      <Button fx:id="backButton" layoutX="45.0" layoutY="673.0" onAction="#backButtonClicked" text="Tilbake" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" />
     </children>
 </AnchorPane>

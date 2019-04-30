@@ -1,5 +1,6 @@
 package com.rtbeb.controller.registrering;
 
+import com.rtbeb.controller.helper.FXMLStyler;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.forsikring.Bolig.Innboforsikring;
 import javafx.event.ActionEvent;
@@ -39,6 +40,7 @@ public class RegistrerNyForsikringController implements Initializable {
             loader.setController(controller);
             Parent root = loader.load();
             Scene scene = new Scene(root);
+            FXMLStyler.addDefaultStyleSheet(scene);
             Stage stage = (Stage) lblTitle.getScene().getWindow();
             stage.setScene(scene);
 
@@ -56,6 +58,7 @@ public class RegistrerNyForsikringController implements Initializable {
             loader.setController(controller);
             Parent root = loader.load();
             Scene scene = new Scene(root);
+            FXMLStyler.addDefaultStyleSheet(scene);
             Stage stage = (Stage) lblTitle.getScene().getWindow();
             stage.setScene(scene);
 
@@ -73,6 +76,7 @@ public class RegistrerNyForsikringController implements Initializable {
             loader.setController(controller);
             Parent root = loader.load();
             Scene scene = new Scene(root);
+            FXMLStyler.addDefaultStyleSheet(scene);
             Stage stage = (Stage) lblTitle.getScene().getWindow();
             stage.setScene(scene);
 
@@ -90,6 +94,7 @@ public class RegistrerNyForsikringController implements Initializable {
             loader.setController(controller);
             Parent root = loader.load();
             Scene scene = new Scene(root);
+            FXMLStyler.addDefaultStyleSheet(scene);
             Stage stage = (Stage) lblTitle.getScene().getWindow();
             stage.setScene(scene);
 

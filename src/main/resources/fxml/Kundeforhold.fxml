@@ -16,73 +16,81 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="723.0" prefWidth="685.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="Pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="794.0" prefWidth="685.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <SplitPane dividerPositions="0.3897364771151179" layoutY="1.0" orientation="VERTICAL" prefHeight="962.0" prefWidth="685.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.4105409153952843" layoutY="1.0" orientation="VERTICAL" prefHeight="962.0" prefWidth="685.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="256.0" prefWidth="683.0">
+          <AnchorPane id="Pane" minHeight="0.0" minWidth="0.0" prefHeight="256.0" prefWidth="683.0">
                <children>
-                  <GridPane hgap="30.0" layoutX="30.0" layoutY="96.0" prefHeight="123.0" prefWidth="623.0" vgap="10.0" AnchorPane.bottomAnchor="83.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0">
+                  <GridPane hgap="30.0" layoutX="30.0" layoutY="96.0" vgap="10.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="0.0" prefWidth="450.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="43.0" minHeight="12.0" prefHeight="12.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="51.0" minHeight="2.0" prefHeight="18.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="93.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="93.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                      <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                      <RowConstraints vgrow="SOMETIMES" />
+                      <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="15.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label fx:id="lblFakturaadresse" text="Adresse" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
                         <Label fx:id="lblPostnummer" text="9999" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
-                        <Label text="Postnr" GridPane.rowIndex="3">
+                        <Label styleClass="descLabel" text="Postnr" GridPane.rowIndex="3">
                            <font>
-                              <Font name="System Bold" size="15.0" />
+                              <Font name="Segoe UI Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label text="Fakturaadresse" GridPane.rowIndex="2">
+                        <Label styleClass="descLabel" text="Fakturaadresse" GridPane.rowIndex="2">
                            <font>
-                              <Font name="System Bold" size="15.0" />
+                              <Font name="Segoe UI Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label text="Navn" GridPane.rowIndex="1">
+                        <Label styleClass="descLabel" text="Navn" GridPane.rowIndex="1">
                            <font>
-                              <Font name="System Bold" size="15.0" />
+                              <Font name="Segoe UI Bold" size="15.0" />
                            </font>
                         </Label>
                         <HBox prefHeight="21.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
-                              <Label fx:id="lblFornavn" text="Fornavn" />
-                              <Label fx:id="lblEtternavn" text="Etternavn">
-                                 <padding>
-                                    <Insets left="10.0" />
-                                 </padding>
-                              </Label>
+                              <Label fx:id="lblFornavn" text="Fornavn">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin></Label>
+                              <Label fx:id="lblEtternavn" text="Etternavn" />
                            </children>
                         </HBox>
-                        <Label text="Forsikringsnr">
+                        <Label styleClass="descLabel" text="Forsikringsnr">
                            <font>
-                              <Font name="System Bold" size="15.0" />
+                              <Font name="Segoe UI Bold" size="15.0" />
                            </font>
                         </Label>
                         <Label fx:id="lblForsikringsnummer" text="9999999" GridPane.columnIndex="1" />
+                        <Button fx:id="btnRedigerKunde" mnemonicParsing="false" onAction="#redigerKundeClicked" prefHeight="35.0" text="Rediger kunde" GridPane.rowIndex="4">
+                           <GridPane.margin>
+                              <Insets top="10.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="btnSlettKunde" mnemonicParsing="false" onAction="#slettKundeClicked" prefHeight="35.0" text="Slett kunde" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <GridPane.margin>
+                              <Insets top="10.0" />
+                           </GridPane.margin>
+                        </Button>
                      </children>
                   </GridPane>
-                  <Label layoutX="45.0" layoutY="33.0" text="Kundeforhold" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                  <Label id="titleLabel" layoutX="45.0" layoutY="33.0" text="Kundeforhold" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
                      <font>
-                        <Font name="System Bold" size="29.0" />
+                        <Font name="Segoe UI Bold" size="29.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnRedigerKunde" layoutX="30.0" layoutY="281.0" mnemonicParsing="false" onAction="#redigerKundeClicked" prefHeight="30.0" prefWidth="120.0" text="Rediger kunde" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" />
-                  <Button fx:id="btnSlettKunde" layoutX="172.0" layoutY="277.0" mnemonicParsing="false" onAction="#slettKundeClicked" prefHeight="30.0" prefWidth="120.0" text="Slett kunde" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="175.0" />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="471.0" prefWidth="683.0">
+          <AnchorPane id="Pane" minHeight="0.0" minWidth="0.0" prefHeight="456.0" prefWidth="683.0">
                <children>
-                  <TabPane prefHeight="406.0" prefWidth="683.0" tabClosingPolicy="UNAVAILABLE">
+                  <TabPane id="tabPane" prefHeight="406.0" prefWidth="683.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                      <Tab text="Forsikring">
+                      <Tab id="tabButton" text="Forsikring">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="373.0" prefWidth="683.0">
                                  <children>
@@ -94,19 +102,19 @@
                                           <TableColumn fx:id="datoOpprettetColumn" minWidth="100.0" prefWidth="160.0" text="Dato" />
                                       </columns>
                                     </TableView>
-                                    <FlowPane layoutX="142.0" layoutY="238.0" prefHeight="45.0" prefWidth="623.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+                                    <FlowPane layoutX="142.0" layoutY="238.0" prefHeight="45.0" prefWidth="623.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="240.0">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#nyForsikringButtonClicked" text="Opprett ny forsikring">
+                                          <Button mnemonicParsing="false" onAction="#nyForsikringButtonClicked" prefHeight="35.0" text="Opprett ny forsikring">
                                              <FlowPane.margin>
                                                 <Insets bottom="10.0" top="10.0" />
                                              </FlowPane.margin>
                                           </Button>
-                                          <Button mnemonicParsing="false" onAction="#redigerForsikringButtonClicked" text="Rediger valgt forsikring">
+                                          <Button mnemonicParsing="false" onAction="#redigerForsikringButtonClicked" prefHeight="35.0" text="Rediger valgt forsikring">
                                              <FlowPane.margin>
                                                 <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                                              </FlowPane.margin>
                                           </Button>
-                                          <Button mnemonicParsing="false" onAction="#slettForsikringButtonClicked" text="Slett valgt forsikring">
+                                          <Button mnemonicParsing="false" onAction="#slettForsikringButtonClicked" prefHeight="35.0" text="Slett valgt forsikring">
                                              <FlowPane.margin>
                                                 <Insets bottom="10.0" top="10.0" />
                                              </FlowPane.margin>
@@ -117,7 +125,7 @@
                               </AnchorPane>
                         </content>
                       </Tab>
-                      <Tab text="Skademelding">
+                      <Tab id="tabButton" text="Skademelding">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="358.0" prefWidth="683.0">
                                  <children>
@@ -132,17 +140,17 @@
                                     </TableView>
                                     <FlowPane layoutX="30.0" layoutY="242.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="240.0">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#nySkademeldingButtonClicked" text="Ny skademelding">
+                                          <Button mnemonicParsing="false" onAction="#nySkademeldingButtonClicked" prefHeight="35.0" text="Ny skademelding">
                                              <FlowPane.margin>
                                                 <Insets bottom="10.0" top="10.0" />
                                              </FlowPane.margin>
                                           </Button>
-                                          <Button mnemonicParsing="false" onAction="#slettSkademeldingButtonClicked" text="Slett skademelding">
+                                          <Button mnemonicParsing="false" onAction="#slettSkademeldingButtonClicked" prefHeight="35.0" text="Slett skademelding">
                                              <FlowPane.margin>
                                                 <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
                                              </FlowPane.margin>
                                           </Button>
-                                          <Button mnemonicParsing="false" onAction="#redigerSkademeldingButtonClicked" text="Rediger skademelding">
+                                          <Button mnemonicParsing="false" onAction="#redigerSkademeldingButtonClicked" prefHeight="35.0" text="Rediger skademelding">
                                              <FlowPane.margin>
                                                 <Insets bottom="10.0" top="10.0" />
                                              </FlowPane.margin>
@@ -152,11 +160,11 @@
                                  </children></AnchorPane>
                         </content>
                       </Tab>
-                        <Tab text="Ubetalt erstatning">
+                        <Tab id="tabButton" text="Ubetalt erstatning">
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="368.0" prefWidth="683.0">
                                  <children>
-                                    <TableView fx:id="tableUbetalteErstatninger" layoutX="45.0" layoutY="36.0" prefHeight="242.0" prefWidth="549.0">
+                                    <TableView fx:id="tableUbetalteErstatninger" layoutX="45.0" layoutY="36.0" prefHeight="200.0" prefWidth="549.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
                                        <columns>
                                           <TableColumn fx:id="ubetaltDatoForSkadeColumn" prefWidth="82.0" text="Dato" />
                                           <TableColumn fx:id="ubetaltSkadennummerColumn" prefWidth="127.0" text="Skadenummer" />
@@ -164,15 +172,14 @@
                                           <TableColumn fx:id="ubetaltTakseringAvSkadeColumn" prefWidth="152.0" text="Taksering" />
                                        </columns>
                                     </TableView>
-                                    <Button layoutX="45.0" layoutY="289.0" mnemonicParsing="false" onAction="#ubetalteErstatningButtonClicked" prefHeight="27.0" prefWidth="210.0" text="Utbetal erstatning" />
-                                    <Button layoutX="404.0" layoutY="289.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="190.0" text="Slett erstatning" />
+                                    <Button layoutX="513.0" layoutY="251.0" mnemonicParsing="false" onAction="#ubetalteErstatningButtonClicked" prefHeight="35.0" text="Utbetal erstatning" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="250.0" />
                                  </children>
                               </AnchorPane>
                            </content>
                         </Tab>
                     </tabs>
                   </TabPane>
-                  <Button fx:id="backButton" layoutX="30.0" layoutY="595.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="30.0" prefWidth="67.0" text="Tilbake" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" />
+                  <Button fx:id="backButton" layoutX="30.0" layoutY="595.0" mnemonicParsing="false" onAction="#backButtonClicked" prefHeight="35.0" text="Tilbake" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" />
                </children>
             </AnchorPane>
         </items>

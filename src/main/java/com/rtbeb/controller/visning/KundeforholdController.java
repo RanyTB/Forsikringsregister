@@ -1,6 +1,7 @@
 package com.rtbeb.controller.visning;
 
 
+import com.rtbeb.controller.helper.FXMLStyler;
 import com.rtbeb.controller.redigering.RedigerKundeController;
 import com.rtbeb.controller.redigering.RedigerSkademeldingController;
 import com.rtbeb.controller.redigering.UtbetalErstatningController;
@@ -69,9 +70,11 @@ public class KundeforholdController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RedigerKunde.fxml"));
         loader.setController(redigerKundeController);
 
-        //Loader parent og åpner kunderedigering i nytt vindu.
+        //Loader parent og åpner kunderedigering i nytt vindu og setter stylesheet.
         Parent root = loader.load();
         Scene scene = new Scene(root);
+        FXMLStyler.addDefaultStyleSheet(scene);
+
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
@@ -102,6 +105,7 @@ public class KundeforholdController implements Initializable {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/Kundevisning.fxml"));
             Scene scene = new Scene(root);
+            FXMLStyler.addDefaultStyleSheet(scene);
             Stage stage = (Stage) btnSlettKunde.getScene().getWindow();
             stage.setScene(scene);
         } catch (IOException e) {
@@ -117,6 +121,7 @@ public class KundeforholdController implements Initializable {
 
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/kundevisning.fxml"));
             Scene previousScene = new Scene(root);
+            FXMLStyler.addDefaultStyleSheet(previousScene);
             Stage stage = (Stage) backButton.getScene().getWindow();
             stage.setScene(previousScene);
 
@@ -181,6 +186,7 @@ public class KundeforholdController implements Initializable {
             loader.setController(controller);
             Parent root = loader.load();
             Scene scene = new Scene(root);
+            FXMLStyler.addDefaultStyleSheet(scene);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.show();
@@ -275,8 +281,9 @@ public class KundeforholdController implements Initializable {
             //Loader FXML-hierarkiet
             Parent root = loader.load();
 
-            //Oppretter ny scene
+            //Oppretter ny scene og setter stylesheet
             Scene scene = new Scene(root);
+            FXMLStyler.addDefaultStyleSheet(scene);
 
             //Oppretter ny stage
             Stage stage = new Stage();
@@ -312,8 +319,9 @@ public class KundeforholdController implements Initializable {
             //Loader FXML-hierarkiet
             Parent root = loader.load();
 
-            //Oppretter ny scene
+            //Oppretter ny scene og setter stylesheet
             Scene scene = new Scene(root);
+            FXMLStyler.addDefaultStyleSheet(scene);
 
             //Oppretter ny stage
             Stage stage = new Stage();
@@ -380,8 +388,9 @@ public class KundeforholdController implements Initializable {
             //Loader FXML-hierarkiet
             Parent root = loader.load();
 
-            //Oppretter ny scene
+            //Oppretter ny scene og setter stylesheet
             Scene scene = new Scene(root);
+            FXMLStyler.addDefaultStyleSheet(scene);
 
             //Oppretter ny stage
             Stage stage = new Stage();
