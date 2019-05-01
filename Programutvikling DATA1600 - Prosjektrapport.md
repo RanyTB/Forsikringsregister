@@ -187,7 +187,7 @@ Prosjektet har vært det første større prosjektet vi har hatt iløpet av studi
 - Vi har lært å bruke git til å samarbeide. Spesielt i form av Feature Branching. Vi har også hatt noen problemer og frustrasjoner med git underveis, som har gjort at vi måtte grave dypere i dokumentasjonen av git's mange funksjonaliteter. Dette har økt forståelsen av git.
 - Vi har erfart at det ikke alltid er lett å sette seg inn i andres kode, og at parprogrammering kan hjelpe på dette.
 
-Til neste prosjekt ønsker vi å legge større vekt på planleggingsfasen og legge større vekt på automatisert testing. 
+Til neste prosjekt ville vi lagt større vekt på planleggingsfasen, men spesielt på automatisert testing, da vi nå ser nytteverdien av dette.
 
 ##### Beskrivelse av arbeidet utført av hvert medlem:
 
