@@ -101,6 +101,7 @@ public class KundevisningController implements Initializable {
         btnLagreTilFil.setDisable(true);
         btnOpprettNyKunde.setDisable(true);
         btnVisValgtKunde.setDisable(true);
+        deactivateDoubleClickFunctionalityForTable();
     }
 
     /**
@@ -111,6 +112,7 @@ public class KundevisningController implements Initializable {
         btnLagreTilFil.setDisable(false);
         btnOpprettNyKunde.setDisable(false);
         btnVisValgtKunde.setDisable(false);
+        activateDoubleClickFunctionalityForTable();
     }
 
     private void generateFileLoadedAlert(){
@@ -165,17 +167,6 @@ public class KundevisningController implements Initializable {
         } catch(IOException e){
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    private void clickOnTable(MouseEvent event){
-
-        //Dersom det blir oppdaget dobbeltklikk på tabellen, åpnes kundeforhold for markert kunde.
-        tableKunder.setOnMouseClicked((MouseEvent clickEvent) -> {
-            if (clickEvent.getButton().equals(MouseButton.PRIMARY) && clickEvent.getClickCount() == 2){
-                visValgtKunde(new ActionEvent());
-            }
-        });
     }
 
     @FXML
@@ -251,6 +242,9 @@ public class KundevisningController implements Initializable {
         //Kolonne for dato
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("kundeOpprettelsesDato"));
 
+        //Aktiverer funksjonalitet for dobbelklikk på kunder.
+        activateDoubleClickFunctionalityForTable();
+
         /*-------------Søkefunksjonalitet----------------
         Kilder:
         https://code.makery.ch/blog/javafx-8-tableview-sorting-filtering/
@@ -292,6 +286,19 @@ public class KundevisningController implements Initializable {
         sortedList.comparatorProperty().bind(tableKunder.comparatorProperty());
         //Setter tabellens data-source til sortedList.
         tableKunder.setItems(sortedList);
+    }
+
+    private void activateDoubleClickFunctionalityForTable(){
+
+        tableKunder.setOnMouseClicked((MouseEvent clickEvent) -> {
+            if (clickEvent.getButton().equals(MouseButton.PRIMARY) && clickEvent.getClickCount() == 2){
+                visValgtKunde(new ActionEvent());
+            }
+        });
+    }
+
+    private void deactivateDoubleClickFunctionalityForTable(){
+        tableKunder.setOnMouseClicked((MouseEvent clickEvent) -> {});
     }
 
 }
