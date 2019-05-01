@@ -2,27 +2,27 @@
 
 ## Innledning
 
-I faget Programutvikling DATA1600 - Våren 2019, ble det gitt i semesteroppgave å utvikle et registreringssystem. Arbeidet skal foregå over 5 uker og forventet arbeidsmengde er 50-60 timer per person. Det var tre alternativer å velge mellom, henholdsvis et registreringssystem for forsikring, vikarbyrå eller kulturhus.
+I faget Programutvikling DATA1600 - Våren 2019, ble det gitt i semesteroppgave å utvikle et registreringssystem. Arbeidet foregikk over 5 uker og forventet arbeidsmengde var 50-60 timer per person. Det var tre alternativer å velge mellom, henholdsvis et registreringssystem for forsikring, vikarbyrå eller kulturhus.
 
 Gruppen, bestående av Rany Tarek Bouorm (s236210) og Eirik Bøyum (s170002), valgte oppgaven om forsikring. 
 
-### Problemstilling
+Problemstilling
 
 Et registreringssystem for forsikringer skal implementeres. Oppgavens vedlegg lister opp elementer som systemet skal registrere. Elementene består av:
 
-* Kunder
-* Forsikringer
-  * Båtforsikring
-  * Hus og innboforsikring
-  * fritidsboligforsikring
-  * Reiseforsikring.
-* Skademeldinger
+- Kunder
+- Forsikringer
+  - Båtforsikring
+  - Hus og innboforsikring
+  - fritidsboligforsikring
+  - Reiseforsikring.
+- Skademeldinger
 
 ##### Programmet skal inneholde følgende funksjonaliteter:
 
-* Elementene skal kunne registreres, redigeres og valideres. Det skal dermed ikke være mulig å legge til ugyldige elementer. Det er ikke gitt noen formelle krav til hva som oppfattes som gyldige og ugyldige elementer.
-* Elementene skal kunne visualiseres i et grafisk brukergrensesnitt. Det skal også være mulig å sortere disse etter hver datakolonne, og filtrere dem etter datakolonnene som det ville vært naturlig å filtrere etter.
-* Programmets data skal kunne lagres og leses fra fil. Det er gitt krav til at programmet skal støtte to filtyper, serialisert format med filendelse ".JOBJ" og CSV-format. Løsningen for lagring skal implementeres med **strategy** designmønsteret, og applikasjonen skal dynamisk kunne velge mellom de to filformatene beskrevet. Løsningen for innlesing fra fil skal kjøre i en egen tråd for å å ikke blokkere programmet under innlesing av store filer.
+- Elementene skal kunne registreres, redigeres og valideres. Det skal dermed ikke være mulig å legge til ugyldige elementer. Det er ikke gitt noen formelle krav til hva som oppfattes som gyldige og ugyldige elementer.
+- Elementene skal kunne visualiseres i et grafisk brukergrensesnitt. Det skal også være mulig å sortere disse etter hver datakolonne, og filtrere dem etter datakolonnene som det ville vært naturlig å filtrere etter.
+- Programmets data skal kunne lagres og leses fra fil. Det er gitt krav til at programmet skal støtte to filtyper, serialisert format med filendelse ".JOBJ" og CSV-format. Løsningen for lagring skal implementeres med **strategy** designmønsteret og applikasjonen skal dynamisk kunne velge mellom de to filformatene beskrevet. Løsningen for innlesing fra fil skal kjøre i en egen tråd for å å ikke blokkere programmet under innlesing av store filer.
 
 ### Verktøy
 
@@ -40,7 +40,6 @@ Et registreringssystem for forsikringer skal implementeres. Oppgavens vedlegg li
 
 
 
-
 <div style="page-break-after: always;"></div>
 
 ## Fremgangsmåte
@@ -51,17 +50,17 @@ Første gruppemøte ble holdt 2. April 2019. Her ble oppgaven gjennomgått og de
 
 ##### Utført forarbeid
 
-* En oppgave kalt "NotepadFX" som var lagt ut på ressurssiden i emnet, hvor en imitasjon av Notepad skulle implementeres i Java med fillagring og bruk av tråder. 
-* Gjennomgåelse av [Oracle sin tutorial](https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/table-view.htm) på bruk av TableView.
-* Oppsett av et "hello world", modulbasert Maven-prosjekt i IntelliJ med JavaFX som dependency.
-* Lesing av deler av boken [Clean Code: A Handbook of Agile Software Craftmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) og sammendrag av denne.
-* Lesing om populære designmønstre, spesielt "strategy" mønsteret, men også "factory" og "state".
+- En oppgave kalt "NotepadFX" som var lagt ut på ressurssiden i emnet, hvor en imitasjon av Notepad skulle implementeres i Java med fillagring og bruk av tråder. 
+- Gjennomgåelse av [Oracle sin tutorial](https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/table-view.htm) på bruk av TableView.
+- Oppsett av et "hello world", modulbasert Maven-prosjekt i IntelliJ med JavaFX som dependency.
+- Lesing av deler av boken [Clean Code: A Handbook of Agile Software Craftmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) og sammendrag av denne.
+- Lesing om populære designmønstre, spesielt "strategy" mønsteret, men også "factory" og "state".
 
 Punktene listet over ble gjort av minst ett gruppemedlem og videreformidlet til den andre. Dette gjorde gruppen bedre rustet til å planlegge oppgaven, da det ga erfaring med noen av de forskjellige funksjonalitetene som skulle implementeres og verktøyene som skulle brukes.
 
 ##### Videre arbeid
 
-Etter forarbeidet ble prosjektet satt opp i [git](<https://git-scm.com/>). Gruppen kom til enighet om at det vil være naturlig å starte med å opprette klassen for kunde og en klasse for kunderegister, som skal fungere som en Singleton klasse hvor programmets data er lagret. 
+Etter forarbeidet ble prosjektet satt opp i [git](<https://git-scm.com/>). Gruppen kom til enighet om at det vil være naturlig å starte med å opprette klassen for kunde og en klasse for kunderegister, som skal fungere som en singletonklasse hvor programmets data er lagret. 
 
 Etter at disse ble implementert, begynte arbeidet med å implementere visning (TableView), registrering og redigering av kunder, samt lagring og innlesing av disse til og fra fil. Deretter ble dette utvidet ved å legge til forsikringer og skademeldinger.
 
@@ -69,9 +68,9 @@ Oppgaven med å implementere TableView, registrering og redigering ble tildelt R
 
 <div style="page-break-after: always;"></div>
 
-### Resultater
+## Resultater
 
-Arbeidet resulterte til slutt i et fungerende registreringssystem for kunder, forsikringer og skademeldinger. Systemet har **Kunde** som hovedobjekt. Med andre ord holder Kunde-objektet referanse til all relevant kundeinfo som forsikringer og skademeldinger. En Singleton-klasse **Kunderegister**, inneholder en **ObservableList** med alle kundene. Forsikringsklassene arver alltid fra klassen **Forsikring** og implementerer interface for validering og serialisering. Det er laget egendefinerte exception-klasser for Kunde, Forsikring og Skademelding. Disse kastes dersom en ugyldig Kunde blir lagt til via addForsikring() i kunderegisteret, eller dersom en ugyldig forsikring eller skademelding blir lagt inn i kunde via addForsikring() eller addSkademelding().
+Arbeidet resulterte til slutt i et fungerende registreringssystem for kunder, forsikringer og skademeldinger. Systemet har **Kunde** som hovedobjekt. Med andre ord holder Kunde-objektet referanse til all relevant kundeinfo som forsikringer og skademeldinger. En singletonklasse **Kunderegister**, inneholder en **ObservableList** med alle kundene. Forsikringsklassene arver alltid fra klassen **Forsikring** og implementerer interface for validering og serialisering. Det er laget egendefinerte exception-klasser for Kunde, Forsikring og Skademelding. Disse kastes dersom en ugyldig Kunde blir lagt til via addForsikring() i kunderegisteret, eller dersom en ugyldig forsikring eller skademelding blir lagt inn i kunde via addForsikring() eller addSkademelding().
 
 Relaterte elementer er abstrahert ut i egne klasser: for eksempel har en båtforsikring en båt, og båten har en eier, slik at når en båtforsikring skal opprettes, vil man i dens konstruktør kun ta imot forsikringsdetaljer og den forsikrede båten som parameter. Dette begrenser lengde på konstruktørene og minimerer sjansene for feil.
 
@@ -79,24 +78,29 @@ Det er lagt stor vekt på lesbarheten av kode og bruk av Javadoc, som forenkler 
 
 Dersom programmet i fremtiden skal utvides med flere forsikringer, er prosessen som følger: 
 
-* Opprett en ny forsikringsklasse som utvider klassen **Forsikring**. Implementer **Validerbar** og **Serializable** interfacet i klassen. **Validerbar** gjør at forsikringen kan valideres og legges til forsikringsregisteret, **Serializable** gjør at forsikringen kan lagres i serialisert format.
-* Utvid klassene **CSVWriteHelper** og **CSVReadHelper** under **filemanagement**-pakken slik at forsikringen kan lagres og leses fra CSV.
-* Opprett en valideringsklasse for forsikringstypen som innehar forsikringens lovlige verdier. 
-* Opprett view og controller for opprettelse og redigering av forsikringen. 
-* Lag en ny knapp i **RegistrerNyForsikring**-menyen, som leder til viewet for registrering av forsikringen. 
-* Utvid klassen **RedigerForsikringHelper** slik at den åpner riktig scene  når den nye forsikringstypen er valgt.  
+- Opprett en ny forsikringsklasse som utvider klassen **Forsikring**. Implementer **Validerbar** og **Serializable** interfacet i klassen. **Validerbar** gjør at forsikringen kan valideres og legges til forsikringsregisteret, **Serializable** gjør at forsikringen kan lagres i serialisert format.
 
-### Refleksjon
+- Utvid klassene **CSVWriteHelper** og **CSVReadHelper** under **filemanagement**-pakken slik at forsikringen kan lagres og leses fra CSV.
+
+- Opprett en valideringsklasse for forsikringstypen som innehar forsikringens lovlige verdier. 
+
+- Opprett view og controller for opprettelse og redigering av forsikringen. 
+
+- Lag en ny knapp i **RegistrerNyForsikring**-menyen, som leder til viewet for registrering av forsikringen. 
+
+- Utvid klassen **RedigerForsikringHelper** slik at den åpner riktig scene  når den nye forsikringstypen er valgt.  
+
+  <div style="page-break-after: always;"></div>
+
+## Refleksjon
 
 Videre følger en refleksjon over arbeidet, som spesifisert i rapportbeskrivelsen.
 
 ##### Deler vi er fornøyd med
 
-* Lesbarhet i koden. Vi har lagt stor vekt på navngivning av metoder og variabler og det å dele opp metoder i hensiktsmessige deler. Nedenfor følger et eksempel på navngivning og oppdelte metoder.
+- **Lesbarhet i koden. Vi har lagt stor vekt på navngivning av metoder og variabler og det å dele opp metoder i hensiktsmessige deler. Nedenfor følger et eksempel på navngivning og oppdelte metoder.
 
-  
-
-  Fra RegistrerReiseforsikringController.java:
+  **Fra RegistrerReiseforsikringController.java:**
 
 ```java
     @FXML
@@ -125,13 +129,11 @@ Videre følger en refleksjon over arbeidet, som spesifisert i rapportbeskrivelse
 
 
 
-* Valideringsløsningen: Det er opprettet egne klasser for validering. Disse inneholder statiske metoder for validering av hvert enkelt felt i en forsikring, og brukes i alle kontrollerne som registrerer og redigerer forsikringer for umiddelbar tilbakemelding på om inntastet informasjon er gyldig eller ikke. Klassene inneholder også en metode som validerer elementet i sin helhet basert på alle feltene. Denne brukes i **Validerbar** interfacet.
+- Valideringsløsningen: Det er opprettet egne klasser for validering. Disse inneholder statiske metoder for validering av hvert enkelt felt i en forsikring, og brukes i alle kontrollerne som registrerer og redigerer forsikringer for umiddelbar tilbakemelding på om inntastet informasjon er gyldig eller ikke. Klassene inneholder også en metode som validerer elementet i sin helhet basert på alle feltene. Denne brukes i **Validerbar** interfacet.
 
   Nedenfor følger et eksempel på validering av enkeltfelt:
 
-  
-
-  Fra InnboForsikringValidator.java:
+  **Fra InnboForsikringValidator.java:**
 
   ```java
   public static boolean forsikringsbeløpInnboIsValid(String forsikringsbeløpForInnbo) {
@@ -147,7 +149,7 @@ Videre følger en refleksjon over arbeidet, som spesifisert i rapportbeskrivelse
   }
   ```
 
-  Fra RegistrerInnboForsikring.java:
+  **Fra RegistrerInnboForsikring.java:**
 
   ```java
    /*Metoden kalles når det blir skrevet noe i feltet "forsikringsbeløp innbo"
@@ -166,54 +168,60 @@ Videre følger en refleksjon over arbeidet, som spesifisert i rapportbeskrivelse
 
 
 
-* Løsning av ubetalte erstatninger: Oppgaven spesifiserte at ubetalte erstatninger skulle tas med som et element under kunde. Vi valgte å løse dette i View. En skademelding inneholder et felt utbetaltErstatning. Dersom denne er satt til 0, er det ikke utbetalt noen erstatning, og kunden har dermed en ubetalt erstatning. Dermed lagde vi en **FilteredList** basert på skademeldinger med ingen utbetalt erstating, og viser dette i en egen **TableView**.
+- Løsning av ubetalte erstatninger: Oppgaven spesifiserte at ubetalte erstatninger skulle tas med som et element under kunde. Vi valgte å løse dette i View. En skademelding inneholder et felt utbetaltErstatning. Dersom denne er satt til 0, er det ikke utbetalt noen erstatning, og kunden har dermed en ubetalt erstatning. Dermed lagde vi en **FilteredList** basert på skademeldinger med ingen utbetalt erstating, og viser dette i en egen **TableView**.
 
 ##### Elementer som kunne blitt gjennomført bedre
 
-* Diskusjon rundt elementer som dere mener kunne ha blitt gjennomført bedre og/eller
+- Det er noe brukt noe repetiv kode, spesielt i views og kontrollere for registrering og redigering. Her kunne det vært implementert en superklasse for å unngå duplikatkode. 
+- Designet av applikasjonen føles noe utdatert ut. Her kunne vi lagt noe mer vekt på design og UX.
+- 
+
+- Diskusjon rundt elementer som dere mener kunne ha blitt gjennomført bedre og/eller
   aspekter i besvarelsen dere ikke er helt fornøyd med.
 
 ##### Læringsutbytte
 
 Prosjektet har vært det første større prosjektet vi har hatt iløpet av studiet. Vi føler at det har vært svært lærerrikt å jobbe med å utvikle et program over lenger tid, og det har vært givende å gjøre applikasjonen bedre og bedre med tiden.
 
-* Vi har lært viktigheten av navngivning, både mtp. gruppearbeid, men også det å skulle forstå sin egen kode noen dager/uker senere.
-* Vi har fått erfaring med å legge klasser med relatert funksjonalitet i egne klasser, og å abstrahere ut metoder som brukes i flere klasser.
-* Vi har lært å bruke git til å samarbeide. Spesielt i form av Feature Branching. Vi har også hatt noen problemer og frustrasjoner med git underveis, som har gjort at vi måtte grave dypere i dokumentasjonen av git's mange funksjonaliteter. Dette har økt forståelsen av git.
-* Vi har erfart at det ikke alltid er lett å sette seg inn i andres kode, og at parprogrammering kan løse dette.
+- Lært og erfart viktigheten av godt forarbeid.
+- Vi har lært viktigheten av navngivning, både mtp. gruppearbeid, men også det å skulle forstå sin egen kode noen dager/uker senere.
+- Vi har fått erfaring med å legge klasser med relatert funksjonalitet i egne klasser, og å abstrahere ut metoder som brukes i flere klasser.
+- Vi har lært å bruke git til å samarbeide. Spesielt i form av Feature Branching. Vi har også hatt noen problemer og frustrasjoner med git underveis, som har gjort at vi måtte grave dypere i dokumentasjonen av git's mange funksjonaliteter. Dette har økt forståelsen av git.
+- Vi har erfart at det ikke alltid er lett å sette seg inn i andres kode, og at parprogrammering kan løse dette.
 
 Til neste prosjekt vil vi **OIJEOIAJTOAJTPAWJPTJ** (Utdyp hva dere har lært i henhold til prosjektarbeid og hva dere vil gjøre annerledes for deres neste store gruppeprosjekt.)
 
 ##### Beskrivelse av arbeidet utført av hvert medlem:
 
-* Rany Tarek Bouorm:
+- **Rany Tarek Bouorm:**
 
-  * Design av menyer.
-  * Oppsett av prosjektet i git.
-  * Oppsett av Maven.
-  * Implementasjon av klassene for kunde og forsikringer.
-  * Oppsett av TableView for Kundelisten og forsikringslisten.
-  * View og kontrollere for registrering, redigering og validering av forsikringer.
-  * Implementasjon av singleton designmønsteret for kunderegisteret.
-  * Implementasjon av Validerbar interfacet og bruken av denne.
-  * Implementasjonen av tråder i filhåndteringsklassene.
-  * Refaktorering av prosjektet og Javadoc.
+  - Design av menyer.
+  - Oppsett av prosjektet i git.
+  - Oppsett av Maven.
+  - Implementasjon av klassene for kunde og forsikringer.
+  - Oppsett av TableView for Kundelisten og forsikringslisten.
+  - View og kontrollere for registrering, redigering og validering av forsikringer.
+  - Implementasjon av singleton designmønsteret for kunderegisteret.
+  - Implementasjon av Validerbar interfacet og bruken av denne.
+  - Implementasjonen av tråder i filhåndteringsklassene.
+  - Prosjektets mappestruktur.
+  - Javadoc.
 
-  Eirik Bøyum:
+  **Eirik Bøyum:**
 
-  * Design av menyer.
+  - Design av menyer.
 
-  * Implementasjon av Serializable interfacet for alle elementer.
-  * Implementasjon av filhåndtering.
-  * View og kontrollere for registrering, redigering og validering av skademelding og ubetalt erstatning.
+  - Implementasjon av Serializable interfacet for alle elementer.
+  - Implementasjon av filhåndtering.
+  - View og kontrollere for registrering, redigering og validering av skademelding og ubetalt erstatning.
 
 
 
 ##### Forslag til forbedringer
 
-* Effektivitet:
-* Utseende:
-* Kodekvalitet
-* Utvidbarhet: F.eks hvis man skal legge til en ny forsikringstype, hvor mye må gjøres? 
-* 
+- Effektivitet:
+- Utseende:
+- Kodekvalitet
+- Utvidbarhet: F.eks hvis man skal legge til en ny forsikringstype, hvor mye må gjøres? 
+- 
 
