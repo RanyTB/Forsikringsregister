@@ -39,6 +39,18 @@ public class Skademelding implements Serializable, Validerbar {
         this.utbetaltErstatningsbeløp = new SimpleStringProperty(this, "utbetaltErstatningsbeløp", utbetaltErstatningsbeløp);
 
     }
+    //Konstruktør for å lage fra csv fil
+    public Skademelding(LocalDate skademeldingsDato, long skadenummer, String typeSkade, String beskrivelse, String vitner,
+                        String takseringAvSkaden, String utbetaltErstatningsbeløp){
+        this.skademeldingsDato = new SimpleObjectProperty<>(this, "skademeldingsDato", skademeldingsDato);
+        this.skadenummer = new SimpleLongProperty(this, "skadenummer", skadenummer);
+        this.typeSkade = new SimpleStringProperty(this, "typeSkade", typeSkade);
+        this.beskrivelse = new SimpleStringProperty(this, "beskrivelse", beskrivelse);
+        this.vitner = new SimpleStringProperty(this, "vitner", vitner);
+        this.takseringAvSkaden = new SimpleStringProperty(this, "takseringAvSkaden", takseringAvSkaden);
+        this.utbetaltErstatningsbeløp = new SimpleStringProperty(this, "utbetaltErstatningsbeløp", utbetaltErstatningsbeløp);
+
+    }
 
     public LocalDate getSkademeldingsDato(){
         return skademeldingsDato.get();

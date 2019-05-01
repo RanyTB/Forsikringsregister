@@ -20,7 +20,7 @@ public class CSVReadStrategy implements FileReadStrategy {
             while ((linje = bufferedReader.readLine()) != null){
                 splittetLinje = linje.split("\"");
                 csvReadHelper.håndterArray(splittetLinje);
-                System.out.println(splittetLinje[1]);
+                //System.out.println(splittetLinje[1]);
             }
             csvReadHelper.addToRegistry();
         }catch (IOException e){

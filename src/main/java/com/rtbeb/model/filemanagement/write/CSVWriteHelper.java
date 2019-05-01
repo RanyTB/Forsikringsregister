@@ -6,6 +6,7 @@ import com.rtbeb.model.base.forsikring.Bolig.Innboforsikring;
 import com.rtbeb.model.base.forsikring.Båt.Båtforsikring;
 import com.rtbeb.model.base.forsikring.Forsikring;
 import com.rtbeb.model.base.forsikring.Reise.Reiseforsikring;
+import com.rtbeb.model.base.forsikring.Skademelding;
 import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 
@@ -13,8 +14,8 @@ import java.util.ArrayList;
 
 public class CSVWriteHelper {
     public static String toStringKunde(Kunde kunde){
-        return "\"" + kunde.getFornavn() + "," + kunde.getEtternavn() + "," + kunde.getFakturaadresse() + "," +
-                kunde.getPostnummer() + "," + kunde.getForsikringsnummer() + "," + kunde.getKundeOpprettelsesDato() + "\",";
+        return kunde.getFornavn() + "," + kunde.getEtternavn() + "," + kunde.getFakturaadresse() + "," +
+                kunde.getPostnummer() + "," + kunde.getForsikringsnummer() + "," + kunde.getKundeOpprettelsesDato();
     }
 
     private static String toStringForsirking(Forsikring forsikring){
@@ -32,32 +33,38 @@ public class CSVWriteHelper {
 
         String tekstForsikring = toStringForsirking(båtforsikring);
 
-        return "\"" + tekstForsikring + "," + tekstBåtforsikring + "," + båtEier + "\",";
+        return tekstForsikring + "," + tekstBåtforsikring + "," + båtEier;
     }
 
     private static String toStringInnboforsikring(Innboforsikring innboforsikring){
-        String bolig = "," + innboforsikring.getBolig().getAdresse() + "," + innboforsikring.getBolig().getPostnummer() +
+        String bolig = innboforsikring.getBolig().getAdresse() + "," + innboforsikring.getBolig().getPostnummer() +
                 "," + innboforsikring.getBolig().getByggeår() + "," + innboforsikring.getBolig().getBoligtype() + "," +
                 "," + innboforsikring.getBolig().getByggemateriale() + "," + innboforsikring.getBolig().getStandard() +
                 "," + innboforsikring.getBolig().getStørrelse();
 
-        String tekstInnboforsikring = "," + innboforsikring.getForsikringssbeløpBygning() + "," + innboforsikring.getForsikringsbeløpInnbo();
+        String tekstInnboforsikring =innboforsikring.getForsikringssbeløpBygning() + "," + innboforsikring.getForsikringsbeløpInnbo();
 
         String tekstForsikring = toStringForsirking(innboforsikring);
 
-        return ",\"" + tekstForsikring + "," + tekstInnboforsikring + "," + bolig + "\",";
+        return tekstForsikring + "," + tekstInnboforsikring + "," + bolig;
     }
 
     private static String toStringReiseforsirking(Reiseforsikring reiseforsikring){
-        String tekstReiseforsikring = "," + reiseforsikring.getForsikringsområde() + "," + reiseforsikring.getForsikringssum();
+        String tekstReiseforsikring =reiseforsikring.getForsikringsområde() + "," + reiseforsikring.getForsikringssum();
 
         String tekstForsikring = toStringForsirking(reiseforsikring);
 
-        return ",\"" + tekstReiseforsikring + "," + tekstForsikring + "\"";
+        return tekstForsikring + "," + tekstReiseforsikring;
+    }
+
+    private static String toStringSkademelding(Skademelding skademelding){
+        return skademelding.getSkademeldingsDato() + "," + skademelding.getSkadenummer() + "," + skademelding.getTypeSkade() +
+                "," + skademelding.getBeskrivelse() + "," + skademelding.getVitner() + "," + skademelding.getTakseringAvSkaden() +
+                "," + skademelding.getUtbetaltErstatningsbeløp();
     }
 
 
-    public static String forsirkingshjelper(Forsikring forsikring){
+    public static String forsikringshjelper(Forsikring forsikring){
 
         //Lager en String[] med båtforsikring, innbo, reise
 
@@ -83,20 +90,65 @@ public class CSVWriteHelper {
 
     }
 
-    private static String håndterForsikringsListe(ObservableList<Forsikring> forsikring){
+    private static String håndterForsikringsListe(ObservableList<Forsikring> forsikringsListe){
+        String forsikringsTekst = "";
+
+        /*ArrayList<String> båtforsikringer = new ArrayList<>();
+        ArrayList<String> innboforsikringer = new ArrayList<>();
+        ArrayList<String> reiseforsikringer = new ArrayList<>();*/
+
+        String båtforsikringsTekst = "";
+        String innboforsikringsTekst = "";
+        String reiseforsikringsTekst = "";
+
         //Tester for en tom liste
         //Hvis tom returneres tomme plasser
-        if (forsikring.size() > 1){
+        if (forsikringsListe.size() > 0){
+            System.out.println("if test");
 
+            for (Forsikring forsikring : forsikringsListe) {
+                System.out.println("Forløkke");
 
-        }else {
-            return "\"\"";
+                if (forsikring instanceof Båtforsikring){
+                    System.out.println("Båt");
+
+                    båtforsikringsTekst += "|" + toStringBåtforsikring((Båtforsikring) forsikring) + "|";
+                    //båtforsikringer.add(toStringBåtforsikring((Båtforsikring) forsikring));
+
+                }else if (forsikring instanceof Innboforsikring){
+                    System.out.println("Innbo");
+
+                    innboforsikringsTekst += "|" + toStringInnboforsikring((Innboforsikring) forsikring) + "|";
+                    //innboforsikringer.add(toStringInnboforsikring((Innboforsikring) forsikring));
+
+                }else if (forsikring instanceof Reiseforsikring){
+                    System.out.println("Reise");
+
+                    reiseforsikringsTekst += "|" + toStringReiseforsirking((Reiseforsikring) forsikring) + "|";
+                    //reiseforsikringer.add(toStringReiseforsirking((Reiseforsikring) forsikring));
+                }
+            }
         }
+        System.out.println("Båtforsikring: " + båtforsikringsTekst);
+
+
+        return båtforsikringsTekst + "\" , \"" + innboforsikringsTekst + "\" , \"" + reiseforsikringsTekst;
+    }
+
+    private static String håndterSkademeldinger(ObservableList<Skademelding> skademeldingsListe){
+        String skademeldingsTekst = "";
+        if (skademeldingsListe.size() > 0){
+            for (Skademelding skademelding : skademeldingsListe) {
+                skademeldingsTekst += "|" + toStringSkademelding(skademelding);
+            }
+        }
+        return skademeldingsTekst;
     }
 
     public static String håndterkundeobjekt(Kunde kunde){
         String kundeTekst = toStringKunde(kunde);
         String forsikringsTekst = håndterForsikringsListe(kunde.getForsikringsListe());
-        return kundeTekst;
+        String skademeldingsTekst = håndterSkademeldinger(kunde.getSkademeldinger());
+        return "\"" + kundeTekst + "\" , \"" + forsikringsTekst + "\" , \"" + skademeldingsTekst + "\"";
     }
 }

@@ -23,19 +23,7 @@ public class CSVSaveStrategy implements FileSaveStrategy{
             //TODO æøå
             printWriter = new PrintWriter(filePath, "UTF-8");
             for (Kunde kunde : kunderegister.getKundeliste()) {
-                printWriter.print(csvWriteHelper.toStringKunde(kunde));
-
-                if (kunde.getForsikringsListe().size() > 0){
-                    for (Forsikring forsikring: kunde.getForsikringsListe()) {
-                        printWriter.print(csvWriteHelper.forsirkingshjelper(forsikring));
-                    }
-                    printWriter.print(csvWriteHelper.forsikringsHjelper(kunde.getForsikringsListe()))
-
-
-                }else {
-
-                }
-
+                printWriter.print(csvWriteHelper.håndterkundeobjekt(kunde));
 
                 printWriter.print("\n");
             }
