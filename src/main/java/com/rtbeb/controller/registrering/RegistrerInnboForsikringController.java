@@ -42,9 +42,9 @@ public class RegistrerInnboForsikringController extends RegistrerForsikringContr
     @FXML
     private ChoiceBox<Bolig.Boligtype> cBoxBoligtype;
     @FXML
-    private ChoiceBox<Byggemateriale> cBoxByggemateriale;
+    private ChoiceBox<Bolig.Byggemateriale> cBoxByggemateriale;
     @FXML
-    private ChoiceBox<Standard> cBoxStandard;
+    private ChoiceBox<Bolig.Standard> cBoxStandard;
     @FXML
     private TextField txtStørrelse;
     @FXML

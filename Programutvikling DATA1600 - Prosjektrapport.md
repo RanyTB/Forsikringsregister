@@ -98,7 +98,7 @@ Videre følger en refleksjon over arbeidet, som spesifisert i rapportbeskrivelse
 
 ##### Deler vi er fornøyd med
 
-- **Lesbarhet i koden. Vi har lagt stor vekt på navngivning av metoder og variabler og det å dele opp metoder i hensiktsmessige deler. Nedenfor følger et eksempel på navngivning og oppdelte metoder.
+- Lesbarhet i koden. Vi har lagt stor vekt på navngivning av metoder og variabler og det å dele opp metoder i hensiktsmessige deler. Nedenfor følger et eksempel på navngivning og oppdelte metoder.
 
   **Fra RegistrerReiseforsikringController.java:**
 
@@ -109,7 +109,7 @@ Videre følger en refleksjon over arbeidet, som spesifisert i rapportbeskrivelse
         try {
             /*generateReise() er tatt ut i en egen private metode for å gjøre denne 
             metoden mer lesbar. Metodenavnet indikerer at en reiseforsikring blir
-            generert når metodne kalles.*/
+            generert når metoden kalles.*/
             Reiseforsikring reiseforsikring = generateReiseforsikring(); 
             
             /*En InvalidForsikringException kastes dersom forsikringen er ugyldig
@@ -121,8 +121,9 @@ Videre følger en refleksjon over arbeidet, som spesifisert i rapportbeskrivelse
             stage.close();
 
         } catch (InvalidForsikringException|NumberFormatException e) {
-            /*generateAlert er brukt flere steder i klassen, og er abstrahert ut i en egen metode. 				Dette øker lesbarheten av denne metoden ytterligere.*/
-            generateAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-			markerte felt.");
+            /*Alerts er brukt flere steder i klassen, og er abstrahert ut i en
+            egen metode. Dette minker mengden repetiv kode.*/
+            generateAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller 				sjekk rød-markerte felt.");
         }
     }
 ```
@@ -174,22 +175,19 @@ Videre følger en refleksjon over arbeidet, som spesifisert i rapportbeskrivelse
 
 - Det er noe brukt noe repetiv kode, spesielt i views og kontrollere for registrering og redigering. Her kunne det vært implementert en superklasse for å unngå duplikatkode. 
 - Designet av applikasjonen føles noe utdatert ut. Her kunne vi lagt noe mer vekt på design og UX.
-- 
-
-- Diskusjon rundt elementer som dere mener kunne ha blitt gjennomført bedre og/eller
-  aspekter i besvarelsen dere ikke er helt fornøyd med.
+- Automatisert testing: Det er implementert noen få JUnit tester i prosjektet, men det er for det meste testet manuelt. Dette har vist seg å være svært upålitelig, da man ofte vil komme over feil av ren tilfeldighet. Hvis det er en ting vi ville lagt større vekt på, ville det vært mer utstrakt bruk av JUnit testing, potensielt i form av "test-driven developement" prosessen.
 
 ##### Læringsutbytte
 
-Prosjektet har vært det første større prosjektet vi har hatt iløpet av studiet. Vi føler at det har vært svært lærerrikt å jobbe med å utvikle et program over lenger tid, og det har vært givende å gjøre applikasjonen bedre og bedre med tiden.
+Prosjektet har vært det første større prosjektet vi har hatt iløpet av studiet. Vi føler at det har vært svært lærerrikt å jobbe med å utvikle et program over lenger tid.
 
 - Lært og erfart viktigheten av godt forarbeid.
 - Vi har lært viktigheten av navngivning, både mtp. gruppearbeid, men også det å skulle forstå sin egen kode noen dager/uker senere.
 - Vi har fått erfaring med å legge klasser med relatert funksjonalitet i egne klasser, og å abstrahere ut metoder som brukes i flere klasser.
 - Vi har lært å bruke git til å samarbeide. Spesielt i form av Feature Branching. Vi har også hatt noen problemer og frustrasjoner med git underveis, som har gjort at vi måtte grave dypere i dokumentasjonen av git's mange funksjonaliteter. Dette har økt forståelsen av git.
-- Vi har erfart at det ikke alltid er lett å sette seg inn i andres kode, og at parprogrammering kan løse dette.
+- Vi har erfart at det ikke alltid er lett å sette seg inn i andres kode, og at parprogrammering kan hjelpe på dette.
 
-Til neste prosjekt vil vi **OIJEOIAJTOAJTPAWJPTJ** (Utdyp hva dere har lært i henhold til prosjektarbeid og hva dere vil gjøre annerledes for deres neste store gruppeprosjekt.)
+Til neste prosjekt ønsker vi å legge større vekt på planleggingsfasen og legge større vekt på automatisert testing. 
 
 ##### Beskrivelse av arbeidet utført av hvert medlem:
 
@@ -200,12 +198,13 @@ Til neste prosjekt vil vi **OIJEOIAJTOAJTPAWJPTJ** (Utdyp hva dere har lært i h
   - Oppsett av Maven.
   - Implementasjon av klassene for kunde og forsikringer.
   - Oppsett av TableView for Kundelisten og forsikringslisten.
-  - View og kontrollere for registrering, redigering og validering av forsikringer.
+  - View og kontrollere for registrering, redigering av forsikringer.
+  - Kodestrukturen i valideringsklassene.
   - Implementasjon av singleton designmønsteret for kunderegisteret.
   - Implementasjon av Validerbar interfacet og bruken av denne.
-  - Implementasjonen av tråder i filhåndteringsklassene.
-  - Prosjektets mappestruktur.
-  - Javadoc.
+  - Implementert tråder i filhåndteringsklassene.
+  - Omgjort prosjektets mappestruktur.
+  - Skrevet Javadocs.
 
   **Eirik Bøyum:**
 
@@ -215,13 +214,7 @@ Til neste prosjekt vil vi **OIJEOIAJTOAJTPAWJPTJ** (Utdyp hva dere har lært i h
   - Implementasjon av filhåndtering.
   - View og kontrollere for registrering, redigering og validering av skademelding og ubetalt erstatning.
 
+<div style="page-break-after: always;"></div>
 
-
-##### Forslag til forbedringer
-
-- Effektivitet:
-- Utseende:
-- Kodekvalitet
-- Utvidbarhet: F.eks hvis man skal legge til en ny forsikringstype, hvor mye må gjøres? 
-- 
+## Konklusjon
 
