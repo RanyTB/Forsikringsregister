@@ -14,59 +14,59 @@ import java.util.ArrayList;
 
 public class CSVWriteHelper {
     public static String toStringKunde(Kunde kunde){
-        return kunde.getFornavn() + "," + kunde.getEtternavn() + "," + kunde.getFakturaadresse() + "," +
-                kunde.getPostnummer() + "," + kunde.getForsikringsnummer() + "," + kunde.getKundeOpprettelsesDato();
+        return kunde.getFornavn() + ";" + kunde.getEtternavn() + ";" + kunde.getFakturaadresse() + ";" +
+                kunde.getPostnummer() + ";" + kunde.getForsikringsnummer() + ";" + kunde.getKundeOpprettelsesDato();
     }
 
     private static String toStringForsirking(Forsikring forsikring){
-        return forsikring.getForsikringstype() + "," + forsikring.getForsikringspremie() + "," +
-                forsikring.getDatoOpprettet() + "," + forsikring.getForsikringsbeløp() + "," + forsikring.getForsikringsbetingelser();
+        return forsikring.getForsikringstype() + ";" + forsikring.getForsikringspremie() + ";" +
+                forsikring.getDatoOpprettet() + ";" + forsikring.getForsikringsbeløp() + ";" + forsikring.getForsikringsbetingelser();
     }
 
     private static String toStringBåtforsikring(Båtforsikring båtforsikring){
-        String båtEier = båtforsikring.getBåt().getEier().getFornavn() + "," + båtforsikring.getBåt().getEier().getEtternavn()
-                + "," + båtforsikring.getBåt().getEier().getFødselsdato();
+        String båtEier = båtforsikring.getBåt().getEier().getFornavn() + ";" + båtforsikring.getBåt().getEier().getEtternavn()
+                + ";" + båtforsikring.getBåt().getEier().getFødselsdato();
 
-        String tekstBåtforsikring = båtforsikring.getBåt().getRegistreringsnummer() + "," + båtforsikring.getBåt().getMerke() +
-                "," + båtforsikring.getBåt().getModell() + "," + båtforsikring.getBåt().getLengde() + "," +
-                båtforsikring.getBåt().getÅrsmodell() + "," + båtforsikring.getBåt().getMotorinfo();
+        String tekstBåtforsikring = båtforsikring.getBåt().getRegistreringsnummer() + ";" + båtforsikring.getBåt().getMerke() +
+                ";" + båtforsikring.getBåt().getModell() + ";" + båtforsikring.getBåt().getLengde() + ";" +
+                båtforsikring.getBåt().getÅrsmodell() + ";" + båtforsikring.getBåt().getMotorinfo();
 
         String tekstForsikring = toStringForsirking(båtforsikring);
 
-        return tekstForsikring + "," + tekstBåtforsikring + "," + båtEier;
+        return tekstForsikring + ";" + tekstBåtforsikring + ";" + båtEier;
     }
 
     private static String toStringInnboforsikring(Innboforsikring innboforsikring){
-        String bolig = innboforsikring.getBolig().getAdresse() + "," + innboforsikring.getBolig().getPostnummer() +
-                "," + innboforsikring.getBolig().getByggeår() + "," + innboforsikring.getBolig().getBoligtype() +
-                "," + innboforsikring.getBolig().getByggemateriale() + "," + innboforsikring.getBolig().getStandard() +
-                "," + innboforsikring.getBolig().getStørrelse();
+        String bolig = innboforsikring.getBolig().getAdresse() + ";" + innboforsikring.getBolig().getPostnummer() +
+                ";" + innboforsikring.getBolig().getByggeår() + ";" + innboforsikring.getBolig().getBoligtype() +
+                ";" + innboforsikring.getBolig().getByggemateriale() + ";" + innboforsikring.getBolig().getStandard() +
+                ";" + innboforsikring.getBolig().getStørrelse();
 
-        String tekstInnboforsikring =innboforsikring.getForsikringssbeløpBygning() + "," + innboforsikring.getForsikringsbeløpInnbo();
+        String tekstInnboforsikring =innboforsikring.getForsikringssbeløpBygning() + ";" + innboforsikring.getForsikringsbeløpInnbo();
 
         String tekstForsikring = toStringForsirking(innboforsikring);
 
-        return tekstForsikring + "," + tekstInnboforsikring + "," + bolig;
+        return tekstForsikring + ";" + tekstInnboforsikring + ";" + bolig;
     }
 
     private static String toStringReiseforsirking(Reiseforsikring reiseforsikring){
-        String tekstReiseforsikring =reiseforsikring.getForsikringsområde() + "," + reiseforsikring.getForsikringssum();
+        String tekstReiseforsikring =reiseforsikring.getForsikringsområde() + ";" + reiseforsikring.getForsikringssum();
 
         String tekstForsikring = toStringForsirking(reiseforsikring);
 
-        return tekstForsikring + "," + tekstReiseforsikring;
+        return tekstForsikring + ";" + tekstReiseforsikring;
     }
 
     private static String toStringSkademelding(Skademelding skademelding){
-        return skademelding.getSkademeldingsDato() + "," + skademelding.getSkadenummer() + "," + skademelding.getTypeSkade() +
-                "," + skademelding.getBeskrivelse() + "," + skademelding.getVitner() + "," + skademelding.getTakseringAvSkaden() +
-                "," + skademelding.getUtbetaltErstatningsbeløp();
+        return skademelding.getSkademeldingsDato() + ";" + skademelding.getSkadenummer() + ";" + skademelding.getTypeSkade() +
+                ";" + skademelding.getBeskrivelse() + ";" + skademelding.getVitner() + ";" + skademelding.getTakseringAvSkaden() +
+                ";" + skademelding.getUtbetaltErstatningsbeløp();
     }
 
 
     public static String forsikringshjelper(Forsikring forsikring){
 
-        //Lager en String[] med båtforsikring, innbo, reise
+        //Lager en String[] med båtforsikring; innbo; reise
 
         String[] forsikringsArray = new String[3];
 
@@ -82,10 +82,10 @@ public class CSVWriteHelper {
             return toStringReiseforsirking((Reiseforsikring) forsikring);
 
         }/*else {
-            return ",,,,,,,,,,,";
+            return ";;;;;;;;;;;";
         }*/
 
-        String forsikringsDelenAvCSVFilen = forsikringsArray[0] + "," + forsikringsArray[1] + "," + forsikringsArray[2];
+        String forsikringsDelenAvCSVFilen = forsikringsArray[0] + ";" + forsikringsArray[1] + ";" + forsikringsArray[2];
         return forsikringsDelenAvCSVFilen;
 
     }
@@ -132,7 +132,7 @@ public class CSVWriteHelper {
         System.out.println("Båtforsikring: " + båtforsikringsTekst);
 
 
-        return båtforsikringsTekst + "\" , \"" + innboforsikringsTekst + "\" , \"" + reiseforsikringsTekst;
+        return båtforsikringsTekst + "\" ; \"" + innboforsikringsTekst + "\" ; \"" + reiseforsikringsTekst;
     }
 
     private static String håndterSkademeldinger(ObservableList<Skademelding> skademeldingsListe){
@@ -149,7 +149,7 @@ public class CSVWriteHelper {
         String kundeTekst = toStringKunde(kunde);
         String forsikringsTekst = håndterForsikringsListe(kunde.getForsikringsListe());
         String skademeldingsTekst = håndterSkademeldinger(kunde.getSkademeldinger());
-        return "\"" + kundeTekst + "\" , \"" + skademeldingsTekst + "\" , \"" + forsikringsTekst + "\"";
+        return "\"" + kundeTekst + "\" ; \"" + skademeldingsTekst + "\" ; \"" + forsikringsTekst + "\"";
 
     }
 }

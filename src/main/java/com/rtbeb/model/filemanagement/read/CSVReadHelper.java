@@ -48,9 +48,9 @@ public class CSVReadHelper {
         }*/
 
         //Tester om kunde har forsikringer
-        System.out.println("lengde på kunde : " + linje[1].split(",").length);
-        if (linje[1].split(",").length == 6){
-            String[] kundeArray = linje[1].split(",");
+        System.out.println("lengde på kunde : " + linje[1].split(";").length);
+        if (linje[1].split(";").length == 6){
+            String[] kundeArray = linje[1].split(";");
             håndterKunde(kundeArray);
         } else{
             throw new InvalidFileStructureException("Ugyldig struktur på kunde");
@@ -61,15 +61,11 @@ public class CSVReadHelper {
             //System.out.println("kunde" + skademeldingsArray.length);
 
             splitSkademeldinger(skademeldingsArray);
-        } else{
-            throw new InvalidFileStructureException("Ugyldig struktur på skademelding");
         }
 
         if (linje[5].split("\\|").length > 1){
             String[] båtforsikringArray = linje[5].split("\\|");
             splitBåtforsikring(båtforsikringArray);
-        } else{
-            throw new InvalidFileStructureException("Ugyldig struktur på båtforsikring.");
         }
 
         if(linje[7].split("\\|").length >1){
@@ -84,8 +80,6 @@ public class CSVReadHelper {
             if (linje[9].split("\\|").length > 1){
                 String[] reiseforsikringsArray = linje[9].split("\\|");
                 splitReiseforsikring(reiseforsikringsArray);
-            } else{
-                throw new InvalidFileStructureException("Ugyldig struktur på reiseforsikring");
             }
         }
 
@@ -166,7 +160,7 @@ public class CSVReadHelper {
         //Splitter opp chunken med skademeldinger til enkelte skademeldinger
         for (String skademelding : skademeldingsArray) {
             if (!skademelding.equals("")){
-                String[] splittetSkademelding = skademelding.split(",");
+                String[] splittetSkademelding = skademelding.split(";");
                 if (splittetSkademelding.length == 7){
                     håndterSkademelding(splittetSkademelding);
                 }else {
@@ -208,7 +202,7 @@ public class CSVReadHelper {
     private void splitBåtforsikring(String[] båtforsikringsArray) throws InvalidForsikringException, InvalidFileContentException, InvalidFileStructureException {
         for (String båtforsikring : båtforsikringsArray) {
             if (!båtforsikring.equals("")){
-                String[] splittetBåtforsikringsArray = båtforsikring.split(",");
+                String[] splittetBåtforsikringsArray = båtforsikring.split(";");
                 if (splittetBåtforsikringsArray.length == 14){
                     håndterBåtforsikring(splittetBåtforsikringsArray);
                 }else {
@@ -265,7 +259,7 @@ public class CSVReadHelper {
     private void splitInnboforsikring(String[] innboforsikringArray) throws InvalidFileContentException, InvalidFileStructureException, InvalidForsikringException {
         for (String innboforsikring : innboforsikringArray) {
             if (!innboforsikring.equals("")){
-                String[] splittetInnboforsikringssArray = innboforsikring.split(",");
+                String[] splittetInnboforsikringssArray = innboforsikring.split(";");
                 if (splittetInnboforsikringssArray.length == 14){
                     håndterInnboforsikring(splittetInnboforsikringssArray);
                 }else {
@@ -317,7 +311,7 @@ public class CSVReadHelper {
     private void splitReiseforsikring(String[] reiseforsikringsArray) throws InvalidForsikringException, InvalidFileContentException, InvalidFileStructureException {
         for (String reiseforsikring : reiseforsikringsArray) {
             if (!reiseforsikring.equals("")){
-                String[] splittetReiseforsikringssArray = reiseforsikring.split(",");
+                String[] splittetReiseforsikringssArray = reiseforsikring.split(";");
                 if (splittetReiseforsikringssArray.length == 7){
                     håndterReiseforsikring(splittetReiseforsikringssArray);
                 }else {
