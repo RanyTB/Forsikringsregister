@@ -1,5 +1,6 @@
-package com.rtbeb.controller.forsikring.registrering;
+package com.rtbeb.controller.registrering;
 
+import com.rtbeb.controller.helper.FXMLStyler;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.forsikring.Bolig.Innboforsikring;
 import javafx.event.ActionEvent;
@@ -15,9 +16,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Kontroller for valg av forsikringen som skal registreres.
+ * @author Rany Tarek Bouorm - s236210
+ */
 public class RegistrerNyForsikringController implements Initializable {
 
-    Kunde kunde;
+    private Kunde kunde;
 
     public RegistrerNyForsikringController(Kunde valgtkunde){
         this.kunde = valgtkunde;
@@ -35,6 +40,7 @@ public class RegistrerNyForsikringController implements Initializable {
             loader.setController(controller);
             Parent root = loader.load();
             Scene scene = new Scene(root);
+            FXMLStyler.addDefaultStyleSheet(scene);
             Stage stage = (Stage) lblTitle.getScene().getWindow();
             stage.setScene(scene);
 
@@ -52,6 +58,7 @@ public class RegistrerNyForsikringController implements Initializable {
             loader.setController(controller);
             Parent root = loader.load();
             Scene scene = new Scene(root);
+            FXMLStyler.addDefaultStyleSheet(scene);
             Stage stage = (Stage) lblTitle.getScene().getWindow();
             stage.setScene(scene);
 
@@ -69,6 +76,7 @@ public class RegistrerNyForsikringController implements Initializable {
             loader.setController(controller);
             Parent root = loader.load();
             Scene scene = new Scene(root);
+            FXMLStyler.addDefaultStyleSheet(scene);
             Stage stage = (Stage) lblTitle.getScene().getWindow();
             stage.setScene(scene);
 
@@ -86,6 +94,7 @@ public class RegistrerNyForsikringController implements Initializable {
             loader.setController(controller);
             Parent root = loader.load();
             Scene scene = new Scene(root);
+            FXMLStyler.addDefaultStyleSheet(scene);
             Stage stage = (Stage) lblTitle.getScene().getWindow();
             stage.setScene(scene);
 

@@ -8,6 +8,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+/**
+ * Base-klassen for forsikringer.
+ * @author Rany Tarek Bouorm - s236210
+ */
 public abstract class Forsikring implements Serializable, Validerbar {
     private static final long serialVersionUID = 1;
 
@@ -64,7 +68,7 @@ public abstract class Forsikring implements Serializable, Validerbar {
         this.datoOpprettet.set(datoOpprettet);
     }
 
-    public int getForsikringsbeløp() {
+    public Integer getForsikringsbeløp() {
         return forsikringsbeløp.get();
     }
 
@@ -72,7 +76,7 @@ public abstract class Forsikring implements Serializable, Validerbar {
         return forsikringsbeløp;
     }
 
-    public void setForsikringsbeløp(int forsikringsbeløp) {
+    public void setForsikringsbeløp(Integer forsikringsbeløp) {
         this.forsikringsbeløp.set(forsikringsbeløp);
     }
 

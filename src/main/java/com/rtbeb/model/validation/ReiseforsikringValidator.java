@@ -3,6 +3,7 @@ package com.rtbeb.model.validation;
 import com.rtbeb.model.base.forsikring.Reise.Reiseforsikring;
 
 /**
+ * @author Rany Tarek Bouorm - s236210
  * For validering av reiseforsikringer i sin helhet.
  */
 public class ReiseforsikringValidator extends ForsikringValidator{
@@ -11,7 +12,7 @@ public class ReiseforsikringValidator extends ForsikringValidator{
 
     /**
      * Valiering av Reiseforsikring og datafelt i superklassen.
-     * @param reiseforsikring
+     * @param reiseforsikring Reiseforsikringen som skal valideres.
      * @return True hvis reiseforsikringen er gyldig.
      */
     public static boolean reiseforsikringIsValid(Reiseforsikring reiseforsikring){
@@ -24,18 +25,15 @@ public class ReiseforsikringValidator extends ForsikringValidator{
     }
 
     /**
-     * @param forsikringsområde
+     * @param forsikringsområde forsikringsområdet som skal valideres.
      * @return Returnerer true hvis gyldig.
      */
     public static boolean forsikringsområdeIsValid(String forsikringsområde){
-        if(forsikringsområde.length() > 2){
-            return true;
-        }
-        return false;
+        return forsikringsområde.length() > 2;
     }
 
     /**
-     * @param forsikringssum
+     * @param forsikringssum forsikringssummen som skal valideres.
      * @return Returnerer true hvis gyldig.
      */
     public static boolean forsikringssumIsValid(String forsikringssum){
@@ -43,20 +41,18 @@ public class ReiseforsikringValidator extends ForsikringValidator{
         try{
             int forsikringssumParsed = Integer.parseInt(forsikringssum);
             return forsikringssumIsValid(forsikringssumParsed);
+
         } catch(NumberFormatException e){
             return false;
         }
     }
 
     /**
-     * @param forsikringssum
+     * @param forsikringssum forsikringssummen som skal valideres.
      * @return Returnerer true hvis gyldig.
      */
-    public static boolean forsikringssumIsValid(int forsikringssum){
-        if(forsikringssum > minForsikringssum && forsikringssum < maxForsikringssum){
-            return true;
-        }
-        return false;
+    private static boolean forsikringssumIsValid(int forsikringssum){
+        return forsikringssum > minForsikringssum && forsikringssum < maxForsikringssum;
     }
 
 }

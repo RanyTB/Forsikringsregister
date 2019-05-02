@@ -1,5 +1,6 @@
 package com.rtbeb;
 
+import com.rtbeb.controller.helper.FXMLStyler;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -15,9 +16,9 @@ public class MainApp extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Kundevisning.fxml"));
         
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/Styles.css");
+        FXMLStyler.addDefaultStyleSheet(scene);
         
-        stage.setTitle("JavaFX and Maven");
+        stage.setTitle("Forsikringsregister");
         stage.setScene(scene);
         stage.show();
     }

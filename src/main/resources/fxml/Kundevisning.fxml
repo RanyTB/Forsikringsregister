@@ -15,31 +15,25 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="554.0" prefWidth="953.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rtbeb.controller.KundevisningController">
+<AnchorPane id="Pane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rtbeb.controller.visning.KundevisningController">
     <children>
-      <TableView fx:id="tableKunder" layoutX="60.0" layoutY="161.0" onMouseClicked="#clickOnTable" prefHeight="277.0" prefWidth="865.0">
+      <TableView fx:id="tableKunder" layoutX="60.0" layoutY="161.0" prefHeight="277.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="120.0">
         <columns>
-            <TableColumn fx:id="forsikringsnummerColumn" prefWidth="113.8320541381836" text="Forsikringnr." />
-          <TableColumn fx:id="fornavnColumn" prefWidth="153.0" text="Fornavn" />
-          <TableColumn fx:id="etternavnColumn" prefWidth="148.0" text="Etternavn" />
-            <TableColumn fx:id="adresseColumn" prefWidth="326.0" text="Adresse" />
-            <TableColumn fx:id="dateColumn" prefWidth="123.0" text="Dato" />
+            <TableColumn fx:id="forsikringsnummerColumn" prefWidth="110.0" resizable="false" text="Forsikringnr." />
+          <TableColumn fx:id="fornavnColumn" prefWidth="120.0" text="Fornavn" />
+          <TableColumn fx:id="etternavnColumn" prefWidth="160.0" text="Etternavn" />
+            <TableColumn fx:id="adresseColumn" prefWidth="220.0" text="Adresse" />
+            <TableColumn fx:id="dateColumn" prefWidth="123.0" resizable="false" text="Dato" />
         </columns>
       </TableView>
-      <Label layoutX="640.0" layoutY="117.0" text="Søk">
+      <Label id="titleLabel" fx:id="lblTitle" layoutX="60.0" layoutY="80.0" prefHeight="34.0" prefWidth="199.0" text="Kundevisning" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="60.0">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="Segoe UI Bold" size="29.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSearch" layoutX="727.0" layoutY="111.0" prefHeight="31.0" prefWidth="231.0" promptText="Navn eller forsikringsnummer" />
-      <Label layoutX="96.0" layoutY="95.0" prefHeight="34.0" prefWidth="199.0" text="Kundevisning">
-         <font>
-            <Font name="System Bold" size="29.0" />
-         </font>
-      </Label>
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="984.0">
+      <MenuBar layoutY="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Fil">
             <items>
                   <MenuItem fx:id="btnÅpneFil" mnemonicParsing="false" onAction="#openFile" text="Åpne fil" />
                   <MenuItem fx:id="btnLagreTilFil" mnemonicParsing="false" onAction="#saveFile" text="Lagre til fil" />
@@ -48,23 +42,41 @@
           </Menu>
         </menus>
       </MenuBar>
-      <GridPane hgap="30.0" layoutX="353.0" layoutY="446.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="79.0" prefWidth="575.0">
+      <GridPane hgap="30.0" layoutX="353.0" layoutY="446.0" nodeOrientation="RIGHT_TO_LEFT" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="400.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.0" minWidth="10.0" prefWidth="242.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="10.0" prefWidth="102.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="386.0" minWidth="10.0" prefWidth="171.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="ol" mnemonicParsing="false" onAction="#opprettNyKunde" prefHeight="35.0" prefWidth="300.0" text="Ny kunde" GridPane.columnIndex="1" />
+            <Button fx:id="btnOpprettNyKunde" mnemonicParsing="false" onAction="#opprettNyKunde" prefHeight="35.0" prefWidth="300.0" text="Ny kunde" GridPane.columnIndex="1" />
               <Button fx:id="btnVisValgtKunde" onAction="#visValgtKunde" prefHeight="35.0" prefWidth="300.0" text="Vis kundeforhold for valgt kunde" />
-            <Button onAction="#testButtonAction" prefHeight="35.0" prefWidth="300.0" text="Test endring av kunde" GridPane.columnIndex="2" />
          </children>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
+         <padding>
+            <Insets bottom="30.0" top="30.0" />
+         </padding>
+      </GridPane>
+      <GridPane layoutX="537.0" layoutY="117.0" prefHeight="30.0" prefWidth="321.0" AnchorPane.leftAnchor="537.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="60.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="72.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="268.0" minWidth="10.0" prefWidth="183.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="txtSearch" prefHeight="31.0" prefWidth="216.0" promptText="Navn eller forsikringsnummer" GridPane.columnIndex="1" />
+            <Label fx:id="lblSøk" text="Søk">
+               <font>
+                  <Font name="Segoe UI Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
       </GridPane>
     </children>
 </AnchorPane>

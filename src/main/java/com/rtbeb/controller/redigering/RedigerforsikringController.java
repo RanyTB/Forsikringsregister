@@ -1,14 +1,19 @@
-package com.rtbeb.controller.forsikring.registrering;
+package com.rtbeb.controller.redigering;
 
 import com.rtbeb.model.base.Kunde;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
-public abstract class RegistrerForsikringController implements Initializable {
+/**
+ * Abstract kontroller for redigering av forsikringer. Inneholder noen felles metoder.
+ * @author Rany Tarek Bouorm - s236210
+ */
+abstract class RedigerforsikringController implements Initializable {
 
-    protected Kunde kunde;
+    private Kunde kunde;
 
-    public RegistrerForsikringController(Kunde kunde){
+    RedigerforsikringController(Kunde kunde){
         this.kunde = kunde;
     }
 
@@ -16,7 +21,7 @@ public abstract class RegistrerForsikringController implements Initializable {
      * Legger til listeneres på TextFields slik at det kun kan skrives inn tall i disse.
      * @param numericFields TextField som kun skal inneholde tall.
      */
-    public void addNumericListeners(TextField[] numericFields){
+    void addNumericListeners(TextField[] numericFields){
 
         for(TextField numericField : numericFields){
 
@@ -29,5 +34,11 @@ public abstract class RegistrerForsikringController implements Initializable {
         }
     }
 
+    void generateAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Redigeringsfeil");
+        alert.setHeaderText(message);
+        alert.showAndWait();
+    }
 
 }

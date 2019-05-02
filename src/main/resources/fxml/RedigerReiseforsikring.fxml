@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="Pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TabPane prefHeight="356.0" prefWidth="527.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
@@ -40,8 +40,8 @@
                               <Insets />
                            </opaqueInsets>
                            <children>
-                              <Label text="Forsikringsområde" />
-                              <Label text="Forsikringssum" GridPane.rowIndex="1" />
+                              <Label styleClass="descLabel" text="Forsikringsområde" />
+                              <Label styleClass="descLabel" text="Forsikringssum" GridPane.rowIndex="1" />
                               <TextField fx:id="txtForsikringsområde" onKeyTyped="#forsikringsområdeChanged" GridPane.columnIndex="1" />
                               <TextField fx:id="txtForsikringssum" onKeyTyped="#forsikringssumChanged" promptText="kr" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            </children>
@@ -67,9 +67,9 @@
                               <RowConstraints maxHeight="200.0" minHeight="42.0" percentHeight="0.0" prefHeight="150.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label minWidth="-Infinity" text="Forsikringspremie" />
-                              <Label minWidth="-Infinity" text="Forsikringsbeløp" GridPane.rowIndex="1" />
-                              <Label minWidth="-Infinity" text="Betingelser" GridPane.rowIndex="2" />
+                              <Label minWidth="-Infinity" styleClass="descLabel" text="Forsikringspremie" />
+                              <Label minWidth="-Infinity" styleClass="descLabel" text="Forsikringsbeløp" GridPane.rowIndex="1" />
+                              <Label minWidth="-Infinity" styleClass="descLabel" text="Betingelser" GridPane.rowIndex="2" />
                               <TextField fx:id="txtForsikringspremie" maxWidth="200.0" minWidth="100.0" onKeyTyped="#forsikringspremieChanged" prefWidth="200.0" promptText="kr" GridPane.columnIndex="1" />
                               <TextField fx:id="txtForsikringsbeløp" maxWidth="200.0" minWidth="100.0" onKeyTyped="#forsikringsbeløpChanged" prefWidth="200.0" promptText="kr" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <TextArea fx:id="txtBetingelser" maxHeight="140.0" maxWidth="250.0" onKeyTyped="#betingelserChanged" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="Pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TabPane prefHeight="356.0" prefWidth="527.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
@@ -40,15 +40,15 @@
                               <Insets />
                            </opaqueInsets>
                            <children>
-                              <Label text="Adresse" />
-                              <Label text="Postnummer" GridPane.rowIndex="1" />
+                              <Label id="descLabel" text="Adresse" />
+                              <Label id="descLabel" text="Postnummer" GridPane.rowIndex="1" />
                               <TextField fx:id="txtAdresse" maxWidth="200.0" minWidth="100.0" onKeyTyped="#adresseChanged" prefWidth="200.0" GridPane.columnIndex="1" />
                               <TextField fx:id="txtPostnummer" maxWidth="200.0" minWidth="100.0" onKeyTyped="#postnummerChanged" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label text="Byggeår" GridPane.rowIndex="2" />
-                              <Label text="Boligtype" GridPane.rowIndex="3" />
-                              <Label text="Byggemateriale" GridPane.rowIndex="4" />
-                              <Label text="Standard" GridPane.rowIndex="5" />
-                              <Label text="Størrelse (kvadratmeter)" GridPane.rowIndex="6" />
+                              <Label id="descLabel" text="Byggeår" GridPane.rowIndex="2" />
+                              <Label id="descLabel" text="Boligtype" GridPane.rowIndex="3" />
+                              <Label id="descLabel" text="Byggemateriale" GridPane.rowIndex="4" />
+                              <Label id="descLabel" text="Standard" GridPane.rowIndex="5" />
+                              <Label id="descLabel" text="Størrelse (kvadratmeter)" GridPane.rowIndex="6" />
                               <TextField fx:id="txtByggeår" maxWidth="200.0" minWidth="100.0" onKeyTyped="#byggeårChanged" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <ChoiceBox fx:id="cBoxBoligtype" maxWidth="200.0" minWidth="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <ChoiceBox fx:id="cBoxByggemateriale" maxWidth="200.0" minWidth="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -79,11 +79,11 @@
                               <RowConstraints maxHeight="200.0" minHeight="42.0" percentHeight="0.0" prefHeight="150.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Label minWidth="-Infinity" text="Årlig Forsikringspremie" GridPane.rowIndex="2" />
-                              <Label minWidth="-Infinity" text="Forsikringsbeløp" GridPane.rowIndex="3" />
-                              <Label minWidth="-Infinity" text="Betingelser" GridPane.rowIndex="4" />
-                              <Label text="Forsikringsbeløp bygning" />
-                              <Label text="Forsikringsbeløp innbo" GridPane.rowIndex="1" />
+                              <Label minWidth="-Infinity" styleClass="descLabel" text="Årlig Forsikringspremie" GridPane.rowIndex="2" />
+                              <Label minWidth="-Infinity" styleClass="descLabel" text="Forsikringsbeløp" GridPane.rowIndex="3" />
+                              <Label minWidth="-Infinity" styleClass="descLabel" text="Betingelser" GridPane.rowIndex="4" />
+                              <Label styleClass="descLabel" text="Forsikringsbeløp bygning" />
+                              <Label styleClass="descLabel" text="Forsikringsbeløp innbo" GridPane.rowIndex="1" />
                               <TextField fx:id="txtForsikringsbeløpBygning" maxWidth="200.0" minWidth="100.0" onKeyTyped="#forsikringsbeløpBygningChanged" prefWidth="200.0" promptText="kr" GridPane.columnIndex="1" />
                               <TextField fx:id="txtForsikringsbeløpInnbo" maxWidth="200.0" minWidth="100.0" onKeyTyped="#forsikringsbeløpInnboChanged" prefWidth="200.0" promptText="kr" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <TextField fx:id="txtForsikringspremie" maxWidth="200.0" minWidth="100.0" onKeyTyped="#forsikringspremieChanged" prefWidth="200.0" promptText="kr" GridPane.columnIndex="1" GridPane.rowIndex="2" />

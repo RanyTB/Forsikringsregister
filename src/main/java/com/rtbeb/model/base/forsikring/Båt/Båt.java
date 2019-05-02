@@ -1,5 +1,7 @@
 package com.rtbeb.model.base.forsikring.Båt;
 
+import com.rtbeb.model.base.forsikring.Validerbar;
+import com.rtbeb.model.validation.BåtValidator;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,7 +12,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class Båt implements Serializable {
+/**
+ * Båt-klasse til bruk i forbindelse med båtforsikring.
+ * @author Rany Tarek Bouorm - s236210
+ */
+public class Båt implements Serializable, Validerbar {
     private static final long serialVersionUID = 1;
 
     private transient ObjectProperty<Eier> eier;
@@ -141,5 +147,14 @@ public class Båt implements Serializable {
         this.lengde = new SimpleStringProperty ((String) objectInputStream.readObject());
         this.årsmodell = new SimpleStringProperty((String) objectInputStream.readObject());
         this.motorinfo = new SimpleStringProperty((String) objectInputStream.readObject());
+    }
+
+    /**
+     * Validerer dette objektet etter satte valideringsregler.
+     * @return Returnerer true hvis gyldig.
+     */
+    @Override
+    public boolean isValid() {
+        return BåtValidator.båtIsValid(this);
     }
 }

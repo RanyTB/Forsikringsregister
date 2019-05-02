@@ -1,5 +1,7 @@
 package com.rtbeb.model.base.forsikring.Bolig;
 
+import com.rtbeb.model.base.forsikring.Validerbar;
+import com.rtbeb.model.validation.BoligValidator;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,7 +12,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class Bolig implements Serializable {
+/**
+ * Klasse for boliger i tilknytning til Innboforsikring.
+ * @author Rany Tarek Bouorm - s236210
+ */
+public class Bolig implements Serializable, Validerbar {
 
     private transient StringProperty adresse;
     private transient StringProperty postnummer;
@@ -26,11 +32,12 @@ public class Bolig implements Serializable {
         this.adresse = new SimpleStringProperty(adresse);
         this.postnummer = new SimpleStringProperty(postnummer);
         this.byggeår = new SimpleStringProperty(byggeår);
-        this.boligtype = new SimpleObjectProperty<Boligtype>(boligtype);
-        this.byggemateriale = new SimpleObjectProperty<Byggemateriale>(byggemateriale);
-        this.standard = new SimpleObjectProperty<Standard>(standard);
+        this.boligtype = new SimpleObjectProperty<>(boligtype);
+        this.byggemateriale = new SimpleObjectProperty<>(byggemateriale);
+        this.standard = new SimpleObjectProperty<>(standard);
         this.størrelse = new SimpleStringProperty(størrelse);
     }
+
 
     /**
      * Lovlige boligtype-verdier.
@@ -45,7 +52,7 @@ public class Bolig implements Serializable {
 
         private final String navn;
 
-        private Boligtype(String navn){
+        Boligtype(String navn){
             this.navn = navn;
         }
 
@@ -65,7 +72,7 @@ public class Bolig implements Serializable {
 
         private String navn;
 
-        private Byggemateriale(String navn){
+        Byggemateriale(String navn){
             this.navn = navn;
         }
 
@@ -86,7 +93,7 @@ public class Bolig implements Serializable {
 
         private String navn;
 
-        private Standard(String navn){
+        Standard(String navn){
             this.navn = navn;
         }
 
@@ -205,5 +212,10 @@ public class Bolig implements Serializable {
         this.byggemateriale = new SimpleObjectProperty<>( (Byggemateriale) objectInputStream.readObject());
         this.standard = new SimpleObjectProperty<>( (Standard) objectInputStream.readObject());
         this.størrelse = new SimpleStringProperty( (String) objectInputStream.readObject());
+    }
+
+    @Override
+    public boolean isValid() {
+        return BoligValidator.boligIsValid(this);
     }
 }

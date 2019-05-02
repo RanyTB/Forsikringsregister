@@ -5,14 +5,23 @@ import com.rtbeb.model.base.forsikring.Bolig.Bolig;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 
+/**
+ * @author Rany Tarek Bouorm - s236210
+ * For validering av innboforsikring
+ */
 public class BoligValidator {
 
-    private static String adresseRegex = "[a-zæøåA-ZÆØÅ\\-0-9\\ \\/\\']{5,50}";
+    private static String adresseRegex = "[a-zæøåA-ZÆØÅ\\-0-9 /']{5,50}";
     private static String postnummerRegex = "\\d{4}";
     private static int maxKvadratmeter = 3000;
     private static int minKvadratmeter = 5;
     private static int minByggeår = 1900;
 
+    /**
+     * Validerer om en bolig knyttet til en InnboForsikring har gyldige verdier.
+     * @param bolig Boligen til vurdering.
+     * @return True hvis alle felt i bolig er gyldig.
+     */
     public static boolean boligIsValid(Bolig bolig){
         String adresse = bolig.getAdresse();
         String postnummer = bolig.getPostnummer();
@@ -33,7 +42,8 @@ public class BoligValidator {
 
     public static boolean byggeårIsValid(String byggeår){
 
-        int byggeårParsed = 0;
+        int byggeårParsed;
+
         try{
             byggeårParsed = Integer.parseInt(byggeår);
         } catch(NumberFormatException e){
@@ -45,10 +55,7 @@ public class BoligValidator {
         if(byggeår.isEmpty()){
             return false;
         }
-        else if(byggeårParsed <= detteÅret && byggeårParsed > minByggeår){
-            return true;
-        }
-        return false;
+        else return byggeårParsed <= detteÅret && byggeårParsed > minByggeår;
     }
 
     public static boolean størrelseIsValid(String størrelse) {
@@ -60,7 +67,7 @@ public class BoligValidator {
         }
     }
 
-    public static boolean størrelseIsValid(int størrelse){
+    private static boolean størrelseIsValid(int størrelse){
         return størrelse > minKvadratmeter && størrelse < maxKvadratmeter;
     }
 }

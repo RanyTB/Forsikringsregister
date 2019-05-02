@@ -1,14 +1,18 @@
-package com.rtbeb.controller.forsikring.redigering;
+package com.rtbeb.controller.registrering;
 
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
+import com.rtbeb.model.base.exception.InvalidForsikringException;
 import com.rtbeb.model.base.forsikring.Bolig.Bolig;
+import com.rtbeb.model.base.forsikring.Bolig.Bolig.Byggemateriale;
+import com.rtbeb.model.base.forsikring.Bolig.Bolig.Standard;
 import com.rtbeb.model.base.forsikring.Bolig.Innboforsikring;
 import com.rtbeb.model.validation.BoligValidator;
 import com.rtbeb.model.validation.ForsikringValidator;
 import com.rtbeb.model.validation.InnboForsikringValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
@@ -16,13 +20,17 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RedigerInnboforsikringController extends RedigerforsikringController {
+/**
+ * Kontroller for registrering av Innboforsikring.
+ * @author Rany Tarek Bouorm
+ */
+public class RegistrerInnboForsikringController extends RegistrerForsikringController implements Initializable {
 
-    Innboforsikring opprinneligInnboforsikring;
+    private Innboforsikring.Brukstype brukstype;
 
-    public RedigerInnboforsikringController(Kunde kunde, Innboforsikring innboforsikring) {
+    public RegistrerInnboForsikringController(Kunde kunde, Innboforsikring.Brukstype brukstype){
         super(kunde);
-        this.opprinneligInnboforsikring = innboforsikring;
+        this.brukstype = brukstype;
     }
 
     @FXML
@@ -52,17 +60,17 @@ public class RedigerInnboforsikringController extends RedigerforsikringControlle
     @FXML
     private Button btnNeste;
 
-
     @FXML
-    private void redigerInnboforsikring(ActionEvent event) {
+    void registrerInnboforsikring(ActionEvent event){
 
-        //Oppretter ny forsikring for validering.
-        Innboforsikring redigertInnboforsikring = generateInnboforsikring();
+        try {
+            Innboforsikring forsikring = generateInnboforsikring();
+            kunde.addForsikring(forsikring);
 
-        //Hvis forsikringen er gyldig, oppdateres den opprinnelige forsikringen.
-        if (InnboForsikringValidator.innboForsikringIsValid(redigertInnboforsikring)){
-            updateOpprinneligforsikring();
-        } else{
+            //Lukk stage hvis forsikring blir registrert OK.
+            Stage stage = (Stage) btnNeste.getScene().getWindow();
+            stage.close();
+        } catch (InvalidForsikringException|NumberFormatException e) {
             generateAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
         }
     }
@@ -74,29 +82,6 @@ public class RedigerInnboforsikringController extends RedigerforsikringControlle
         alert.showAndWait();
     }
 
-    /**
-     * Oppdaterer opprinnelig forsikring til de redigerte feltene.
-     */
-    private void updateOpprinneligforsikring(){
-        opprinneligInnboforsikring.getBolig().setAdresse( txtAdresse.getText() );
-        opprinneligInnboforsikring.getBolig().setPostnummer( txtPostnummer.getText() );
-        opprinneligInnboforsikring.getBolig().setByggeår( txtByggeår.getText() );
-        opprinneligInnboforsikring.getBolig().setBoligtype( cBoxBoligtype.getValue() );
-        opprinneligInnboforsikring.getBolig().setByggemateriale( cBoxByggemateriale.getValue() );
-        opprinneligInnboforsikring.getBolig().setStandard( cBoxStandard.getValue() );
-        opprinneligInnboforsikring.getBolig().setStørrelse( txtStørrelse.getText() );
-        opprinneligInnboforsikring.setForsikringspremie( Integer.parseInt(txtForsikringspremie.getText()) );
-        opprinneligInnboforsikring.setForsikringsbeløp( Integer.parseInt(txtForsikringsbeløp.getText()) );
-        opprinneligInnboforsikring.setForsikringsbetingelser( txtBetingelser.getText() );
-        opprinneligInnboforsikring.setForsikringsbeløpBygning( Integer.parseInt(txtForsikringsbeløpBygning.getText()) );
-        opprinneligInnboforsikring.setForsikringsbeløpInnbo( Integer.parseInt(txtForsikringsbeløpInnbo.getText()) );
-    }
-
-    /**
-     * Generer en innboforsikring basert på de fylte felt.
-     * @return en uvalidert Innboforsikring
-     * @throws NumberFormatException dersom numeriske felt står tomme.
-     */
     private Innboforsikring generateInnboforsikring() throws NumberFormatException{
 
         int forsikringspremie = Integer.parseInt(txtForsikringspremie.getText());
@@ -106,8 +91,8 @@ public class RedigerInnboforsikringController extends RedigerforsikringControlle
         String postnummer = txtPostnummer.getText();
         String byggeår = txtByggeår.getText();
         Bolig.Boligtype boligtype = cBoxBoligtype.getSelectionModel().getSelectedItem();
-        Bolig.Byggemateriale byggemateriale = cBoxByggemateriale.getSelectionModel().getSelectedItem();
-        Bolig.Standard standard = cBoxStandard.getSelectionModel().getSelectedItem();
+        Byggemateriale byggemateriale = cBoxByggemateriale.getSelectionModel().getSelectedItem();
+        Standard standard = cBoxStandard.getSelectionModel().getSelectedItem();
         String størrelse = txtStørrelse.getText();
         int forsikringssbeløpBygning = Integer.parseInt(txtForsikringsbeløpBygning.getText());
         int forsikringsbeløpInnbo = Integer.parseInt(txtForsikringsbeløpInnbo.getText());
@@ -115,32 +100,32 @@ public class RedigerInnboforsikringController extends RedigerforsikringControlle
         Bolig bolig = new Bolig(adresse, postnummer, byggeår, boligtype,
                 byggemateriale, standard, størrelse);
 
-        return new Innboforsikring(opprinneligInnboforsikring.getBrukstype(), forsikringspremie, forsikringsbeløp, betingelser,
+        return new Innboforsikring(this.brukstype, forsikringspremie, forsikringsbeløp, betingelser,
                 bolig, forsikringssbeløpBygning,forsikringsbeløpInnbo);
     }
 
     @FXML
-    private void goToForsikringsdetaljerTab(ActionEvent event) {
+    void goToForsikringsdetaljerTab(ActionEvent event) {
 
         //Får tak i TabPane
-        TabPane tabPane = (TabPane) btnNeste.getParent().getParent().getParent();
+        TabPane tabPane = (TabPane)btnNeste.getParent().getParent().getParent();
 
         //Velger andre tab
         tabPane.getSelectionModel().select(1);
     }
 
     @FXML
-    private void goToBoligTab(ActionEvent event) {
+    void goToBoligTab(ActionEvent event) {
 
         //Får tak i TabPane
-        TabPane tabPane = (TabPane) btnNeste.getParent().getParent().getParent();
+        TabPane tabPane = (TabPane)btnNeste.getParent().getParent().getParent();
 
         //Velger andre tab
         tabPane.getSelectionModel().select(0);
     }
 
     @FXML
-    private void lukkVindu(ActionEvent event) {
+    void lukkVindu(ActionEvent event) {
         Stage stage = (Stage) btnNeste.getScene().getWindow();
         stage.close();
 
@@ -150,106 +135,97 @@ public class RedigerInnboforsikringController extends RedigerforsikringControlle
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //Fyller alle tekstfelt med data fra forsikringen som skal redigeres.
-        initTextFields();
-
         //Henter lovlige verdier for Brukstype, Byggemateriale og Standard og setter disse inn i ChoiceBox-ene.
         cBoxBoligtype.getItems().setAll(Bolig.Boligtype.values());
-        cBoxByggemateriale.getItems().setAll(Bolig.Byggemateriale.values());
-        cBoxStandard.getItems().setAll(Bolig.Standard.values());
+        cBoxByggemateriale.getItems().setAll(Byggemateriale.values());
+        cBoxStandard.getItems().setAll(Standard.values());
 
-        TextField[] numericFields = {txtPostnummer, txtByggeår, txtStørrelse, txtForsikringsbeløpBygning,
+        TextField[] numericFields = {txtPostnummer,txtByggeår,txtStørrelse, txtForsikringsbeløpBygning,
                 txtForsikringsbeløpInnbo, txtForsikringspremie, txtForsikringsbeløp};
-        addNumericListeners(numericFields);
-    }
-
-    /**
-     * Fyller alle tekstfelt med data fra forsikringen som skal redigeres.
-     */
-    private void initTextFields(){
-        txtAdresse.setText(opprinneligInnboforsikring.getBolig().getAdresse());
-        txtPostnummer.setText(opprinneligInnboforsikring.getBolig().getPostnummer());
-        txtByggeår.setText(opprinneligInnboforsikring.getBolig().getByggeår());
-        cBoxBoligtype.getSelectionModel().select(opprinneligInnboforsikring.getBolig().getBoligtype());
-        cBoxByggemateriale.getSelectionModel().select(opprinneligInnboforsikring.getBolig().getByggemateriale());
-        cBoxStandard.getSelectionModel().select(opprinneligInnboforsikring.getBolig().getStandard());
-        txtStørrelse.setText(opprinneligInnboforsikring.getBolig().getStørrelse());
-        txtForsikringspremie.setText(opprinneligInnboforsikring.getForsikringspremie().toString());
-        txtBetingelser.setText(opprinneligInnboforsikring.getForsikringsbetingelser());
-        txtForsikringsbeløpBygning.setText(opprinneligInnboforsikring.getForsikringssbeløpBygning().toString());
-        txtForsikringsbeløpInnbo.setText(opprinneligInnboforsikring.getForsikringsbeløpInnbo().toString());
-        updateForsikringsbeløp();
+        addNumericRestrictionsToTextFields(numericFields);
     }
 
 
     //------------VALIDERING---------------//
     @FXML
-    private void adresseChanged(InputEvent event) {
+    private void adresseChanged(InputEvent event){
         String adresse = txtAdresse.getText();
 
-        if (!BoligValidator.adresseIsValid(adresse)) {
+        if(!BoligValidator.adresseIsValid(adresse)){
             FieldStyler.setInvalidStyle(txtAdresse);
-        } else {
+        } else{
             FieldStyler.setValidStyle(txtAdresse);
         }
     }
 
     @FXML
-    private void postnummerChanged() {
+    private void postnummerChanged(){
         String postnummer = txtPostnummer.getText();
 
-        if (!BoligValidator.postnummerIsValid(postnummer)) {
+        if(!BoligValidator.postnummerIsValid(postnummer)){
             FieldStyler.setInvalidStyle(txtPostnummer);
-        } else {
+        } else{
             FieldStyler.setValidStyle(txtPostnummer);
         }
     }
 
     @FXML
-    private void byggeårChanged() {
+    private void byggeårChanged(){
         String byggeår = txtByggeår.getText();
 
-        if (!BoligValidator.byggeårIsValid(byggeår)) {
+        if(!BoligValidator.byggeårIsValid(byggeår)){
             FieldStyler.setInvalidStyle(txtByggeår);
-        } else {
+        } else{
             FieldStyler.setValidStyle(txtByggeår);
         }
     }
 
     @FXML
-    private void størrelseChanged() {
+    private void størrelseChanged(){
         String størrelse = txtStørrelse.getText();
 
-        if (!BoligValidator.størrelseIsValid(størrelse)) {
+        if(!BoligValidator.størrelseIsValid(størrelse)){
             FieldStyler.setInvalidStyle(txtStørrelse);
-        } else {
+        } else{
             FieldStyler.setValidStyle(txtStørrelse);
         }
     }
 
     @FXML
-    private void forsikringsbeløpBygningChanged() {
+    private void forsikringsbeløpBygningChanged(){
 
         String forsikringsbeløpBygning = txtForsikringsbeløpBygning.getText();
 
-        if (!InnboForsikringValidator.forsikringsbeløpBygningIsValid(forsikringsbeløpBygning)) {
+        if(!InnboForsikringValidator.forsikringsbeløpBygningIsValid(forsikringsbeløpBygning)){
             FieldStyler.setInvalidStyle(txtForsikringsbeløpBygning);
-        } else {
+        } else{
             FieldStyler.setValidStyle(txtForsikringsbeløpBygning);
             updateForsikringsbeløp();
         }
+    }
 
+    @FXML
+    private void forsikringsbeløpInnboChanged(){
+
+        String forsikringsbeløpInnbo = txtForsikringsbeløpInnbo.getText();
+
+        if(!InnboForsikringValidator.forsikringsbeløpInnboIsValid(forsikringsbeløpInnbo)){
+            FieldStyler.setInvalidStyle(txtForsikringsbeløpInnbo);
+        } else{
+            FieldStyler.setValidStyle(txtForsikringsbeløpInnbo);
+            updateForsikringsbeløp();
+        }
     }
 
     /**
      * Metoden oppdaterer forsikringsbeløpet slik at det blir satt til summen av forsikringsbeløpet for innbo og bygning.
      */
-    private void updateForsikringsbeløp() {
+    private void updateForsikringsbeløp(){
 
         String forsikringbeløpInnbo = txtForsikringsbeløpInnbo.getText();
         String forsikringsbeløpBygning = txtForsikringsbeløpBygning.getText();
 
-        try {
+        try{
 
             int forsikringbeløpInnboParsed = Integer.parseInt(forsikringbeløpInnbo);
             int forsikringsbeløpBygningParsed = Integer.parseInt(forsikringsbeløpBygning);
@@ -257,20 +233,7 @@ public class RedigerInnboforsikringController extends RedigerforsikringControlle
             int forsikringsbeløp = forsikringbeløpInnboParsed + forsikringsbeløpBygningParsed;
             txtForsikringsbeløp.setText(String.valueOf(forsikringsbeløp));
 
-        } catch (NumberFormatException e) { /*Dette oppstår kun hvis et av feltene ikke er fylt ut.*/}
-    }
-
-    @FXML
-    private void forsikringsbeløpInnboChanged() {
-
-        String forsikringsbeløpInnbo = txtForsikringsbeløpInnbo.getText();
-
-        if (!InnboForsikringValidator.forsikringsbeløpInnboIsValid(forsikringsbeløpInnbo)) {
-            FieldStyler.setInvalidStyle(txtForsikringsbeløpInnbo);
-        } else {
-            FieldStyler.setValidStyle(txtForsikringsbeløpInnbo);
-            updateForsikringsbeløp();
-        }
+        } catch(NumberFormatException e){ /*Dette oppstår kun hvis et av feltene ikke er fylt ut.*/}
     }
 
     @FXML
@@ -294,4 +257,6 @@ public class RedigerInnboforsikringController extends RedigerforsikringControlle
             FieldStyler.setValidStyle(txtBetingelser);
         }
     }
+
+
 }
