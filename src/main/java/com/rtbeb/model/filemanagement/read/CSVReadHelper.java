@@ -174,7 +174,7 @@ public class CSVReadHelper {
         try {
             //Skademeldings info
             LocalDate skademeldingsDato = getDatoFormat(splittetSkademelding[0]);
-            long skadenummer = Long.parseLong(splittetSkademelding[1]);
+            int skadenummer = Integer.parseInt(splittetSkademelding[1]);
             String typeSkade = splittetSkademelding[2];
             String beskrivelse = splittetSkademelding[3];
             String vitner = splittetSkademelding[4];
