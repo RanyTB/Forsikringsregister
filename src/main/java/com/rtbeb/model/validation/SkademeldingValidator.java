@@ -7,11 +7,12 @@ import java.util.regex.Pattern;
 
 /**
  *  @author Eirik Bøyum
- *  Validator for skademelding
+ *  Validator for skademelding.
+ *  Regex for tillat input
  */
 public class SkademeldingValidator {
-    private static String textRegex = "[a-zæøåA-ZÆØÅ\\- ]{2,50}+";
-    private static String textOgTallRegex = "[a-zøæåA-ZÆØÅ0-9\\- ]{2,100}+";
+    private static String textRegex = "[a-zæøåA-ZÆØÅ\\-,-. ]{2,50}+";
+    private static String textTallRegex = "[a-zøæåA-ZÆØÅ0-9\\-\\n-@-,-. ]{2,100}+";
     private static String tallRegex = "\\d{1,8}";
 
 
@@ -23,7 +24,7 @@ public class SkademeldingValidator {
 
     public static boolean textOgTallIsValid(String hvaSomSkalValideres){
 
-        return Pattern.matches(textOgTallRegex, hvaSomSkalValideres);
+        return Pattern.matches(textTallRegex, hvaSomSkalValideres);
 
     }
 
@@ -43,7 +44,7 @@ public class SkademeldingValidator {
         }
     }
 
-    //Siste sjekk før skademelding opprettes
+    //Siste sjekk for skademelding
     public static boolean skademeldingIsValid(Skademelding skademelding){
         LocalDate date = skademelding.getSkademeldingsDato();
         String typeSkade = skademelding.getTypeSkade();
