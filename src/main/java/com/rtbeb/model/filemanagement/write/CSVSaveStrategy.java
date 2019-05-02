@@ -20,7 +20,6 @@ public class CSVSaveStrategy implements FileSaveStrategy{
         PrintWriter printWriter = null;
 
         try {
-            //TODO æøå
             printWriter = new PrintWriter(filePath, "UTF-8");
             for (Kunde kunde : kunderegister.getKundeliste()) {
                 printWriter.print(csvWriteHelper.håndterkundeobjekt(kunde));
