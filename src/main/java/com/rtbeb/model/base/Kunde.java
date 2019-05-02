@@ -167,7 +167,7 @@ public class Kunde implements Serializable, Validerbar {
         if(forsikring.isValid()){
             this.forsikringsListe.add(forsikring);
         } else{
-            throw new InvalidForsikringException("Ugyldig forsikring");
+            throw new InvalidForsikringException("Ugyldig forsikringsparametre i forsikring: " + forsikring.getForsikringstype() );
         }
     }
 

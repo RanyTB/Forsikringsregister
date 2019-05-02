@@ -149,6 +149,7 @@ public class CSVWriteHelper {
         String kundeTekst = toStringKunde(kunde);
         String forsikringsTekst = håndterForsikringsListe(kunde.getForsikringsListe());
         String skademeldingsTekst = håndterSkademeldinger(kunde.getSkademeldinger());
-        return "\"" + kundeTekst + "\" , \"" + forsikringsTekst + "\" , \"" + skademeldingsTekst + "\"";
+        return "\"" + kundeTekst + "\" , \"" + skademeldingsTekst + "\" , \"" + forsikringsTekst + "\"";
+
     }
 }

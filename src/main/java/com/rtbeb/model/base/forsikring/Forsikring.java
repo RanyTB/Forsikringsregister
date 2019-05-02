@@ -23,7 +23,6 @@ public abstract class Forsikring implements Serializable, Validerbar {
     private transient StringProperty forsikringsbetingelser;
 
 
-
     public Forsikring(String forsikringstype, Integer forsikringspremie, Integer forsikringsbeløp, String forsikringsbetingelser) {
         this.forsikringstype = new SimpleStringProperty(forsikringstype);
         this.forsikringspremie = new SimpleIntegerProperty(forsikringspremie);
