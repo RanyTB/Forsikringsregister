@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * Klasse for båtforsikring.
@@ -24,6 +25,15 @@ public class Båtforsikring extends Forsikring implements Serializable, Validerb
     public Båtforsikring(Integer årligForsikringspremie, Integer forsikringsbeløp, String forsikringsbetingelser, Båt båt) {
 
         super("Båtforsikring", årligForsikringspremie, forsikringsbeløp, forsikringsbetingelser);
+        this.båt = new SimpleObjectProperty<>(båt);
+    }
+
+    /**
+     * Konstruktør for innlesning av csv fil
+     */
+    public Båtforsikring(Integer årligForsikringspremie, LocalDate datoOpprettet, Integer forsikringsbeløp, String forsikringsbetingelser, Båt båt) {
+
+        super("Båtforsikring", årligForsikringspremie, datoOpprettet, forsikringsbeløp, forsikringsbetingelser);
         this.båt = new SimpleObjectProperty<>(båt);
     }
 

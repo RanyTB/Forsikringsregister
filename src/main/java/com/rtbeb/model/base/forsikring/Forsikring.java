@@ -31,6 +31,17 @@ public abstract class Forsikring implements Serializable, Validerbar {
         this.forsikringsbetingelser = new SimpleStringProperty(forsikringsbetingelser);
     }
 
+    /**
+     * Konstruktør for innlesning av csv fil
+     */
+    public Forsikring(String forsikringstype, Integer forsikringspremie, LocalDate datoOpprettet, Integer forsikringsbeløp, String forsikringsbetingelser) {
+        this.forsikringstype = new SimpleStringProperty(forsikringstype);
+        this.forsikringspremie = new SimpleIntegerProperty(forsikringspremie);
+        this.datoOpprettet = new SimpleObjectProperty<>(datoOpprettet);
+        this.forsikringsbeløp = new SimpleIntegerProperty(forsikringsbeløp);
+        this.forsikringsbetingelser = new SimpleStringProperty(forsikringsbetingelser);
+    }
+
     public String getForsikringstype() {
         return forsikringstype.get();
     }

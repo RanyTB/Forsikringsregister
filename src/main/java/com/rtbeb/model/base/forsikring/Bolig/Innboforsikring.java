@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * Klasse for innboforsikring.
@@ -25,6 +26,20 @@ public class Innboforsikring extends Forsikring implements Serializable, Valider
                            Bolig bolig, Integer forsikringssbeløpBygning, Integer forsikringsbeløpInnbo) {
 
         super(brukstype.toString(), forsikringspremie, forsikringsbeløp, betingelser);
+        this.brukstype = brukstype;
+        this.bolig = new SimpleObjectProperty<>(bolig);
+        this.forsikringssbeløpBygning = new SimpleIntegerProperty(forsikringssbeløpBygning);
+        this.forsikringsbeløpInnbo = new SimpleIntegerProperty(forsikringsbeløpInnbo);
+    }
+
+    /**
+     * Konstruktør for innlesning av csv fil
+     */
+
+    public Innboforsikring(Brukstype brukstype, int forsikringspremie, LocalDate datoOpprettet, int forsikringsbeløp, String betingelser,
+                           Bolig bolig, Integer forsikringssbeløpBygning, Integer forsikringsbeløpInnbo) {
+
+        super(brukstype.toString(), forsikringspremie, datoOpprettet, forsikringsbeløp, betingelser);
         this.brukstype = brukstype;
         this.bolig = new SimpleObjectProperty<>(bolig);
         this.forsikringssbeløpBygning = new SimpleIntegerProperty(forsikringssbeløpBygning);

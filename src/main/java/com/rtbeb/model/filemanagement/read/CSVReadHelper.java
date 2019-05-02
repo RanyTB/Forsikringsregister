@@ -48,6 +48,7 @@ public class CSVReadHelper {
         }*/
 
         //Tester om kunde har forsikringer
+        System.out.println("lengde på kunde : " + linje[1].split(",").length);
         if (linje[1].split(",").length == 6){
             String[] kundeArray = linje[1].split(",");
             håndterKunde(kundeArray);
@@ -232,7 +233,7 @@ public class CSVReadHelper {
 
             Eier eier = new Eier(fornavn, etternavn, fødselsdato);
             Båt båt = new Båt(eier,registreringsnummer, merke, modell,lengde,årsmodell,motorinfo);
-            Båtforsikring båtforsikring = new Båtforsikring(forsikringspremie, forsikringsbeløp, forsikringsbetingelser, båt);
+            Båtforsikring båtforsikring = new Båtforsikring(forsikringspremie, datoOpprettet, forsikringsbeløp, forsikringsbetingelser, båt);
 
             if (båtforsikring.isValid()){
                 System.out.println("Riktig format på båtforsikring");
@@ -265,7 +266,7 @@ public class CSVReadHelper {
             //Forsikrings info
             Innboforsikring.Brukstype brukstype = Innboforsikring.Brukstype.getBrukstype(splittetInnboforsikringssArray[0]);
             int forsikringspremie = Integer.parseInt(splittetInnboforsikringssArray[1]);
-            //LocalDate datoOpprettet = getDatoFormat(splittetInnboforsikringssArray[2]);
+            LocalDate datoOpprettet = getDatoFormat(splittetInnboforsikringssArray[2]);
             int forsikringsbeløp = Integer.parseInt(splittetInnboforsikringssArray[3]);
             String forsikringsbetingelser = splittetInnboforsikringssArray[4];
 
@@ -284,7 +285,7 @@ public class CSVReadHelper {
             String størrelse = splittetInnboforsikringssArray[13];
 
             Bolig bolig = new Bolig(adresse, postnummer, byggeår, boligtype, byggemateriale, standard, størrelse);
-            Innboforsikring innboforsikring = new Innboforsikring(brukstype, forsikringspremie, forsikringsbeløp,
+            Innboforsikring innboforsikring = new Innboforsikring(brukstype, forsikringspremie, datoOpprettet, forsikringsbeløp,
                     forsikringsbetingelser, bolig, forsikringssbeløpBygning, forsikringsbeløpInnbo);
 
             if (innboforsikring.isValid()){
@@ -322,8 +323,6 @@ public class CSVReadHelper {
             //Forsikrings info
             String forsikringsType = splittetReiseforsikringssArray[0];
             int forsikringspremie = Integer.parseInt(splittetReiseforsikringssArray[1]);
-
-            //TODO lage konstruktør som tar imot en dato
             LocalDate datoOpprettet = getDatoFormat(splittetReiseforsikringssArray[2]);
             int forsikringsbeløp = Integer.parseInt(splittetReiseforsikringssArray[3]);
             String forsikringsbetingelser = splittetReiseforsikringssArray[4];
@@ -332,7 +331,7 @@ public class CSVReadHelper {
             String forsikringsområde = splittetReiseforsikringssArray[5];
             int forsikringssum = Integer.parseInt(splittetReiseforsikringssArray[6]);
 
-            Reiseforsikring reiseforsikring = new Reiseforsikring(forsikringspremie, forsikringsbeløp,
+            Reiseforsikring reiseforsikring = new Reiseforsikring(forsikringspremie, forsikringsbeløp, datoOpprettet,
                     forsikringsbetingelser, forsikringsområde, forsikringssum);
 
             if (reiseforsikring.isValid()){
