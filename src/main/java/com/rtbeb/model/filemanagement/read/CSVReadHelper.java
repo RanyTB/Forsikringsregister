@@ -137,7 +137,7 @@ public class CSVReadHelper {
             String etternavn = kundeArray[1];
             String fakturaadresse = kundeArray[2];
             String postnummer = kundeArray[3];
-            Long forsikringsnummer = Long.parseLong(kundeArray[4]);
+            int forsikringsnummer = Integer.parseInt(kundeArray[4]);
 
             LocalDate opprettelsesDato = getDatoFormat(kundeArray[5]);
 
