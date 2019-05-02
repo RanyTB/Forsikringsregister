@@ -60,6 +60,12 @@ public class RegistrerSkademeldingController implements Initializable {
         lblForsikringsnummer.textProperty().bind(valgtKunde.forsikringsnummerProperty().asString());
     }
 
+    /**
+     *
+     * Disse metodene validerer i sanntid input fra bruker.
+     * Taster bruker inn gyldig input får teltet grønn farge.
+     * Taster bruker inn ugyldig input får teltet rød farge.
+     */
     @FXML
     private void dateChanged(ActionEvent event){
         LocalDate date = datePicker.getValue();
@@ -121,8 +127,29 @@ public class RegistrerSkademeldingController implements Initializable {
         }
     }
 
+    /**
+     * Denne metoden henter inn en generert skademelding. Den prøver så å putte skademeldingen inn i skademelding lista.
+     * addSkademelding kaster en feilmelding hvis dette ikke går og bruker blir informert om dette.
+     */
     @FXML
     private void registrerSkademeldingClicked(ActionEvent event){
+        Skademelding skademelding = generateSkademelding();
+
+        try {
+            valgtKunde.addSkademelding(skademelding);
+        } catch (InvalidSkademeldingException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Ugyldig input");
+            alert.setTitle("Feil ved registrering");
+            alert.showAndWait();
+        }
+        Stage thisStage = (Stage) btnRegistrerSkademelding.getScene().getWindow();
+        thisStage.close();
+    }
+
+    /**
+     * Genererer skademelding ut i fra brukerens innput i feltene.
+     */
+    private Skademelding generateSkademelding(){
         //Gjør om til LocalDate objekt
         LocalDate date = datePicker.getValue();
         String typeSkade = txtTypeSkade.getText();
@@ -134,15 +161,7 @@ public class RegistrerSkademeldingController implements Initializable {
         Skademelding skademelding = new Skademelding(date, typeSkade,
                 beskrivelse, vitner, takseringAvSkaden, utbetaltErstatningsbeløp);
 
-            try {
-                valgtKunde.addSkademelding(skademelding);
-            } catch (InvalidSkademeldingException e) {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Ugyldig input");
-                alert.setTitle("Feil ved registrering");
-                alert.showAndWait();
-            }
-            Stage thisStage = (Stage) btnRegistrerSkademelding.getScene().getWindow();
-            thisStage.close();
+        return skademelding;
     }
 
     @FXML

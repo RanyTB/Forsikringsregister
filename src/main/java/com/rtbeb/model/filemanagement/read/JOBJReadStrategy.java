@@ -6,7 +6,10 @@ import com.rtbeb.model.filemanagement.exception.FileReadException;
 
 import java.io.*;
 import java.util.ArrayList;
-
+/**
+ *  @author Eirik Bøyum
+ *  Klassen itererer over kundeobjekter, kaller så på csvFormatter og skriver resultatet til fil
+ */
 public class JOBJReadStrategy implements FileReadStrategy{
 
     @Override

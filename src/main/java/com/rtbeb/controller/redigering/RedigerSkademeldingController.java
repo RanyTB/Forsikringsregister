@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 /**
+ * Kontroller for redigering av skademelding
  * @author Eirik Bøyum - s170002
  */
 public class RedigerSkademeldingController implements Initializable {
@@ -137,7 +138,7 @@ public class RedigerSkademeldingController implements Initializable {
     private void redigerSkademeldingClicked(ActionEvent event){
         Skademelding skademelding = generateSkademelding();
 
-        if (skademeldingValidator.skademeldingIsValid(skademelding)){
+        if (skademelding.isValid()){
             valgtSkademelding.setSkademeldingsDato(datePicker.getValue());
             valgtSkademelding.setTypeSkade(txtTypeSkade.getText());
             valgtSkademelding.setBeskrivelse(txtBeskrivelse.getText());

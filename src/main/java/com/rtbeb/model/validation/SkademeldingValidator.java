@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 /**
  *  @author Eirik Bøyum
+ *  Validator for skademelding
  */
 public class SkademeldingValidator {
     private static String textRegex = "[a-zæøåA-ZÆØÅ\\- ]{2,50}+";
@@ -42,6 +43,7 @@ public class SkademeldingValidator {
         }
     }
 
+    //Siste sjekk før skademelding opprettes
     public static boolean skademeldingIsValid(Skademelding skademelding){
         LocalDate date = skademelding.getSkademeldingsDato();
         String typeSkade = skademelding.getTypeSkade();

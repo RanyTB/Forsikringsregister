@@ -1,6 +1,5 @@
 package com.rtbeb.model.filemanagement.write;
 
-import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
 
 import java.io.FileOutputStream;
