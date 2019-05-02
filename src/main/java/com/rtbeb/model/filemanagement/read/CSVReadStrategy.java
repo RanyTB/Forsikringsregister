@@ -2,6 +2,7 @@ package com.rtbeb.model.filemanagement.read;
 
 import com.rtbeb.model.base.exception.InvalidForsikringException;
 import com.rtbeb.model.filemanagement.exception.InvalidFileContentException;
+import com.rtbeb.model.filemanagement.exception.InvalidFileStructureException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.nio.file.Paths;
 public class CSVReadStrategy implements FileReadStrategy {
 
     @Override
-    public void readFromFile(String filePath) throws IOException, InvalidForsikringException, InvalidFileContentException {
+    public void readFromFile(String filePath) throws IOException, InvalidForsikringException, InvalidFileContentException, InvalidFileStructureException {
         Path path = Paths.get(filePath);
         CSVReadHelper csvReadHelper = new CSVReadHelper();
 

@@ -2,6 +2,7 @@ package com.rtbeb.model.filemanagement.read;
 
 import com.rtbeb.model.base.exception.InvalidForsikringException;
 import com.rtbeb.model.filemanagement.exception.InvalidFileContentException;
+import com.rtbeb.model.filemanagement.exception.InvalidFileStructureException;
 import com.rtbeb.model.filemanagement.exception.InvalidFileTypeException;
 import javafx.concurrent.Task;
 
@@ -50,6 +51,8 @@ public class RegisterReader extends Task<Void> {
         } catch (InvalidFileContentException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (InvalidFileStructureException e) {
             e.printStackTrace();
         }
 
