@@ -46,7 +46,7 @@ public class Kunde implements Serializable, Validerbar {
     /*Skademeldingsliste med extractor. Dette sørger for at update event blir trigget når utbetalt erstatningsbeløp blir endret.
     Se her: https://stackoverflow.com/questions/31687642/callback-and-extractors-for-javafx-observablelist*/
     private transient ObservableList<Skademelding> skademeldinger = FXCollections.observableArrayList(skademelding ->
-            new Observable[] {skademelding.utbetaltErstatningsbeløpProperty()});
+            new Observable[] {skademelding.utbetaltErstatningsbeløpProperty(), skademelding.takseringAvSkadenProperty()});
 
     public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer) {
         this.fornavn = new SimpleStringProperty(this,"fornavn",fornavn);

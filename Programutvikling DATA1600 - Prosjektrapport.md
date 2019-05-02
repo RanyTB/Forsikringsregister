@@ -169,7 +169,7 @@ Videre følger en refleksjon over arbeidet, som spesifisert i rapportbeskrivelse
 
 
 
-- Løsning av ubetalte erstatninger: Oppgaven spesifiserte at ubetalte erstatninger skulle tas med som et element under kunde. Vi valgte å løse dette i View. En skademelding inneholder et felt utbetaltErstatning. Dersom denne er satt til 0, er det ikke utbetalt noen erstatning, og kunden har dermed en ubetalt erstatning. Dermed lagde vi en **FilteredList** basert på skademeldinger med ingen utbetalt erstating, og viser dette i en egen **TableView**.
+- Løsning av ubetalte erstatninger: Oppgaven spesifiserte at ubetalte erstatninger skulle tas med som et element under kunde. Vi valgte å løse dette i View. En skademelding inneholder feltene taksert beløp og utbetaltErstatning. Dersom taksert beløp er større enn null, men det ikke foreligger et utbetalt erstatningsbeløp, er dette en ubetalt erstatning. Dette lagde vi en **FilteredList** av og viser det i en egen **TableView**.
 
 ##### Elementer som kunne blitt gjennomført bedre
 
@@ -194,15 +194,14 @@ Til neste prosjekt ville vi lagt større vekt på planleggingsfasen, men spesiel
 - **Rany Tarek Bouorm:**
 
   - Design av menyer.
-  - Oppsett av prosjektet i git.
-  - Oppsett av Maven.
+  - Oppsett av prosjektet i git med Maven og Java 11.
   - Implementasjon av klassene for kunde og forsikringer.
   - Oppsett av TableView for Kundelisten og forsikringslisten.
   - View og kontrollere for registrering, redigering av forsikringer.
   - Kodestrukturen i valideringsklassene.
   - Implementasjon av singleton designmønsteret for kunderegisteret.
   - Implementasjon av Validerbar interfacet og bruken av denne.
-  - Implementert tråder i filhåndteringsklassene.
+  - Implementert tråder i filhåndteringsklassene med egendefinert system som et alternativ til [modality](<https://docs.oracle.com/javase/8/javafx/api/javafx/stage/Modality.html>). Dette gjør at det fortsatt er mulig å navigere i og sortere kundelisten mens tråden kjører.
   - Omgjort prosjektets mappestruktur.
   - Skrevet Javadocs.
 
