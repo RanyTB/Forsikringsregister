@@ -1,18 +1,20 @@
 package com.rtbeb.model.filemanagement.write;
 
 import com.rtbeb.model.base.Kunde;
-import com.rtbeb.model.base.forsikring.Bolig.Bolig;
 import com.rtbeb.model.base.forsikring.Bolig.Innboforsikring;
 import com.rtbeb.model.base.forsikring.Båt.Båtforsikring;
 import com.rtbeb.model.base.forsikring.Forsikring;
 import com.rtbeb.model.base.forsikring.Reise.Reiseforsikring;
 import com.rtbeb.model.base.forsikring.Skademelding;
-import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-
-public class CSVWriteHelper {
+/**
+ *  @author Eirik Bøyum
+ *  Denne klassen formaterer kundeobjektet til csv format for skriving til fil.
+ *  håndterkundeobjekt tar imot et kunde objekt for så systematisk hente ut tilhørende informasjon.
+ *  Metoden returnerer så en komplett String av kunde som i CSVSaveStrategy skrives til fil.
+ */
+public class CSVFormatter {
     public static String toStringKunde(Kunde kunde){
         return kunde.getFornavn() + ";" + kunde.getEtternavn() + ";" + kunde.getFakturaadresse() + ";" +
                 kunde.getPostnummer() + ";" + kunde.getForsikringsnummer() + ";" + kunde.getKundeOpprettelsesDato();
@@ -63,40 +65,8 @@ public class CSVWriteHelper {
                 ";" + skademelding.getUtbetaltErstatningsbeløp();
     }
 
-
-    public static String forsikringshjelper(Forsikring forsikring){
-
-        //Lager en String[] med båtforsikring; innbo; reise
-
-        String[] forsikringsArray = new String[3];
-
-
-
-        if (forsikring instanceof Båtforsikring){
-            return toStringBåtforsikring((Båtforsikring) forsikring);
-
-        }else if (forsikring instanceof Innboforsikring){
-            return toStringInnboforsikring((Innboforsikring) forsikring);
-
-        }else if (forsikring instanceof Reiseforsikring){
-            return toStringReiseforsirking((Reiseforsikring) forsikring);
-
-        }/*else {
-            return ";;;;;;;;;;;";
-        }*/
-
-        String forsikringsDelenAvCSVFilen = forsikringsArray[0] + ";" + forsikringsArray[1] + ";" + forsikringsArray[2];
-        return forsikringsDelenAvCSVFilen;
-
-    }
-
+    //Metoden tar imot kundens forsirkingsliste. Listen iteres gjennom of resultatet testets.
     private static String håndterForsikringsListe(ObservableList<Forsikring> forsikringsListe){
-        String forsikringsTekst = "";
-
-        /*ArrayList<String> båtforsikringer = new ArrayList<>();
-        ArrayList<String> innboforsikringer = new ArrayList<>();
-        ArrayList<String> reiseforsikringer = new ArrayList<>();*/
-
         String båtforsikringsTekst = "";
         String innboforsikringsTekst = "";
         String reiseforsikringsTekst = "";
@@ -104,33 +74,23 @@ public class CSVWriteHelper {
         //Tester for en tom liste
         //Hvis tom returneres tomme plasser
         if (forsikringsListe.size() > 0){
-            System.out.println("if test");
 
             for (Forsikring forsikring : forsikringsListe) {
-                System.out.println("Forløkke");
 
                 if (forsikring instanceof Båtforsikring){
-                    System.out.println("Båt");
 
                     båtforsikringsTekst += "|" + toStringBåtforsikring((Båtforsikring) forsikring) + "|";
-                    //båtforsikringer.add(toStringBåtforsikring((Båtforsikring) forsikring));
 
                 }else if (forsikring instanceof Innboforsikring){
-                    System.out.println("Innbo");
 
                     innboforsikringsTekst += "|" + toStringInnboforsikring((Innboforsikring) forsikring) + "|";
-                    //innboforsikringer.add(toStringInnboforsikring((Innboforsikring) forsikring));
 
                 }else if (forsikring instanceof Reiseforsikring){
-                    System.out.println("Reise");
 
                     reiseforsikringsTekst += "|" + toStringReiseforsirking((Reiseforsikring) forsikring) + "|";
-                    //reiseforsikringer.add(toStringReiseforsirking((Reiseforsikring) forsikring));
                 }
             }
         }
-        System.out.println("Båtforsikring: " + båtforsikringsTekst);
-
 
         return båtforsikringsTekst + "\" ; \"" + innboforsikringsTekst + "\" ; \"" + reiseforsikringsTekst;
     }

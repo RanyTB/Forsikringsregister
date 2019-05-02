@@ -18,7 +18,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * @author Eirik Bøyum
+ * Kontroller for ubetalt erstatning
+ * @author Eirik Bøyum - s170002
  */
 public class UtbetalErstatningController implements Initializable {
 
@@ -66,6 +67,10 @@ public class UtbetalErstatningController implements Initializable {
 
     }
 
+    /**
+     * Metoden sjekker om erstatningsbeløper er gyldig hvis true oppdaterer
+     * utbetaltErstatnigsBeløp med gitt verdi. Hvis false blir bruker informert om dette
+     */
     @FXML
     private void utbetalErstatningClicked(ActionEvent event){
         String erstatningsBeløp = txtUtbetaltErstatningsbeløp.getText();

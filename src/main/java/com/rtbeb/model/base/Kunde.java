@@ -29,9 +29,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Kunde implements Serializable, Validerbar {
     private static final long serialVersionUID = 1;
-    /*Kundeklassen bruker properties, som fungerer som en wrapper for klassene med muligheten
-    for å binde listeners. Dette gjør at en TableView automatisk vil oppdatere properties
-     som får nye verdier.*/
 
     //Counteren sørger for threadsafe utdeling av forsikringsnummer til nye kunder med metoden getAndIncrement();
     private transient static final AtomicInteger forsikringnummerCounter = new AtomicInteger(100000);

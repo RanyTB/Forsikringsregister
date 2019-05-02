@@ -19,6 +19,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
+/**
+ * @author Eirik Bøyum
+ */
+
 public class CSVReadHelper {
 
     private ArrayList<Kunde> importertKundeliste = new ArrayList<>();
@@ -26,26 +30,6 @@ public class CSVReadHelper {
     Kunde kunde;
 
     public void håndterArray(String[] linje) throws InvalidFileContentException, InvalidForsikringException, InvalidFileStructureException, InvalidSkademeldingException {
-        //Kunde har posisjon 1, forsikringer posisjon 2 og skademeldinger posisjon 3
-
-        System.out.println("Lengde på linje: " +linje.length);
-
-
-        /*try {
-            String[] båtforsikringArray = linje[3].split("\\|");
-            String[] innboforsikringArray = linje[5].split("\\|");
-            String[] reiseforsikringsArray = linje[7].split("\\|");
-            String[] skademeldingsArray = linje[9].split("\\|");
-
-
-
-            splitBåtforsikring(båtforsikringArray);
-            splitInnboforsikring(innboforsikringArray);
-            splitReiseforsikring(reiseforsikringsArray);
-            splitSkademeldinger(skademeldingsArray);
-        }catch(Exception e){
-               e.printStackTrace();
-        }*/
 
         //Tester om kunde har forsikringer
         System.out.println("lengde på kunde : " + linje[1].split(";").length);
@@ -58,8 +42,6 @@ public class CSVReadHelper {
 
         if(linje[3].split("\\|").length > 1){
             String[] skademeldingsArray = linje[3].split("\\|");
-            //System.out.println("kunde" + skademeldingsArray.length);
-
             splitSkademeldinger(skademeldingsArray);
         }
 
@@ -76,52 +58,11 @@ public class CSVReadHelper {
         //Ved første split i selve metoden for innlesning fra til faller den siste plassen bort hvis kunde ikke har noen
         // reiseforsikringer. Sjekker for dette tilfellet her.
         if (linje.length == 10){
-
             if (linje[9].split("\\|").length > 1){
                 String[] reiseforsikringsArray = linje[9].split("\\|");
                 splitReiseforsikring(reiseforsikringsArray);
             }
         }
-
-
-        //String[] innboforsikringArray = linje[5].split("\\|");
-        //String[] reiseforsikringsArray = linje[7].split("\\|");
-        //String[] skademeldingsArray = linje[9].split("\\|");
-
-
-        /*String[] båtforsikringArray = linje[3].split("\\|");
-        String[] innboforsikringArray = linje[5].split("\\|");
-        String[] reiseforsikringsArray = linje[7].split("\\|");
-        String[] skademeldingsArray = linje[9].split("\\|");*/
-
-
-        /*for (int i = 0; i < skademeldingsArray.length; i++){
-            System.out.println("skademeldingsArray: " + i + " skademeldingsArray: " + skademeldingsArray[i] + " end of line");
-
-        }
-
-        for (int i = 0; i < linje.length; i++){
-            System.out.println("linjenr: " + i + " innhold: " + linje[i] + " end of line");
-
-        }*/
-
-        //System.out.println(linje[0]);
-        /*System.out.println(linje[1]);
-        System.out.println(linje[2]);
-        System.out.println(linje[3]);
-        System.out.println(linje[4]);
-        System.out.println(linje[5]);
-        System.out.println(linje[6]);*/
-
-        //System.out.println("skademelding: " + skademeldingsArray[0]);
-
-
-
-        //håndterKunde(kundeArray);
-        /*splitBåtforsikring(båtforsikringArray);
-        splitInnboforsikring(innboforsikringArray);
-        splitReiseforsikring(reiseforsikringsArray);
-        splitSkademeldinger(skademeldingsArray);*/
     }
 
     private LocalDate getDatoFormat(String dato){
