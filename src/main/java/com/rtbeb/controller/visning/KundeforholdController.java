@@ -174,6 +174,13 @@ public class KundeforholdController implements Initializable {
         forsikringsbelopColumn.setCellValueFactory(new PropertyValueFactory<>("forsikringsbeløp"));
         forsikringspremieColumn.setCellValueFactory(new PropertyValueFactory<>("forsikringspremie"));
 
+        //Håndterer dobbelklikk på tabellen.
+        tableForsikringer.setOnMouseClicked((MouseEvent clickEvent) -> {
+            if (clickEvent.getButton().equals(MouseButton.PRIMARY) && clickEvent.getClickCount() == 2){
+                redigerForsikringButtonClicked(new ActionEvent());
+            }
+        });
+
         tableForsikringer.setItems(valgtKunde.getForsikringsListe());
     }
 
@@ -193,17 +200,6 @@ public class KundeforholdController implements Initializable {
         } catch(IOException e){
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    private void clickOnForsikringTable(MouseEvent event){
-
-        //Dersom det blir oppdaget dobbeltklikk på tabellen, åpnes redigering for markert forsikring.
-        tableForsikringer.setOnMouseClicked((MouseEvent clickEvent) -> {
-            if (clickEvent.getButton().equals(MouseButton.PRIMARY) && clickEvent.getClickCount() == 2){
-                redigerForsikringButtonClicked(new ActionEvent());
-            }
-        });
     }
 
     @FXML
@@ -264,6 +260,12 @@ public class KundeforholdController implements Initializable {
       utbetaltErstatningsbeløpColumn.setCellValueFactory(new PropertyValueFactory<>("utbetaltErstatningsbeløp"));
       tableSkademeldinger.setItems(valgtKunde.getSkademeldinger());
 
+
+        tableSkademeldinger.setOnMouseClicked((MouseEvent clickEvent) -> {
+            if (clickEvent.getButton().equals(MouseButton.PRIMARY) && clickEvent.getClickCount() == 2){
+                redigerSkademeldingButtonClicked(new ActionEvent());
+            }
+        });
     }
 
     @FXML
@@ -372,6 +374,11 @@ public class KundeforholdController implements Initializable {
         ubetaltTakseringAvSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("takseringAvSkaden"));
         tableUbetalteErstatninger.setItems(filteredList);
 
+        tableUbetalteErstatninger.setOnMouseClicked((MouseEvent clickEvent) -> {
+            if (clickEvent.getButton().equals(MouseButton.PRIMARY) && clickEvent.getClickCount() == 2){
+                ubetalteErstatningButtonClicked(new ActionEvent());
+            }
+        });
     }
 
     @FXML
