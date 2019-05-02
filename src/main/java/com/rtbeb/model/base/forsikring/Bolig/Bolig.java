@@ -56,6 +56,15 @@ public class Bolig implements Serializable, Validerbar {
             this.navn = navn;
         }
 
+        public static Boligtype getBoligtype(String boligtypeSomTekst){
+            for (Boligtype boligtype : Boligtype.values()){
+                if (boligtype.navn.equalsIgnoreCase(boligtypeSomTekst)){
+                    return boligtype;
+                }
+            }
+            return null;
+        }
+
         @Override
         public String toString(){
             return navn;
@@ -74,6 +83,15 @@ public class Bolig implements Serializable, Validerbar {
 
         Byggemateriale(String navn){
             this.navn = navn;
+        }
+
+        public static Byggemateriale getByggmateriale(String materialeSomTekst){
+            for (Byggemateriale byggemateriale : Byggemateriale.values()){
+                if (byggemateriale.navn.equalsIgnoreCase(materialeSomTekst)){
+                    return byggemateriale;
+                }
+            }
+            return null;
         }
 
         @Override
@@ -95,6 +113,15 @@ public class Bolig implements Serializable, Validerbar {
 
         Standard(String navn){
             this.navn = navn;
+        }
+
+        public static Standard getStandard(String standardSomTekst){
+            for (Standard standard : Standard.values()){
+                if (standard.navn.equalsIgnoreCase(standardSomTekst)){
+                    return standard;
+                }
+            }
+            return null;
         }
 
         @Override

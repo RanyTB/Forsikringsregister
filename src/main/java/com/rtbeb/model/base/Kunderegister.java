@@ -2,8 +2,6 @@ package com.rtbeb.model.base;
 
 import com.rtbeb.model.base.exception.InvalidForsikringException;
 import com.rtbeb.model.base.exception.InvalidKundeException;
-import com.rtbeb.model.base.forsikring.Bolig.Bolig;
-import com.rtbeb.model.base.forsikring.Bolig.Innboforsikring;
 import com.rtbeb.model.base.forsikring.Båt.Båt;
 import com.rtbeb.model.base.forsikring.Båt.Båtforsikring;
 import com.rtbeb.model.base.forsikring.Båt.Eier;
@@ -14,7 +12,6 @@ import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Kunderegisteret er en Singleton-klasse som fungerer som systemets register. Registeret inneholder alle
@@ -44,12 +41,6 @@ public class Kunderegister {
         Eier eier = new Eier("Ola", "Nordmann", LocalDate.now().minusYears(10));
         Båt båt = new Båt(eier, "pp4444", "Tekst", "Tekst", "300", "2004", "400hk");
         Båtforsikring båtforsikring = new Båtforsikring(20000, 300000, "roawijrawoj", båt);
-
-        /*Bolig bolig = new Bolig("Agmund", "0664", "1987", "Enebolig",
-                "Betong", "Middels", "120");
-
-        Innboforsikring innboforsikring = new Innboforsikring(this.brukstype, forsikringspremie, forsikringsbeløp, betingelser,
-                bolig, forsikringssbeløpBygning,forsikringsbeløpInnbo);*/
 
         //Tester opprettelse av skademeldinge
         Skademelding skademelding1 = new Skademelding(LocalDate.now(), "Påkjørlse", "Påkjørt fra babord", "Truls tlf 12738492", "50000", "10000");

@@ -38,7 +38,7 @@ public class CSVWriteHelper {
 
     private static String toStringInnboforsikring(Innboforsikring innboforsikring){
         String bolig = innboforsikring.getBolig().getAdresse() + "," + innboforsikring.getBolig().getPostnummer() +
-                "," + innboforsikring.getBolig().getByggeår() + "," + innboforsikring.getBolig().getBoligtype() + "," +
+                "," + innboforsikring.getBolig().getByggeår() + "," + innboforsikring.getBolig().getBoligtype() +
                 "," + innboforsikring.getBolig().getByggemateriale() + "," + innboforsikring.getBolig().getStandard() +
                 "," + innboforsikring.getBolig().getStørrelse();
 

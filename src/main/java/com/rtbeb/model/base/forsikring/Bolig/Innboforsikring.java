@@ -45,6 +45,20 @@ public class Innboforsikring extends Forsikring implements Serializable, Valider
             this.forsikringstype = forsikringsstype;
         }
 
+        //Denne metoden benyttes ved innlesning fra csv fil der formatet er på "Hus og Innbo"
+        //og ikke HELÅRSBOLIG. Den tarimot "Hus og Innbo" og finner HELÅRSBOLIG.
+        public static Brukstype getBrukstype(String brukstypeSomTekst){
+          for (Brukstype brukstype : Brukstype.values()) {
+            if (brukstype.forsikringstype.equalsIgnoreCase(brukstypeSomTekst)) {
+              return brukstype;
+            }
+            /*if (brukstype.forsikringstype.equals(brukstypeSomTekst)) {
+                  return brukstype;
+            }*/
+          }
+          return null;
+        }
+
         @Override
         public String toString(){
             return forsikringstype;

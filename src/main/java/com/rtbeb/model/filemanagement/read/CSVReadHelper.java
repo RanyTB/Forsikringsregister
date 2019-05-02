@@ -2,9 +2,16 @@ package com.rtbeb.model.filemanagement.read;
 
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
+import com.rtbeb.model.base.exception.InvalidForsikringException;
+import com.rtbeb.model.base.forsikring.Bolig.Bolig;
+import com.rtbeb.model.base.forsikring.Bolig.Innboforsikring;
+import com.rtbeb.model.base.forsikring.Båt.Båt;
+import com.rtbeb.model.base.forsikring.Båt.Båtforsikring;
+import com.rtbeb.model.base.forsikring.Båt.Eier;
 import com.rtbeb.model.base.forsikring.Reise.Reiseforsikring;
 import com.rtbeb.model.base.forsikring.Skademelding;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -12,19 +19,77 @@ import java.util.ArrayList;
 public class CSVReadHelper {
 
     private ArrayList<Kunde> importertKundeliste = new ArrayList<>();
-    private ArrayList<Skademelding> importertSkademeldingsliste = new ArrayList<>();
+
+    Kunde kunde;
 
     public void håndterArray(String[] linje){
         //Kunde har posisjon 1, forsikringer posisjon 2 og skademeldinger posisjon 3
         String[] kundeArray = linje[1].split(",");
-        String[] båtforsikringArray = linje[3].split("\\|");
+        håndterKunde(kundeArray);
+
+        /*try {
+            String[] båtforsikringArray = linje[3].split("\\|");
+            String[] innboforsikringArray = linje[5].split("\\|");
+            String[] reiseforsikringsArray = linje[7].split("\\|");
+            String[] skademeldingsArray = linje[9].split("\\|");
+
+
+
+            splitBåtforsikring(båtforsikringArray);
+            splitInnboforsikring(innboforsikringArray);
+            splitReiseforsikring(reiseforsikringsArray);
+            splitSkademeldinger(skademeldingsArray);
+        }catch(Exception e){
+               e.printStackTrace();
+        }*/
+
+        //Tester om kunde har forsikringer
+        if(linje[3].split("\\|").length > 1){
+            String[] båtforsikringArray = linje[3].split("\\|");
+            splitBåtforsikring(båtforsikringArray);
+        }
+
+        if(linje[5].split("\\|").length >1){
+            String[] innboforsikringArray = linje[5].split("\\|");
+            splitInnboforsikring(innboforsikringArray);
+        }
+
+        if (linje[7].split("\\|").length > 1){
+            String[] reiseforsikringsArray = linje[7].split("\\|");
+            splitReiseforsikring(reiseforsikringsArray);
+        }
+
+        //Ved første split i selve metoden for innlesning fra til faller den siste plassen bort hvis kunde ikke har noen skademeldinger.
+        //Sjekker for dette tilfellet her.
+        if (linje.length == 10){
+            if (linje[9].split("\\|").length > 1){
+                String[] skademeldingsArray = linje[9].split("\\|");
+                splitSkademeldinger(skademeldingsArray);
+            }
+        }
+
+
+        //String[] innboforsikringArray = linje[5].split("\\|");
+        //String[] reiseforsikringsArray = linje[7].split("\\|");
+        //String[] skademeldingsArray = linje[9].split("\\|");
+
+
+        /*String[] båtforsikringArray = linje[3].split("\\|");
         String[] innboforsikringArray = linje[5].split("\\|");
         String[] reiseforsikringsArray = linje[7].split("\\|");
-        String[] skademeldingsArray = linje[9].split("\\|");
+        String[] skademeldingsArray = linje[9].split("\\|");*/
 
-        for (int i = 0; i < linje.length; i++) {
-            System.out.println(linje[i] + " nr" + i);
+
+        /*for (int i = 0; i < skademeldingsArray.length; i++){
+            System.out.println("skademeldingsArray: " + i + " skademeldingsArray: " + skademeldingsArray[i] + " end of line");
+
         }
+
+        for (int i = 0; i < linje.length; i++){
+            System.out.println("linjenr: " + i + " innhold: " + linje[i] + " end of line");
+
+        }*/
+
         //System.out.println(linje[0]);
         /*System.out.println(linje[1]);
         System.out.println(linje[2]);
@@ -37,10 +102,11 @@ public class CSVReadHelper {
 
 
 
-        håndterKunde(kundeArray);
-        splitBåtforsikring(båtforsikringArray);
-        splitSkademeldinger(skademeldingsArray);
+        //håndterKunde(kundeArray);
+        /*splitBåtforsikring(båtforsikringArray);
         splitInnboforsikring(innboforsikringArray);
+        splitReiseforsikring(reiseforsikringsArray);
+        splitSkademeldinger(skademeldingsArray);*/
     }
 
     private LocalDate getDatoFormat(String dato){
@@ -59,7 +125,7 @@ public class CSVReadHelper {
 
         LocalDate opprettelsesDato = getDatoFormat(kundeArray[5]);
 
-        Kunde kunde = new Kunde(fornavn, etternavn, fakturaadresse, postnummer, forsikringsnummer, opprettelsesDato);
+        kunde = new Kunde(fornavn, etternavn, fakturaadresse, postnummer, forsikringsnummer, opprettelsesDato);
 
         if (kunde.isValid()){
             importertKundeliste.add(kunde);
@@ -70,7 +136,7 @@ public class CSVReadHelper {
 
     private void splitBåtforsikring(String[] båtforsikringsArray){
         for (String båtforsikring : båtforsikringsArray) {
-            if (!båtforsikringsArray.equals("")){
+            if (!båtforsikring.equals("")){
                 String[] splittetBåtforsikringsArray = båtforsikring.split(",");
                 håndterBåtforsikring(splittetBåtforsikringsArray);
             }
@@ -78,43 +144,78 @@ public class CSVReadHelper {
     }
 
     private void håndterBåtforsikring(String[] splittetBåtforsikringsArray){
-        //Forsikrings info
-        String forsikringsType = splittetBåtforsikringsArray[0];
-        int forsikringspremie = Integer.parseInt(splittetBåtforsikringsArray[1]);
-        LocalDate datoOpprettet = getDatoFormat(splittetBåtforsikringsArray[2]);
-        int forsikringsbeløp = Integer.parseInt(splittetBåtforsikringsArray[3]);
-        String forsikringsbetingelser = splittetBåtforsikringsArray[4];
+        try {
+            //Forsikrings info
+            String forsikringsType = splittetBåtforsikringsArray[0];
+            int forsikringspremie = Integer.parseInt(splittetBåtforsikringsArray[1]);
+            LocalDate datoOpprettet = getDatoFormat(splittetBåtforsikringsArray[2]);
+            //LocalDate datoOpprettet = LocalDate.now();
 
-        //Båt info
-        String registreringsnummer = splittetBåtforsikringsArray[5];
-        String merke = splittetBåtforsikringsArray[6];
-        String modell = splittetBåtforsikringsArray[7];
-        String lengde = splittetBåtforsikringsArray[8];
-        String årsmodell = splittetBåtforsikringsArray[9];
-        String motorinfo = splittetBåtforsikringsArray[10];
+            int forsikringsbeløp = Integer.parseInt(splittetBåtforsikringsArray[3]);
+            String forsikringsbetingelser = splittetBåtforsikringsArray[4];
 
-        //Eier info
-        String fornavn = splittetBåtforsikringsArray[11];
-        String etternavn = splittetBåtforsikringsArray[12];
-        LocalDate fødselsdato = getDatoFormat(splittetBåtforsikringsArray[13]);
+            //Båt info
+            String registreringsnummer = splittetBåtforsikringsArray[5];
+            String merke = splittetBåtforsikringsArray[6];
+            String modell = splittetBåtforsikringsArray[7];
+            String lengde = splittetBåtforsikringsArray[8];
+            String årsmodell = splittetBåtforsikringsArray[9];
+            String motorinfo = splittetBåtforsikringsArray[10];
+
+            //Eier info
+            String fornavn = splittetBåtforsikringsArray[11];
+            String etternavn = splittetBåtforsikringsArray[12];
+            LocalDate fødselsdato = getDatoFormat(splittetBåtforsikringsArray[13]);
+            //LocalDate fødselsdato = LocalDate.now();
+
+            Eier eier = new Eier(fornavn, etternavn, fødselsdato);
+            Båt båt = new Båt(eier,registreringsnummer, merke, modell,lengde,årsmodell,motorinfo);
+            Båtforsikring båtforsikring = new Båtforsikring(forsikringspremie, forsikringsbeløp, forsikringsbetingelser, båt);
+
+            if (båtforsikring.isValid()){
+                //importertKundeliste.add(båtforsikring);
+                System.out.println("Riktig format på båtforsikring");
+
+                try {
+                    kunde.addForsikring(båtforsikring);
+                    System.out.println("Try");
+                } catch (InvalidForsikringException e) {
+                    e.printStackTrace();
+                }
+
+            }else {
+                System.out.println("Feil ved format på båtforsikring");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     private void splitInnboforsikring(String[] innboforsikringArray){
         for (String innboforsikring : innboforsikringArray) {
             if (!innboforsikring.equals("")){
+                System.out.println("splitInnboforsikring");
                 String[] splittetInnboforsikringssArray = innboforsikring.split(",");
-                håndterBåtforsikring(splittetInnboforsikringssArray);
+                for (int i = 0; i < splittetInnboforsikringssArray.length; i++) {
+                    //System.out.println(splittetInnboforsikringssArray[i] + " nr: " + i);
+                }
+                håndterInnboforsikring(splittetInnboforsikringssArray);
+
             }
         }
     }
 
     private void håndterInnboforsikring(String[] splittetInnboforsikringssArray){
         //Forsikrings info
-        String forsikringsType = splittetInnboforsikringssArray[0];
+        Innboforsikring.Brukstype brukstype = Innboforsikring.Brukstype.getBrukstype(splittetInnboforsikringssArray[0]);
+        //Innboforsikring.Brukstype brukstype = Innboforsikring.Brukstype.valueOf("HELÅRSBOLIG");
+
         int forsikringspremie = Integer.parseInt(splittetInnboforsikringssArray[1]);
-        LocalDate datoOpprettet = getDatoFormat(splittetInnboforsikringssArray[2]);
+        //LocalDate datoOpprettet = getDatoFormat(splittetInnboforsikringssArray[2]);
         int forsikringsbeløp = Integer.parseInt(splittetInnboforsikringssArray[3]);
         String forsikringsbetingelser = splittetInnboforsikringssArray[4];
+
 
         //Innbo info
         int forsikringssbeløpBygning = Integer.parseInt(splittetInnboforsikringssArray[5]);
@@ -124,18 +225,37 @@ public class CSVReadHelper {
         String adresse = splittetInnboforsikringssArray[7];
         String postnummer = splittetInnboforsikringssArray[8];
         String byggeår = splittetInnboforsikringssArray[9];
-        String boligtype = splittetInnboforsikringssArray[10];
-        String byggemateriale = splittetInnboforsikringssArray[11];
-        String standard = splittetInnboforsikringssArray[12];
+        Bolig.Boligtype boligtype = Bolig.Boligtype.getBoligtype(splittetInnboforsikringssArray[10]);
+        Bolig.Byggemateriale byggemateriale = Bolig.Byggemateriale.getByggmateriale(splittetInnboforsikringssArray[11]);
+        Bolig.Standard standard = Bolig.Standard.getStandard(splittetInnboforsikringssArray[12]);
         String størrelse = splittetInnboforsikringssArray[13];
 
+        Bolig bolig = new Bolig(adresse, postnummer, byggeår, boligtype, byggemateriale, standard, størrelse);
+        Innboforsikring innboforsikring = new Innboforsikring(brukstype, forsikringspremie, forsikringsbeløp,
+                forsikringsbetingelser, bolig, forsikringssbeløpBygning, forsikringsbeløpInnbo);
+
+        System.out.println(innboforsikring);
+
+        if (innboforsikring.isValid()){
+            //importertKundeliste.add(innboforsikring);
+            System.out.println("Riktig format på innboforsikring");
+
+            try {
+                kunde.addForsikring(innboforsikring);
+                System.out.println("Try");
+            } catch (InvalidForsikringException e) {
+                e.printStackTrace();
+            }
+        }else {
+            System.out.println("Feil ved format på innboforsikring");
+        }
     }
 
     private void splitReiseforsikring(String[] reiseforsikringsArray){
         for (String reiseforsikring : reiseforsikringsArray) {
             if (!reiseforsikring.equals("")){
                 String[] splittetReiseforsikringssArray = reiseforsikring.split(",");
-                håndterBåtforsikring(splittetReiseforsikringssArray);
+                håndterReiseforsikring(splittetReiseforsikringssArray);
             }
         }
     }
@@ -144,6 +264,8 @@ public class CSVReadHelper {
         //Forsikrings info
         String forsikringsType = splittetReiseforsikringssArray[0];
         int forsikringspremie = Integer.parseInt(splittetReiseforsikringssArray[1]);
+
+        //TODO lage konstruktør som tar imot en dato
         LocalDate datoOpprettet = getDatoFormat(splittetReiseforsikringssArray[2]);
         int forsikringsbeløp = Integer.parseInt(splittetReiseforsikringssArray[3]);
         String forsikringsbetingelser = splittetReiseforsikringssArray[4];
@@ -152,7 +274,21 @@ public class CSVReadHelper {
         String forsikringsområde = splittetReiseforsikringssArray[5];
         int forsikringssum = Integer.parseInt(splittetReiseforsikringssArray[6]);
 
-        //Reiseforsikring reiseforsikring = new Reiseforsikring();
+        Reiseforsikring reiseforsikring = new Reiseforsikring(forsikringspremie, forsikringsbeløp,
+                forsikringsbetingelser, forsikringsområde, forsikringssum);
+
+        if (reiseforsikring.isValid()){
+            //importertKundeliste.add(reiseforsikring);
+            System.out.println("Riktig format på reiseforsikring");
+            try {
+                kunde.addForsikring(reiseforsikring);
+                System.out.println("Try");
+            } catch (InvalidForsikringException e) {
+                e.printStackTrace();
+            }
+        }else {
+            System.out.println("Feil ved format på reiseforsikring");
+        }
     }
 
     private void splitSkademeldinger(String[] skademeldingsArray){
@@ -161,7 +297,6 @@ public class CSVReadHelper {
             if (!skademelding.equals("")){
                 String[] splittetSkademelding = skademelding.split(",");
                 håndterSkademelding(splittetSkademelding);
-                //System.out.println("skademelding: " + enkeltSkademelding);
             }
         }
     }
@@ -179,7 +314,12 @@ public class CSVReadHelper {
                 takseringAvSkaden, utbetaltErstatningsbeløp);
 
         if (skademelding.isValid()){
-            importertSkademeldingsliste.add(skademelding);
+            System.out.println("Ritkig format på skademelding");
+
+                kunde.addSkademelding(skademelding);
+                System.out.println("Try");
+
+
         }else {
             System.out.println("Feil ved format på skademelding");
         }
