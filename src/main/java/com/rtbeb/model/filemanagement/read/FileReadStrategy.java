@@ -6,9 +6,11 @@ import com.rtbeb.model.filemanagement.exception.FileReadException;
 import com.rtbeb.model.filemanagement.exception.InvalidFileContentException;
 import com.rtbeb.model.filemanagement.exception.InvalidFileStructureException;
 
+import java.io.ObjectStreamException;
+
 public interface FileReadStrategy {
 
-    void readFromFile(String filePath) throws FileReadException, InvalidFileStructureException, InvalidSkademeldingException, InvalidFileContentException, InvalidForsikringException;
+    void readFromFile(String filePath) throws FileReadException, InvalidSkademeldingException, InvalidForsikringException, ClassNotFoundException;
 
 
 }

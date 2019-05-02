@@ -13,29 +13,7 @@ public class SkademeldingValidator {
     private static String textOgTallRegex = "[a-zøæåA-ZÆØÅ0-9\\- ]{2,100}+";
     private static String tallRegex = "\\d{1,8}";
 
-    /*public static boolean textIsValid(String hvaSomSkalValideres, int maksTekstLengde){
-        if (hvaSomSkalValideres.length() > maksTekstLengde){
-            return false;
-        }else {
-            return Pattern.matches(textRegex, hvaSomSkalValideres);
-        }
-    }
 
-    public static boolean textOgTallIsValid(String hvaSomSkalValideres, int maksTekstLengde){
-        if (hvaSomSkalValideres.length() > maksTekstLengde){
-            return false;
-        }else {
-            return Pattern.matches(textOgTallRegex, hvaSomSkalValideres);
-        }
-    }
-
-    public static boolean tallIsValid(String hvaSomSkalValideres, int maksTallLengde){
-        if (hvaSomSkalValideres.length() > maksTallLengde){
-            return false;
-        }else {
-            return Pattern.matches(tallRegex, hvaSomSkalValideres);
-        }
-    }*/
     public static boolean textIsValid(String hvaSomSkalValideres){
 
         return Pattern.matches(textRegex, hvaSomSkalValideres);

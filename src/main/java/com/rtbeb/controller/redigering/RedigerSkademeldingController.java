@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 /**
- * @author Eirik Bøyum
+ * @author Eirik Bøyum - s170002
  */
 public class RedigerSkademeldingController implements Initializable {
 
@@ -72,7 +72,12 @@ public class RedigerSkademeldingController implements Initializable {
 
     }
 
-
+    /**
+     *
+     * Disse metodene validerer i sanntid input fra bruker.
+     * Taster bruker inn gyldig input får teltet grønn farge.
+     * Taster bruker inn ugyldig input får teltet rød farge.
+     */
     @FXML
     private void typeSkadeChanged(InputEvent event){
         String typeSkade = txtTypeSkade.getText();
@@ -123,6 +128,11 @@ public class RedigerSkademeldingController implements Initializable {
         }
     }
 
+    /**
+     * Denne metoden henter inn en generert skademelding. Den kaller så på metoden skademeldingIsValid som tar imot en
+     * skademelding og tester så alle feltene. Ut i fra dette returneres true / false. Returneres true så oppdateres
+     * skademeldingsinformasjonen. Returneres false kommer den opp en feilmelding til kunde som informerer om dette.
+     */
     @FXML
     private void redigerSkademeldingClicked(ActionEvent event){
         Skademelding skademelding = generateSkademelding();
@@ -144,6 +154,9 @@ public class RedigerSkademeldingController implements Initializable {
         }
     }
 
+    /**
+     * Genererer skademelding ut i fra brukerens innput i feltene.
+     */
     private Skademelding generateSkademelding(){
         //Gjør om til LocalDate objekt
         LocalDate date = datePicker.getValue();

@@ -74,6 +74,7 @@ public class KundevisningController implements Initializable {
 
     /**
      * @author Eirik Bøyum
+     *
      */
     @FXML
     private void openFile() {

@@ -41,7 +41,7 @@ public class RegisterReader extends Task<Void> {
     }
 
     @Override
-    protected Void call() throws FileReadException, InvalidForsikringException, InvalidSkademeldingException{
+    protected Void call() throws FileReadException, InvalidForsikringException, InvalidSkademeldingException, ClassNotFoundException {
 
         //Simulerer lang task.
         try {
