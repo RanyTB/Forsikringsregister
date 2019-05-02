@@ -1,6 +1,8 @@
 package com.rtbeb.model.filemanagement.read;
 
 import com.rtbeb.model.base.exception.InvalidForsikringException;
+import com.rtbeb.model.base.exception.InvalidSkademeldingException;
+import com.rtbeb.model.filemanagement.exception.FileReadException;
 import com.rtbeb.model.filemanagement.exception.InvalidFileContentException;
 import com.rtbeb.model.filemanagement.exception.InvalidFileStructureException;
 import com.rtbeb.model.filemanagement.exception.InvalidFileTypeException;
@@ -39,21 +41,13 @@ public class RegisterReader extends Task<Void> {
     }
 
     @Override
-    protected Void call() {
+    protected Void call() throws FileReadException, InvalidForsikringException, InvalidSkademeldingException{
 
         //Simulerer lang task.
         try {
-        Thread.sleep(3000);
+            Thread.sleep(3000);
             fileReadStrategy.readFromFile(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvalidForsikringException e) {
-            e.printStackTrace();
-        } catch (InvalidFileContentException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (InvalidFileStructureException e) {
             e.printStackTrace();
         }
 

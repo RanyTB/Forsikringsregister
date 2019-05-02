@@ -1,6 +1,7 @@
 package com.rtbeb.model.base;
 
 import com.rtbeb.model.base.exception.InvalidForsikringException;
+import com.rtbeb.model.base.exception.InvalidSkademeldingException;
 import com.rtbeb.model.base.forsikring.Forsikring;
 import com.rtbeb.model.base.forsikring.Skademelding;
 import com.rtbeb.model.base.forsikring.Validerbar;
@@ -191,8 +192,12 @@ public class Kunde implements Serializable, Validerbar {
         this.skademeldinger = skademeldinger;
     }
 
-    public void addSkademelding(Skademelding skademelding){
-        this.skademeldinger.add(skademelding);
+    public void addSkademelding(Skademelding skademelding) throws InvalidSkademeldingException {
+        if(skademelding.isValid()){
+            this.skademeldinger.add(skademelding);
+        } else {
+            throw new InvalidSkademeldingException("Ugyldige verdier i skademelding");
+        }
 
     }
 

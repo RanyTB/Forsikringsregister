@@ -2,6 +2,7 @@ package com.rtbeb.controller.registrering;
 
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
+import com.rtbeb.model.base.exception.InvalidSkademeldingException;
 import com.rtbeb.model.base.forsikring.Skademelding;
 import com.rtbeb.model.validation.SkademeldingValidator;
 import javafx.event.ActionEvent;
@@ -133,17 +134,15 @@ public class RegistrerSkademeldingController implements Initializable {
         Skademelding skademelding = new Skademelding(date, typeSkade,
                 beskrivelse, vitner, takseringAvSkaden, utbetaltErstatningsbeløp);
 
-        if (skademelding.isValid()){
-
-            valgtKunde.addSkademelding(skademelding);
+            try {
+                valgtKunde.addSkademelding(skademelding);
+            } catch (InvalidSkademeldingException e) {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Ugyldig input");
+                alert.setTitle("Feil ved registrering");
+                alert.showAndWait();
+            }
             Stage thisStage = (Stage) btnRegistrerSkademelding.getScene().getWindow();
             thisStage.close();
-
-        }else {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Ugyldig input");
-            alert.setTitle("Feil ved registrering");
-            alert.showAndWait();
-        }
     }
 
     @FXML
