@@ -5,6 +5,7 @@ import com.rtbeb.model.filemanagement.exception.InvalidFileContentException;
 import com.rtbeb.model.filemanagement.exception.InvalidFileStructureException;
 import com.rtbeb.model.filemanagement.exception.InvalidFileTypeException;
 import javafx.concurrent.Task;
+import javafx.scene.control.Alert;
 
 import java.io.IOException;
 
@@ -65,4 +66,5 @@ public class RegisterReader extends Task<Void> {
         successAlertFunc.run();
         activateButtonsFunc.run();
     }
+
 }
