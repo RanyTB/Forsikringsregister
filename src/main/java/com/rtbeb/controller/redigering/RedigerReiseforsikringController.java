@@ -96,6 +96,10 @@ public class RedigerReiseforsikringController extends RedigerforsikringControlle
         }
     }
 
+    /**
+     * @return Returnerer en uvalidert reiseforsikring basert på inputfeltene i registreringsskjemaet.
+     * @throws NumberFormatException dersom numeriske felt står tomme.
+     */
     private Reiseforsikring generateReiseforsikring() throws NumberFormatException {
 
         int forsikringspremie = Integer.parseInt(txtForsikringspremie.getText());

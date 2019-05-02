@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.rtbeb.controller.helper.FXMLStyler;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
 import com.rtbeb.model.filemanagement.exception.InvalidFileTypeException;
@@ -32,12 +33,18 @@ import javafx.stage.Stage;
  * og dobbeltklikk på kunder for å vise kundeforholdet.
  *
  * @author Rany Tarek Bouorm - s236210
- * @author Eirik Bøyum - -saveFile() og openFile()
+ * @author Eirik Bøyum - Filbehandlingsmetoder
  */
 public class KundevisningController implements Initializable {
 
     // Kunderegisteret representert.
     private Kunderegister kunderegister;
+
+    @FXML
+    Label lblTitle;
+
+    @FXML
+    Label lblSøk;
 
     @FXML
     TextField txtSearch;
@@ -109,6 +116,7 @@ public class KundevisningController implements Initializable {
         btnLagreTilFil.setDisable(true);
         btnOpprettNyKunde.setDisable(true);
         btnVisValgtKunde.setDisable(true);
+        deactivateDoubleClickFunctionalityForTable();
     }
 
     /**
@@ -119,6 +127,7 @@ public class KundevisningController implements Initializable {
         btnLagreTilFil.setDisable(false);
         btnOpprettNyKunde.setDisable(false);
         btnVisValgtKunde.setDisable(false);
+        activateDoubleClickFunctionalityForTable();
     }
 
     private void generateFileLoadedAlert() {
@@ -170,23 +179,13 @@ public class KundevisningController implements Initializable {
         alert.show();
     }
 
-
     @FXML
-    private void testButtonAction(ActionEvent event) {
-        //TODO Implementer denne som en test og fjern den herfra.
-        //Lag ny kunde og test tableview.
-        System.out.println("You clicked me!");
-
-        //Test for om data blir endret i tabellen når de endres i kundeobjektet:
-        kunderegister.getKundeliste().get(0).setFornavn("Test");
-        kunderegister.getKundeliste().get(1).setEtternavn("Test");
-    }
-
-    @FXML
-    private void opprettNyKunde(ActionEvent event) {
-        try {
+    private void opprettNyKunde(ActionEvent event){
+        try{
+            //Åpner kundescene
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/NyKunde.fxml"));
             Scene kundeScene = new Scene(root);
+            FXMLStyler.addDefaultStyleSheet(kundeScene);
             Stage newStage = new Stage();
             newStage.setScene(kundeScene);
             newStage.show();
@@ -197,18 +196,7 @@ public class KundevisningController implements Initializable {
     }
 
     @FXML
-    private void clickOnTable(MouseEvent event) {
-
-        //Dersom det blir oppdaget dobbeltklikk på tabellen, åpnes kundeforhold for markert kunde.
-        tableKunder.setOnMouseClicked((MouseEvent clickEvent) -> {
-            if (clickEvent.getButton().equals(MouseButton.PRIMARY) && clickEvent.getClickCount() == 2) {
-                visValgtKunde(new ActionEvent());
-            }
-        });
-    }
-
-    @FXML
-    private void visValgtKunde(ActionEvent event) {
+    private void visValgtKunde(ActionEvent event){
 
         try {
 
@@ -233,8 +221,9 @@ public class KundevisningController implements Initializable {
                 //Loader FXML-hierarkiet
                 Parent root = loader.load();
 
-                //Oppretter ny scene
+                //Oppretter ny scene og setter css stylesheet
                 Scene scene = new Scene(root);
+                FXMLStyler.addDefaultStyleSheet(scene);
 
                 //Henter nåværende vindu
                 Stage stage = (Stage) tableKunder.getScene().getWindow();
@@ -258,6 +247,8 @@ public class KundevisningController implements Initializable {
      */
     private void setUpTableKunder() {
 
+        tableKunder.setPlaceholder( new Label("Det er ingen elementer i tabbellen. Elementer kan importeres via Fil -> Åpne fil"));
+
         //Henter Singleton instansen av kunderegisteret
         kunderegister = Kunderegister.getInstance();
 
@@ -276,6 +267,9 @@ public class KundevisningController implements Initializable {
 
         //Kolonne for dato
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("kundeOpprettelsesDato"));
+
+        //Aktiverer funksjonalitet for dobbelklikk på kunder.
+        activateDoubleClickFunctionalityForTable();
 
         /*-------------Søkefunksjonalitet----------------
         Kilder:
@@ -318,6 +312,19 @@ public class KundevisningController implements Initializable {
         sortedList.comparatorProperty().bind(tableKunder.comparatorProperty());
         //Setter tabellens data-source til sortedList.
         tableKunder.setItems(sortedList);
+    }
+
+    private void activateDoubleClickFunctionalityForTable(){
+
+        tableKunder.setOnMouseClicked((MouseEvent clickEvent) -> {
+            if (clickEvent.getButton().equals(MouseButton.PRIMARY) && clickEvent.getClickCount() == 2){
+                visValgtKunde(new ActionEvent());
+            }
+        });
+    }
+
+    private void deactivateDoubleClickFunctionalityForTable(){
+        tableKunder.setOnMouseClicked((MouseEvent clickEvent) -> {});
     }
 
 }

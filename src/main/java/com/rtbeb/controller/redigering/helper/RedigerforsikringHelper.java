@@ -1,5 +1,6 @@
 package com.rtbeb.controller.redigering.helper;
 
+import com.rtbeb.controller.helper.FXMLStyler;
 import com.rtbeb.controller.redigering.RedigerBåtforsikringController;
 import com.rtbeb.controller.redigering.RedigerInnboforsikringController;
 import com.rtbeb.controller.redigering.RedigerReiseforsikringController;
@@ -44,6 +45,7 @@ public class RedigerforsikringHelper {
         try {
             Parent root = loader.load();
             Scene scene = new Scene(root);
+            FXMLStyler.addDefaultStyleSheet(scene);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.show();
