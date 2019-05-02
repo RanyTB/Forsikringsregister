@@ -174,7 +174,7 @@ Videre følger en refleksjon over arbeidet, som spesifisert i rapportbeskrivelse
 ##### Elementer som kunne blitt gjennomført bedre
 
 - Det er noe brukt noe repetiv kode, spesielt i views og kontrollere for registrering og redigering. Her kunne det vært implementert en superklasse for å unngå duplikatkode. 
-- Designet av applikasjonen føles noe utdatert ut. Her kunne vi lagt noe mer vekt på design og UX.
+- Vi kunne vi lagt noe mer vekt på design og UX, spesielt når det kommer til responsivt design.
 - Automatisert testing: Det er implementert noen få JUnit tester i prosjektet, men det er for det meste testet manuelt. Dette har vist seg å være svært upålitelig, da man ofte vil komme over feil av ren tilfeldighet. Hvis det er en ting vi ville lagt større vekt på, ville det vært mer utstrakt bruk av JUnit testing, potensielt i form av "test-driven developement" prosessen.
 
 ##### Læringsutbytte
@@ -203,15 +203,18 @@ Til neste prosjekt ville vi lagt større vekt på planleggingsfasen, men spesiel
   - Implementasjon av Validerbar interfacet og bruken av denne.
   - Implementert tråder i filhåndteringsklassene med egendefinert system som et alternativ til [modality](<https://docs.oracle.com/javase/8/javafx/api/javafx/stage/Modality.html>). Dette gjør at det fortsatt er mulig å navigere i og sortere kundelisten mens tråden kjører.
   - Omgjort prosjektets mappestruktur.
-  - Skrevet Javadocs.
-
-  **Eirik Bøyum:**
-
-  - Design av menyer.
-
-  - Implementasjon av Serializable interfacet for alle elementer.
-  - Implementasjon av filhåndtering.
+  
+**Eirik Bøyum:**
+  
+- Design av menyer.
+  
+- Implementasjon av Serializable interfacet for alle elementer med egendefinert serialisering.
+  
+  - Implementasjon av filhåndtering med tilhørende exceptions.
+  
   - View og kontrollere for registrering, redigering og validering av skademelding og ubetalt erstatning.
+  
+    
 
 <div style="page-break-after: always;"></div>
 
