@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * Klasse for innboforsikring.
@@ -32,6 +33,20 @@ public class Innboforsikring extends Forsikring implements Serializable, Valider
     }
 
     /**
+     * Konstruktør for innlesning av csv fil
+     */
+
+    public Innboforsikring(Brukstype brukstype, int forsikringspremie, LocalDate datoOpprettet, int forsikringsbeløp, String betingelser,
+                           Bolig bolig, Integer forsikringssbeløpBygning, Integer forsikringsbeløpInnbo) {
+
+        super(brukstype.toString(), forsikringspremie, datoOpprettet, forsikringsbeløp, betingelser);
+        this.brukstype = brukstype;
+        this.bolig = new SimpleObjectProperty<>(bolig);
+        this.forsikringssbeløpBygning = new SimpleIntegerProperty(forsikringssbeløpBygning);
+        this.forsikringsbeløpInnbo = new SimpleIntegerProperty(forsikringsbeløpInnbo);
+    }
+
+    /**
      * enum Brukstype brukes i konstruktøren for å skille mellom vanlig innbo og fritidsboligforsikring.
      * Dette slik at samme Controller kan brukes til de forskjellige forsikringstypene.
      */
@@ -43,6 +58,20 @@ public class Innboforsikring extends Forsikring implements Serializable, Valider
 
         Brukstype(String forsikringsstype){
             this.forsikringstype = forsikringsstype;
+        }
+
+        //Denne metoden benyttes ved innlesning fra csv fil der formatet er på "Hus og Innbo"
+        //og ikke HELÅRSBOLIG. Den tarimot "Hus og Innbo" og finner HELÅRSBOLIG.
+        public static Brukstype getBrukstype(String brukstypeSomTekst){
+          for (Brukstype brukstype : Brukstype.values()) {
+            if (brukstype.forsikringstype.equalsIgnoreCase(brukstypeSomTekst)) {
+              return brukstype;
+            }
+            /*if (brukstype.forsikringstype.equals(brukstypeSomTekst)) {
+                  return brukstype;
+            }*/
+          }
+          return null;
         }
 
         @Override

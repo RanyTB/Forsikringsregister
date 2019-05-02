@@ -21,7 +21,7 @@ public class Skademelding implements Serializable, Validerbar {
     private transient static final AtomicInteger skadenummerCounter = new AtomicInteger(10000);
 
     private transient ObjectProperty<LocalDate> skademeldingsDato;
-    private transient LongProperty skadenummer;
+    private transient IntegerProperty skadenummer;
     private transient StringProperty typeSkade;
     private transient StringProperty beskrivelse;
     private transient StringProperty vitner;
@@ -31,13 +31,36 @@ public class Skademelding implements Serializable, Validerbar {
     public Skademelding(LocalDate skademeldingsDato, String typeSkade, String beskrivelse, String vitner,
                         String takseringAvSkaden, String utbetaltErstatningsbeløp){
         this.skademeldingsDato = new SimpleObjectProperty<>(this, "skademeldingsDato", skademeldingsDato);
-        this.skadenummer = new SimpleLongProperty(this, "skadenummer", skadenummerCounter.getAndIncrement());
+        this.skadenummer = new SimpleIntegerProperty(this, "skadenummer", skadenummerCounter.getAndIncrement());
         this.typeSkade = new SimpleStringProperty(this, "typeSkade", typeSkade);
         this.beskrivelse = new SimpleStringProperty(this, "beskrivelse", beskrivelse);
         this.vitner = new SimpleStringProperty(this, "vitner", vitner);
         this.takseringAvSkaden = new SimpleStringProperty(this, "takseringAvSkaden", takseringAvSkaden);
         this.utbetaltErstatningsbeløp = new SimpleStringProperty(this, "utbetaltErstatningsbeløp", utbetaltErstatningsbeløp);
 
+    }
+    //Konstruktør for å lage fra csv fil
+    public Skademelding(LocalDate skademeldingsDato, int skadenummer, String typeSkade, String beskrivelse, String vitner,
+                        String takseringAvSkaden, String utbetaltErstatningsbeløp){
+        this.skademeldingsDato = new SimpleObjectProperty<>(this, "skademeldingsDato", skademeldingsDato);
+        this.skadenummer = new SimpleIntegerProperty(this, "skadenummer", skadenummer);
+        this.typeSkade = new SimpleStringProperty(this, "typeSkade", typeSkade);
+        this.beskrivelse = new SimpleStringProperty(this, "beskrivelse", beskrivelse);
+        this.vitner = new SimpleStringProperty(this, "vitner", vitner);
+        this.takseringAvSkaden = new SimpleStringProperty(this, "takseringAvSkaden", takseringAvSkaden);
+        this.utbetaltErstatningsbeløp = new SimpleStringProperty(this, "utbetaltErstatningsbeløp", utbetaltErstatningsbeløp);
+
+    }
+
+    /**
+     * Oppdaterer skadenummer telleren til høyeste nummeret lagt inn + 1.
+     * @param innlastetSkadenummer Skadenummeret for skademeldingen som opprettes.
+     */
+    private void updateSkademeldingCounter(int innlastetSkadenummer){
+        //Sett counteren til høyeste forsikringsnummer + 1 når nye kunder opprettes.
+        if(innlastetSkadenummer >= skadenummerCounter.get()){
+            skadenummerCounter.set(innlastetSkadenummer + 1);
+        }
     }
 
     public LocalDate getSkademeldingsDato(){
@@ -52,15 +75,15 @@ public class Skademelding implements Serializable, Validerbar {
         this.skademeldingsDato.set(skademeldingsDato);
     }
 
-    public long getSkadenummer() {
+    public int getSkadenummer() {
         return skadenummer.get();
     }
 
-    public LongProperty skadenummerProperty() {
+    public IntegerProperty skadenummerProperty() {
         return skadenummer;
     }
 
-    public void setSkadenummer(long skadenummer) {
+    public void setSkadenummer(int skadenummer) {
         this.skadenummer.set(skadenummer);
     }
 
@@ -140,12 +163,16 @@ public class Skademelding implements Serializable, Validerbar {
     private void readObject(ObjectInputStream objectInputStream) throws IOException , ClassNotFoundException{
         objectInputStream.defaultReadObject();
         this.skademeldingsDato = new SimpleObjectProperty<>((LocalDate) objectInputStream.readObject());
-        this.skadenummer = new SimpleLongProperty((Long) objectInputStream.readObject());
+        this.skadenummer = new SimpleIntegerProperty((Integer) objectInputStream.readObject());
         this.typeSkade = new SimpleStringProperty((String) objectInputStream.readObject());
         this.beskrivelse = new SimpleStringProperty((String) objectInputStream.readObject());
         this.vitner = new SimpleStringProperty((String) objectInputStream.readObject());
         this.takseringAvSkaden = new SimpleStringProperty((String) objectInputStream.readObject());
         this.utbetaltErstatningsbeløp = new SimpleStringProperty((String) objectInputStream.readObject());
+
+        //Oppdaterer skademeldingscounteren til verdiene av skademeldingen som opprettes + 1.
+        updateSkademeldingCounter( this.skadenummer.getValue() );
+
     }
 
     @Override

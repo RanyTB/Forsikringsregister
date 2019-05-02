@@ -1,6 +1,7 @@
 package com.rtbeb.model.base;
 
 import com.rtbeb.model.base.exception.InvalidForsikringException;
+import com.rtbeb.model.base.exception.InvalidSkademeldingException;
 import com.rtbeb.model.base.forsikring.Forsikring;
 import com.rtbeb.model.base.forsikring.Skademelding;
 import com.rtbeb.model.base.forsikring.Validerbar;
@@ -28,9 +29,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Kunde implements Serializable, Validerbar {
     private static final long serialVersionUID = 1;
-    /*Kundeklassen bruker properties, som fungerer som en wrapper for klassene med muligheten
-    for å binde listeners. Dette gjør at en TableView automatisk vil oppdatere properties
-     som får nye verdier.*/
 
     //Counteren sørger for threadsafe utdeling av forsikringsnummer til nye kunder med metoden getAndIncrement();
     private transient static final AtomicInteger forsikringnummerCounter = new AtomicInteger(100000);
@@ -38,7 +36,7 @@ public class Kunde implements Serializable, Validerbar {
     private transient StringProperty etternavn;
     private transient StringProperty fakturaadresse;
     private transient StringProperty postnummer;
-    private transient LongProperty forsikringsnummer;
+    private transient IntegerProperty forsikringsnummer;
     private transient ObjectProperty<LocalDate> kundeOpprettelsesDato;
 
     private transient ObservableList<Forsikring> forsikringsListe = FXCollections.observableArrayList();
@@ -53,20 +51,34 @@ public class Kunde implements Serializable, Validerbar {
         this.etternavn = new SimpleStringProperty(this,"etternavn",etternavn);
         this.fakturaadresse = new SimpleStringProperty(this,"fakturaadresse",fakturaadresse);
         this.postnummer = new SimpleStringProperty(this, "postnummer", postnummer);
-        this.forsikringsnummer = new SimpleLongProperty(this,"forsikringsnummer", forsikringnummerCounter.getAndIncrement());
+        this.forsikringsnummer = new SimpleIntegerProperty(this,"forsikringsnummer", forsikringnummerCounter.getAndIncrement());
         this.kundeOpprettelsesDato = new SimpleObjectProperty<>(this,"kundeOpprettelsesDato", LocalDate.now());
     }
 
     /**
      * Konstruktøren tillater innlesing av eksisterende kunder. Forsikringsnummer og kundeOpprettelsesDato settes i konstruktøren.
      */
-    public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer, long forsikringsnummer, LocalDate datoOpprettet) {
+    public Kunde(String fornavn, String etternavn, String fakturaadresse, String postnummer, int forsikringsnummer, LocalDate datoOpprettet) {
         this.fornavn = new SimpleStringProperty(this,"fornavn",fornavn);
         this.etternavn = new SimpleStringProperty(this,"etternavn",etternavn);
         this.fakturaadresse = new SimpleStringProperty(this,"fakturaadresse",fakturaadresse);
         this.postnummer = new SimpleStringProperty(this, "postnummer", postnummer);
-        this.forsikringsnummer = new SimpleLongProperty(this,"forsikringsnummer", forsikringsnummer);
+        this.forsikringsnummer = new SimpleIntegerProperty(this,"forsikringsnummer", forsikringsnummer);
         this.kundeOpprettelsesDato = new SimpleObjectProperty<>(this,"kundeOpprettelsesDato", datoOpprettet);
+        System.out.println("Legger inn kunde med forsikringsnummer " + forsikringsnummer);
+        updateForsikringsNummerCounter(forsikringsnummer);
+    }
+
+    /**
+     * Oppdaterer forsikringsnummer telleren til høyeste nummeret lagt inn + 1.
+     * @param innlastetForsikringsnummer Forsikringsnummeret for kunden som settes inn i registeret.
+     */
+    private void updateForsikringsNummerCounter(int innlastetForsikringsnummer){
+        //Sett counteren til høyeste forsikringsnummer + 1 når nye kunder opprettes.
+        if(innlastetForsikringsnummer >= forsikringnummerCounter.get()){
+            forsikringnummerCounter.set(innlastetForsikringsnummer + 1);
+            System.out.println("Counter oppdateres til " + innlastetForsikringsnummer + 1);
+        }
     }
 
     //----------------KUNDEINFO-----------------------//
@@ -119,15 +131,15 @@ public class Kunde implements Serializable, Validerbar {
         this.postnummer.set(postnummer);
     }
 
-    public long getForsikringsnummer() {
+    public Integer getForsikringsnummer() {
         return forsikringsnummer.get();
     }
 
-    public LongProperty forsikringsnummerProperty() {
+    public IntegerProperty forsikringsnummerProperty() {
         return forsikringsnummer;
     }
 
-    public void setForsikringsnummer(long forsikringsnummer) {
+    public void setForsikringsnummer(int forsikringsnummer) {
         this.forsikringsnummer.set(forsikringsnummer);
     }
 
@@ -167,7 +179,7 @@ public class Kunde implements Serializable, Validerbar {
         if(forsikring.isValid()){
             this.forsikringsListe.add(forsikring);
         } else{
-            throw new InvalidForsikringException("Ugyldig forsikring");
+            throw new InvalidForsikringException("Ugyldig forsikringsparametre i forsikring: " + forsikring.getForsikringstype() );
         }
     }
 
@@ -191,8 +203,12 @@ public class Kunde implements Serializable, Validerbar {
         this.skademeldinger = skademeldinger;
     }
 
-    public void addSkademelding(Skademelding skademelding){
-        this.skademeldinger.add(skademelding);
+    public void addSkademelding(Skademelding skademelding) throws InvalidSkademeldingException {
+        if(skademelding.isValid()){
+            this.skademeldinger.add(skademelding);
+        } else {
+            throw new InvalidSkademeldingException("Ugyldige verdier i skademelding");
+        }
 
     }
 
@@ -223,10 +239,13 @@ public class Kunde implements Serializable, Validerbar {
         this.etternavn = new SimpleStringProperty((String) objectInputStream.readObject());
         this.fakturaadresse = new SimpleStringProperty((String) objectInputStream.readObject());
         this.postnummer = new SimpleStringProperty((String) objectInputStream.readObject());
-        this.forsikringsnummer = new SimpleLongProperty((Long) objectInputStream.readObject());
+        this.forsikringsnummer = new SimpleIntegerProperty((Integer) objectInputStream.readObject());
         this.kundeOpprettelsesDato = new SimpleObjectProperty<>((LocalDate) objectInputStream.readObject());
         this.forsikringsListe = FXCollections.observableArrayList( (ArrayList<Forsikring>) objectInputStream.readObject());
         this.skademeldinger = FXCollections.observableArrayList( (ArrayList<Skademelding>) objectInputStream.readObject());
+
+        //Sett counteren til høyeste forsikringsnummer + 1 når nye kunder opprettes.
+        updateForsikringsNummerCounter( this.forsikringsnummer.getValue());
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.rtbeb.model.base;
 
 import com.rtbeb.model.base.exception.InvalidForsikringException;
 import com.rtbeb.model.base.exception.InvalidKundeException;
+import com.rtbeb.model.base.exception.InvalidSkademeldingException;
 import com.rtbeb.model.base.forsikring.Båt.Båt;
 import com.rtbeb.model.base.forsikring.Båt.Båtforsikring;
 import com.rtbeb.model.base.forsikring.Båt.Eier;
@@ -12,7 +13,6 @@ import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Kunderegisteret er en Singleton-klasse som fungerer som systemets register. Registeret inneholder alle
@@ -47,14 +47,22 @@ public class Kunderegister {
         Skademelding skademelding1 = new Skademelding(LocalDate.now(), "Påkjørlse", "Påkjørt fra babord", "Truls tlf 12738492", "50000", "10000");
         Skademelding skademelding2 = new Skademelding(LocalDate.now(), "Brann", "Brann fra sikringsskap", "Linda tlf 89372645", "70000", "50000");
 
-        kunde1.addSkademelding(skademelding1);
-        kunde1.addSkademelding(skademelding2);
+        try {
+            kunde1.addSkademelding(skademelding1);
+            kunde1.addSkademelding(skademelding2);
+        } catch (InvalidSkademeldingException e) {
+            e.printStackTrace();
+        }
 
         Skademelding skademelding3 = new Skademelding(LocalDate.now(), "Påkjørlse", "Påkjørt fra babord", "Truls tlf 12738492", "50000", "0");
         Skademelding skademelding4 = new Skademelding(LocalDate.now(), "Brann", "Brann fra sikringsskap", "Linda tlf 89372645", "70000", "0");
 
-        kunde1.addSkademelding(skademelding3);
-        kunde1.addSkademelding(skademelding4);
+        try {
+            kunde1.addSkademelding(skademelding3);
+            kunde1.addSkademelding(skademelding4);
+        } catch (InvalidSkademeldingException e) {
+            e.printStackTrace();
+        }
 
         //Tester innsetting av båtforsikring i et kundeobjekt.
         try {

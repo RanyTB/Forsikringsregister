@@ -3,6 +3,8 @@ package com.rtbeb.controller.visning;
 import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import com.rtbeb.controller.helper.FXMLStyler;
 import com.rtbeb.model.base.Kunde;
@@ -12,6 +14,7 @@ import com.rtbeb.model.filemanagement.read.RegisterReader;
 import com.rtbeb.model.filemanagement.write.RegisterWriter;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +31,7 @@ import javafx.stage.Stage;
 /**
  * Entry-point for programmet. Viser en oversikt over alle kunder, tillater sletting og redigering av kunder
  * og dobbeltklikk på kunder for å vise kundeforholdet.
+ *
  * @author Rany Tarek Bouorm - s236210
  * @author Eirik Bøyum - Filbehandlingsmetoder
  */
@@ -46,16 +50,16 @@ public class KundevisningController implements Initializable {
     TextField txtSearch;
 
     @FXML
-    TableColumn<Kunde,Integer> forsikringsnummerColumn;
+    TableColumn<Kunde, Integer> forsikringsnummerColumn;
 
     @FXML
-    TableColumn<Kunde,String> fornavnColumn;
+    TableColumn<Kunde, String> fornavnColumn;
 
     @FXML
-    TableColumn<Kunde,String> etternavnColumn;
+    TableColumn<Kunde, String> etternavnColumn;
 
     @FXML
-    TableColumn<Kunde,String> adresseColumn;
+    TableColumn<Kunde, String> adresseColumn;
 
     @FXML
     TableColumn<Kunde, String> dateColumn;
@@ -72,21 +76,32 @@ public class KundevisningController implements Initializable {
     @FXML
     private Button btnVisValgtKunde;
 
+    //Deklarerer variabel for lesetråd.
+    Thread readThread;
+
+    /**
+     * @author Eirik Bøyum
+     *
+     */
     @FXML
     private void openFile() {
         //TODO implementer FileChooser her
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(new Stage());
 
-        if( file != null ){
+        if (file != null) {
 
-            try{
+            try {
                 //En ny tråd settes opp med to Runnable funksjoner som blir kalt når tråden er ferdig med å kjøre.
-                Thread readThread = new Thread( new RegisterReader(file.getPath(), this::generateFileLoadedAlert, this::activateButtons) );
+                Task readTask = new RegisterReader(file.getPath(), this::generateFileLoadedAlert, this::activateButtons);
+                Thread readThread = new Thread(readTask);
+
+                //Dersom tråden feiler, hentes exception-meldingen fra tråden og genererer en feilmelding.
+                readTask.setOnFailed(workerStateEvent -> readFailedHandler(readTask.getException().getMessage()));
                 deactivateButtons();
                 readThread.start();
 
-            } catch (InvalidFileTypeException e){
+            } catch (InvalidFileTypeException e) {
 
                 System.err.println(e.getMessage());
             }
@@ -96,7 +111,7 @@ public class KundevisningController implements Initializable {
     /**
      * Deaktiverer knapper og menyikoner.
      */
-    private void deactivateButtons(){
+    private void deactivateButtons() {
         btnÅpneFil.setDisable(true);
         btnLagreTilFil.setDisable(true);
         btnOpprettNyKunde.setDisable(true);
@@ -107,7 +122,7 @@ public class KundevisningController implements Initializable {
     /**
      * Aktiverer knapper og menyikoner.
      */
-    private void activateButtons(){
+    private void activateButtons() {
         btnÅpneFil.setDisable(false);
         btnLagreTilFil.setDisable(false);
         btnOpprettNyKunde.setDisable(false);
@@ -115,12 +130,23 @@ public class KundevisningController implements Initializable {
         activateDoubleClickFunctionalityForTable();
     }
 
-    private void generateFileLoadedAlert(){
+    private void generateFileLoadedAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("Registeret ble lastet inn.");
         alert.show();
     }
 
+    private void readFailedHandler(String errorMessage) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("Feil ved filinnlasting.");
+        alert.setContentText(errorMessage + "\nFilinnlasting avbrytes.");
+        activateButtons();
+        alert.showAndWait();
+    }
+
+    /**
+     * @author Eirik Bøyum
+     */
     @FXML
     private void saveFile(ActionEvent event) {
 
@@ -134,10 +160,10 @@ public class KundevisningController implements Initializable {
         fileChooser.getExtensionFilters().addAll(extensionFilterJOBJ, extensionFilterCSV);
         File file = fileChooser.showSaveDialog(new Stage());
 
-        if ( file != null ) {
+        if (file != null) {
             try {
 
-                Thread saveThread = new Thread( new RegisterWriter(file.getPath(), this::generateFileSavedAlert, this::activateButtons) );
+                Thread saveThread = new Thread(new RegisterWriter(file.getPath(), this::generateFileSavedAlert, this::activateButtons));
                 deactivateButtons();
                 saveThread.start();
 
@@ -147,7 +173,7 @@ public class KundevisningController implements Initializable {
         }
     }
 
-    private void generateFileSavedAlert(){
+    private void generateFileSavedAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("Kunderegisteret ble lagret");
         alert.show();
@@ -164,7 +190,7 @@ public class KundevisningController implements Initializable {
             newStage.setScene(kundeScene);
             newStage.show();
 
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -176,7 +202,7 @@ public class KundevisningController implements Initializable {
 
             Kunde valgtKunde = tableKunder.getSelectionModel().getSelectedItem();
 
-            if (valgtKunde != null){
+            if (valgtKunde != null) {
                 /*
                 Kilder/inspirasjon for sending av parametre til kontroller:
                 https://github.com/jalopezsuarez/javafx-screens/blob/master/javafx-screens/src/com/vemovi/javafx/NavigationController.java
@@ -219,7 +245,7 @@ public class KundevisningController implements Initializable {
     /**
      * Setter opp kundetabellen med tilhørende søkefunksjonalitet og sortering.
      */
-    private void setUpTableKunder(){
+    private void setUpTableKunder() {
 
         tableKunder.setPlaceholder( new Label("Det er ingen elementer i tabbellen. Elementer kan importeres via Fil -> Åpne fil"));
 
@@ -255,11 +281,11 @@ public class KundevisningController implements Initializable {
         FilteredList<Kunde> filteredList = new FilteredList<>(kunderegister.getKundeliste());
 
         //Setter opp en listener for søkefeltet (txtSearch), slik at filteret oppdateres hver gang man skriver noe nytt.
-        txtSearch.textProperty().addListener((observable,oldValue,newValue) -> {
+        txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(kunde -> {
 
                 //Vis alt dersom søkefeltet er tomt:
-                if(newValue == null || newValue.isEmpty()){
+                if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
 
@@ -267,13 +293,13 @@ public class KundevisningController implements Initializable {
                 String lowerCaseFilter = newValue.toLowerCase();
 
                 //Sammenligner lowerCaseFilter med fornavn, etternavn og forsikringsnummer.
-                if(kunde.getFornavn().toLowerCase().contains(lowerCaseFilter)){
+                if (kunde.getFornavn().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (kunde.getEtternavn().toLowerCase().contains(lowerCaseFilter)){
+                } else if (kunde.getEtternavn().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if(kunde.getFakturaadresse().toLowerCase().contains(lowerCaseFilter)){
+                } else if (kunde.getFakturaadresse().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if(Long.toString(kunde.getForsikringsnummer()).contains(lowerCaseFilter)){
+                } else if (Long.toString(kunde.getForsikringsnummer()).contains(lowerCaseFilter)) {
                     return true;
                 }
                 return false; //Ingen match

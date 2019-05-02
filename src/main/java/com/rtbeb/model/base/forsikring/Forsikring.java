@@ -23,11 +23,21 @@ public abstract class Forsikring implements Serializable, Validerbar {
     private transient StringProperty forsikringsbetingelser;
 
 
-
     public Forsikring(String forsikringstype, Integer forsikringspremie, Integer forsikringsbeløp, String forsikringsbetingelser) {
         this.forsikringstype = new SimpleStringProperty(forsikringstype);
         this.forsikringspremie = new SimpleIntegerProperty(forsikringspremie);
         this.datoOpprettet = new SimpleObjectProperty<>(LocalDate.now());
+        this.forsikringsbeløp = new SimpleIntegerProperty(forsikringsbeløp);
+        this.forsikringsbetingelser = new SimpleStringProperty(forsikringsbetingelser);
+    }
+
+    /**
+     * Konstruktør for innlesning av csv fil
+     */
+    public Forsikring(String forsikringstype, Integer forsikringspremie, LocalDate datoOpprettet, Integer forsikringsbeløp, String forsikringsbetingelser) {
+        this.forsikringstype = new SimpleStringProperty(forsikringstype);
+        this.forsikringspremie = new SimpleIntegerProperty(forsikringspremie);
+        this.datoOpprettet = new SimpleObjectProperty<>(datoOpprettet);
         this.forsikringsbeløp = new SimpleIntegerProperty(forsikringsbeløp);
         this.forsikringsbetingelser = new SimpleStringProperty(forsikringsbetingelser);
     }
@@ -90,6 +100,10 @@ public abstract class Forsikring implements Serializable, Validerbar {
 
     public void setForsikringsbetingelser(String forsikringsbetingelser) {
         this.forsikringsbetingelser.set(forsikringsbetingelser);
+    }
+    public String toStringForsikring(){
+        String forsirking = "\"" + "";
+        return forsirking;
     }
 
     //Egendefinert serialisering

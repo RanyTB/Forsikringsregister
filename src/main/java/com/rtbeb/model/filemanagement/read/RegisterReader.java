@@ -1,7 +1,15 @@
 package com.rtbeb.model.filemanagement.read;
 
+import com.rtbeb.model.base.exception.InvalidForsikringException;
+import com.rtbeb.model.base.exception.InvalidSkademeldingException;
+import com.rtbeb.model.filemanagement.exception.FileReadException;
+import com.rtbeb.model.filemanagement.exception.InvalidFileContentException;
+import com.rtbeb.model.filemanagement.exception.InvalidFileStructureException;
 import com.rtbeb.model.filemanagement.exception.InvalidFileTypeException;
 import javafx.concurrent.Task;
+import javafx.scene.control.Alert;
+
+import java.io.IOException;
 
 public class RegisterReader extends Task<Void> {
 
@@ -33,11 +41,15 @@ public class RegisterReader extends Task<Void> {
     }
 
     @Override
-    protected Void call() throws Exception {
+    protected Void call() throws FileReadException, InvalidForsikringException, InvalidSkademeldingException, ClassNotFoundException {
 
         //Simulerer lang task.
-        Thread.sleep(3000);
-        fileReadStrategy.readFromFile(path);
+        try {
+            Thread.sleep(3000);
+            fileReadStrategy.readFromFile(path);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return null;
     }
@@ -48,4 +60,5 @@ public class RegisterReader extends Task<Void> {
         successAlertFunc.run();
         activateButtonsFunc.run();
     }
+
 }

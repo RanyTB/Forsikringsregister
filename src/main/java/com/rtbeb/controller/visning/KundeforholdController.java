@@ -213,17 +213,19 @@ public class KundeforholdController implements Initializable {
     @FXML
     private void slettForsikringButtonClicked(ActionEvent event){
        Forsikring valgtForsikring = tableForsikringer.getSelectionModel().getSelectedItem();
-        //Genererer alert
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Slett forsikring");
-        alert.setHeaderText("Er du sikker på at du vil slette forsikringen?");
+       if (valgtForsikring != null){
+           //Genererer alert
+           Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+           alert.setTitle("Slett forsikring");
+           alert.setHeaderText("Er du sikker på at du vil slette forsikringen?");
 
-        //Sletter forsikringen dersom brukeren trykker OK.
-        alert.showAndWait().ifPresent(respons -> {
-            if (respons == ButtonType.OK) {
-                valgtKunde.slettForsikring(valgtForsikring);
-            }
-        });
+           //Sletter forsikringen dersom brukeren trykker OK.
+           alert.showAndWait().ifPresent(respons -> {
+               if (respons == ButtonType.OK) {
+                   valgtKunde.slettForsikring(valgtForsikring);
+               }
+           });
+       }
 
     }
 
@@ -301,8 +303,9 @@ public class KundeforholdController implements Initializable {
     @FXML
     private void slettSkademeldingButtonClicked(ActionEvent event){
         Skademelding skademelding = tableSkademeldinger.getSelectionModel().getSelectedItem();
-        System.out.println("Valgt forsikringsnummer: " + skademelding.getSkadenummer());
-        valgtKunde.slettSkademelding(skademelding);
+        if (skademelding != null){
+            valgtKunde.slettSkademelding(skademelding);
+        }
     }
 
     @FXML
@@ -310,25 +313,26 @@ public class KundeforholdController implements Initializable {
 
         try {
             Skademelding valgtSkademelding = tableSkademeldinger.getSelectionModel().getSelectedItem();
+            if (valgtSkademelding != null){
+                RedigerSkademeldingController redigerSkademeldingController = new RedigerSkademeldingController(valgtKunde, valgtSkademelding);
 
-            RedigerSkademeldingController redigerSkademeldingController = new RedigerSkademeldingController(valgtKunde, valgtSkademelding);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RedigerSkademelding.fxml"));
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RedigerSkademelding.fxml"));
+                //Setter loaderens kontroller til kontroller-instansen. fx:controller er ikke satt i FXML-filen.
+                loader.setController(redigerSkademeldingController);
 
-            //Setter loaderens kontroller til kontroller-instansen. fx:controller er ikke satt i FXML-filen.
-            loader.setController(redigerSkademeldingController);
-
-            //Loader FXML-hierarkiet
-            Parent root = loader.load();
+                //Loader FXML-hierarkiet
+                Parent root = loader.load();
 
             //Oppretter ny scene og setter stylesheet
             Scene scene = new Scene(root);
             FXMLStyler.addDefaultStyleSheet(scene);
 
-            //Oppretter ny stage
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
+                //Oppretter ny stage
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.show();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -386,25 +390,26 @@ public class KundeforholdController implements Initializable {
 
         try {
             Skademelding valgtUbetaltErstatning = tableUbetalteErstatninger.getSelectionModel().getSelectedItem();
+            if (valgtUbetaltErstatning != null){
+                UtbetalErstatningController utbetalErstatningController = new UtbetalErstatningController(valgtKunde, valgtUbetaltErstatning);
 
-            UtbetalErstatningController utbetalErstatningController = new UtbetalErstatningController(valgtKunde, valgtUbetaltErstatning);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UtbetalErstatning.fxml"));
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/UtbetalErstatning.fxml"));
+                //Setter loaderens kontroller til kontroller-instansen. fx:controller er ikke satt i FXML-filen.
+                loader.setController(utbetalErstatningController);
 
-            //Setter loaderens kontroller til kontroller-instansen. fx:controller er ikke satt i FXML-filen.
-            loader.setController(utbetalErstatningController);
-
-            //Loader FXML-hierarkiet
-            Parent root = loader.load();
+                //Loader FXML-hierarkiet
+                Parent root = loader.load();
 
             //Oppretter ny scene og setter stylesheet
             Scene scene = new Scene(root);
             FXMLStyler.addDefaultStyleSheet(scene);
 
-            //Oppretter ny stage
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.show();
+                //Oppretter ny stage
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.show();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -415,11 +420,11 @@ public class KundeforholdController implements Initializable {
     @FXML
     private void slettUbetalteErstatningButtonClicked(ActionEvent event){
         Skademelding skademelding = tableSkademeldinger.getSelectionModel().getSelectedItem();
-        System.out.println("Valgt forsikringsnummer: " + skademelding.getSkadenummer());
-        valgtKunde.slettSkademelding(skademelding);
+        if (skademelding != null){
+            valgtKunde.slettSkademelding(skademelding);
+        }
     }
 
     //---------------Ubetalt erstatning end-----------------//
-
 
 }

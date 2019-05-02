@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * Reiseforsikringsklasse.
@@ -23,6 +24,17 @@ public class Reiseforsikring extends Forsikring implements Serializable, Valider
                            String forsikringsbetingelser, String forsikringsområde, int forsikringssum) {
 
         super("Reiseforsikring",årligForsikringspremie, forsikringsbeløp,forsikringsbetingelser);
+        this.forsikringsområde = new SimpleStringProperty(forsikringsområde);
+        this.forsikringssum = new SimpleIntegerProperty(forsikringssum);
+    }
+
+    /**
+     * Konstruktør for innlesning av csv fil
+     */
+    public Reiseforsikring(Integer årligForsikringspremie, Integer forsikringsbeløp, LocalDate datoOpprettet,
+                           String forsikringsbetingelser, String forsikringsområde, int forsikringssum) {
+
+        super("Reiseforsikring",årligForsikringspremie, datoOpprettet, forsikringsbeløp, forsikringsbetingelser);
         this.forsikringsområde = new SimpleStringProperty(forsikringsområde);
         this.forsikringssum = new SimpleIntegerProperty(forsikringssum);
     }

@@ -7,35 +7,15 @@ import java.util.regex.Pattern;
 
 /**
  *  @author Eirik Bøyum
+ *  Validator for skademelding.
+ *  Regex for tillat input
  */
 public class SkademeldingValidator {
-    private static String textRegex = "[a-zæøåA-ZÆØÅ\\- ]{2,50}+";
-    private static String textOgTallRegex = "[a-zøæåA-ZÆØÅ0-9\\- ]{2,100}+";
+    private static String textRegex = "[a-zæøåA-ZÆØÅ\\-,-. ]{2,50}+";
+    private static String textTallRegex = "[a-zøæåA-ZÆØÅ0-9\\-\\n-@-,-. ]{2,100}+";
     private static String tallRegex = "\\d{1,8}";
 
-    /*public static boolean textIsValid(String hvaSomSkalValideres, int maksTekstLengde){
-        if (hvaSomSkalValideres.length() > maksTekstLengde){
-            return false;
-        }else {
-            return Pattern.matches(textRegex, hvaSomSkalValideres);
-        }
-    }
 
-    public static boolean textOgTallIsValid(String hvaSomSkalValideres, int maksTekstLengde){
-        if (hvaSomSkalValideres.length() > maksTekstLengde){
-            return false;
-        }else {
-            return Pattern.matches(textOgTallRegex, hvaSomSkalValideres);
-        }
-    }
-
-    public static boolean tallIsValid(String hvaSomSkalValideres, int maksTallLengde){
-        if (hvaSomSkalValideres.length() > maksTallLengde){
-            return false;
-        }else {
-            return Pattern.matches(tallRegex, hvaSomSkalValideres);
-        }
-    }*/
     public static boolean textIsValid(String hvaSomSkalValideres){
 
         return Pattern.matches(textRegex, hvaSomSkalValideres);
@@ -44,7 +24,7 @@ public class SkademeldingValidator {
 
     public static boolean textOgTallIsValid(String hvaSomSkalValideres){
 
-        return Pattern.matches(textOgTallRegex, hvaSomSkalValideres);
+        return Pattern.matches(textTallRegex, hvaSomSkalValideres);
 
     }
 
@@ -64,6 +44,7 @@ public class SkademeldingValidator {
         }
     }
 
+    //Siste sjekk for skademelding
     public static boolean skademeldingIsValid(Skademelding skademelding){
         LocalDate date = skademelding.getSkademeldingsDato();
         String typeSkade = skademelding.getTypeSkade();
