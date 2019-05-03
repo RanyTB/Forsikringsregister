@@ -14,6 +14,10 @@ import java.nio.file.Paths;
 
 /**
  * @author Eirik Bøyum
+ * Klassen for lesing av fil.
+ * Metoden readFromFile tar imot filepathen og prøver lese inn filen.
+ * Den leser inn hver linje fra filen og splittern den. Resultatet av splitten sendes videre til klassen CSVReadHelper.
+ * linjenummeret telles opp slik at bruker vet i hvilken linje lesing fra fil eventuelt feilet.
  */
 public class CSVReadStrategy implements FileReadStrategy {
 
@@ -33,7 +37,6 @@ public class CSVReadStrategy implements FileReadStrategy {
                 csvReadHelper.håndterArray(splittetLinje);
             }
             csvReadHelper.addToRegistry();
-            System.out.println("Ferdig med å lese fil");
         }catch (IOException e){
             throw new FileReadException("Kunne ikke lese filen.");
         }catch(FileReadException e){

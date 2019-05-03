@@ -16,17 +16,17 @@ import javafx.collections.ObservableList;
  *  @author Eirik Bøyum
  */
 public class CSVFormatter {
-    public static String toStringKunde(Kunde kunde){
+    public static String toCSVStringKunde(Kunde kunde){
         return kunde.getFornavn() + ";" + kunde.getEtternavn() + ";" + kunde.getFakturaadresse() + ";" +
                 kunde.getPostnummer() + ";" + kunde.getForsikringsnummer() + ";" + kunde.getKundeOpprettelsesDato();
     }
 
-    private static String toStringForsirking(Forsikring forsikring){
+    private static String toCSVStringForsirking(Forsikring forsikring){
         return forsikring.getForsikringstype() + ";" + forsikring.getForsikringspremie() + ";" +
                 forsikring.getDatoOpprettet() + ";" + forsikring.getForsikringsbeløp() + ";" + forsikring.getForsikringsbetingelser();
     }
 
-    private static String toStringBåtforsikring(Båtforsikring båtforsikring){
+    private static String toCSVStringBåtforsikring(Båtforsikring båtforsikring){
         String båtEier = båtforsikring.getBåt().getEier().getFornavn() + ";" + båtforsikring.getBåt().getEier().getEtternavn()
                 + ";" + båtforsikring.getBåt().getEier().getFødselsdato();
 
@@ -34,12 +34,12 @@ public class CSVFormatter {
                 ";" + båtforsikring.getBåt().getModell() + ";" + båtforsikring.getBåt().getLengde() + ";" +
                 båtforsikring.getBåt().getÅrsmodell() + ";" + båtforsikring.getBåt().getMotorinfo();
 
-        String tekstForsikring = toStringForsirking(båtforsikring);
+        String tekstForsikring = toCSVStringForsirking(båtforsikring);
 
         return tekstForsikring + ";" + tekstBåtforsikring + ";" + båtEier;
     }
 
-    private static String toStringInnboforsikring(Innboforsikring innboforsikring){
+    private static String toCSVStringInnboforsikring(Innboforsikring innboforsikring){
         String bolig = innboforsikring.getBolig().getAdresse() + ";" + innboforsikring.getBolig().getPostnummer() +
                 ";" + innboforsikring.getBolig().getByggeår() + ";" + innboforsikring.getBolig().getBoligtype() +
                 ";" + innboforsikring.getBolig().getByggemateriale() + ";" + innboforsikring.getBolig().getStandard() +
@@ -47,20 +47,20 @@ public class CSVFormatter {
 
         String tekstInnboforsikring =innboforsikring.getForsikringssbeløpBygning() + ";" + innboforsikring.getForsikringsbeløpInnbo();
 
-        String tekstForsikring = toStringForsirking(innboforsikring);
+        String tekstForsikring = toCSVStringForsirking(innboforsikring);
 
         return tekstForsikring + ";" + tekstInnboforsikring + ";" + bolig;
     }
 
-    private static String toStringReiseforsirking(Reiseforsikring reiseforsikring){
+    private static String toCSVStringReiseforsirking(Reiseforsikring reiseforsikring){
         String tekstReiseforsikring =reiseforsikring.getForsikringsområde() + ";" + reiseforsikring.getForsikringssum();
 
-        String tekstForsikring = toStringForsirking(reiseforsikring);
+        String tekstForsikring = toCSVStringForsirking(reiseforsikring);
 
         return tekstForsikring + ";" + tekstReiseforsikring;
     }
 
-    private static String toStringSkademelding(Skademelding skademelding){
+    private static String toCSVStringSkademelding(Skademelding skademelding){
         return skademelding.getSkademeldingsDato() + ";" + skademelding.getSkadenummer() + ";" + skademelding.getTypeSkade() +
                 ";" + skademelding.getBeskrivelse() + ";" + skademelding.getVitner() + ";" + skademelding.getTakseringAvSkaden() +
                 ";" + skademelding.getUtbetaltErstatningsbeløp();
@@ -80,15 +80,15 @@ public class CSVFormatter {
 
                 if (forsikring instanceof Båtforsikring){
 
-                    båtforsikringsTekst += "|" + toStringBåtforsikring((Båtforsikring) forsikring) + "|";
+                    båtforsikringsTekst += "|" + toCSVStringBåtforsikring((Båtforsikring) forsikring) + "|";
 
                 }else if (forsikring instanceof Innboforsikring){
 
-                    innboforsikringsTekst += "|" + toStringInnboforsikring((Innboforsikring) forsikring) + "|";
+                    innboforsikringsTekst += "|" + toCSVStringInnboforsikring((Innboforsikring) forsikring) + "|";
 
                 }else if (forsikring instanceof Reiseforsikring){
 
-                    reiseforsikringsTekst += "|" + toStringReiseforsirking((Reiseforsikring) forsikring) + "|";
+                    reiseforsikringsTekst += "|" + toCSVStringReiseforsirking((Reiseforsikring) forsikring) + "|";
                 }
             }
         }
@@ -100,14 +100,14 @@ public class CSVFormatter {
         String skademeldingsTekst = "";
         if (skademeldingsListe.size() > 0){
             for (Skademelding skademelding : skademeldingsListe) {
-                skademeldingsTekst += "|" + toStringSkademelding(skademelding);
+                skademeldingsTekst += "|" + toCSVStringSkademelding(skademelding);
             }
         }
         return skademeldingsTekst;
     }
 
     public static String håndterkundeobjekt(Kunde kunde){
-        String kundeTekst = toStringKunde(kunde);
+        String kundeTekst = toCSVStringKunde(kunde);
         String forsikringsTekst = håndterForsikringsListe(kunde.getForsikringsListe());
         String skademeldingsTekst = håndterSkademeldinger(kunde.getSkademeldinger());
         return "\"" + kundeTekst + "\" ; \"" + skademeldingsTekst + "\" ; \"" + forsikringsTekst + "\"";
