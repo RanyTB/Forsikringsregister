@@ -138,11 +138,11 @@ public class RegistrerSkademeldingController implements Initializable {
 
         try {
             valgtKunde.addSkademelding(skademelding);
+            Stage thisStage = (Stage) btnRegistrerSkademelding.getScene().getWindow();
+            thisStage.close();
         } catch (InvalidSkademeldingException e) {
             AlertGenerator.registreringsfeilAlert("Feil ved registrering.\nFyll inn alle felt eller sjekk rød-markerte felt.");
         }
-        Stage thisStage = (Stage) btnRegistrerSkademelding.getScene().getWindow();
-        thisStage.close();
     }
 
     /**
