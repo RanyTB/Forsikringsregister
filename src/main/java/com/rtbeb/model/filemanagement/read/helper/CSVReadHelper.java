@@ -1,4 +1,4 @@
-package com.rtbeb.model.filemanagement.read;
+package com.rtbeb.model.filemanagement.read.helper;
 
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
@@ -22,7 +22,6 @@ import java.util.ArrayList;
 /**
  * @author Eirik Bøyum
  */
-
 public class CSVReadHelper {
 
     private ArrayList<Kunde> importertKundeliste = new ArrayList<>();
@@ -263,11 +262,6 @@ public class CSVReadHelper {
     }
 
     private void håndterReiseforsikring(String[] splittetReiseforsikringssArray) throws InvalidFileContentException, InvalidForsikringException {
-        /*
-        Feil som kan oppstå:
-        parseInt kan kaste NumberFormatException -> Kaster dette videre som InvalidFileContentException
-        Reiseforsikringen kan være ugyldig etter valideringsreglene -> Kast InvalidForsikringException
-        */
         try {
             //Forsikrings info
             String forsikringsType = splittetReiseforsikringssArray[0];

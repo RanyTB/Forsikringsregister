@@ -9,9 +9,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- *  @author Eirik Bøyum
  *  Klassen itererer over kundeobjekter, kaller så på csvFormatter og skriver resultatet til fil som er gitt som
  *  parameter til writeToFile metoden
+ *
+ *  @author Eirik Bøyum
  */
 public class CSVSaveStrategy implements FileSaveStrategy{
 

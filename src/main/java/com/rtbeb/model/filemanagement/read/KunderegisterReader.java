@@ -1,24 +1,21 @@
 package com.rtbeb.model.filemanagement.read;
 
-import com.rtbeb.model.base.exception.InvalidForsikringException;
-import com.rtbeb.model.base.exception.InvalidSkademeldingException;
 import com.rtbeb.model.filemanagement.exception.FileReadException;
-import com.rtbeb.model.filemanagement.exception.InvalidFileContentException;
-import com.rtbeb.model.filemanagement.exception.InvalidFileStructureException;
 import com.rtbeb.model.filemanagement.exception.InvalidFileTypeException;
 import javafx.concurrent.Task;
-import javafx.scene.control.Alert;
 
-import java.io.IOException;
-
-public class RegisterReader extends Task<Void> {
+/**
+ * @author Eirik Bøyum
+ * @author Rany Tarek Bouorm - s236210
+ */
+public class KunderegisterReader extends Task<Void> {
 
     String path;
     FileReadStrategy fileReadStrategy;
     Runnable successAlertFunc;
     Runnable activateButtonsFunc;
 
-    public RegisterReader(String path, Runnable successAlertFunc, Runnable activateButtonsFunc) throws InvalidFileTypeException {
+    public KunderegisterReader(String path, Runnable successAlertFunc, Runnable activateButtonsFunc) throws InvalidFileTypeException {
         this.path = path;
         this.fileReadStrategy = getStrategyBasedOnExtension(path);
         this.successAlertFunc = successAlertFunc;
@@ -41,7 +38,7 @@ public class RegisterReader extends Task<Void> {
     }
 
     @Override
-    protected Void call() throws FileReadException, InvalidForsikringException, InvalidSkademeldingException, ClassNotFoundException {
+    protected Void call() throws FileReadException {
 
         //Simulerer lang task.
         try {

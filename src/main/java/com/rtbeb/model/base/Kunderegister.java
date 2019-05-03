@@ -17,6 +17,7 @@ import java.util.ArrayList;
 /**
  * Kunderegisteret er en Singleton-klasse som fungerer som systemets register. Registeret inneholder alle
  * kundeobjektene.
+ * @author Rany Tarek Bouorm - s236210
  */
 public class Kunderegister {
 

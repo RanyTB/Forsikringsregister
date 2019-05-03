@@ -39,7 +39,11 @@ public class Skademelding implements Serializable, Validerbar {
         this.utbetaltErstatningsbeløp = new SimpleStringProperty(this, "utbetaltErstatningsbeløp", utbetaltErstatningsbeløp);
 
     }
-    //Konstruktør for å lage fra csv fil
+
+
+    /**
+     * Konstruktør med muligheten for å sette skadenummeret. Brukes til innlesing fra fil.
+     */
     public Skademelding(LocalDate skademeldingsDato, int skadenummer, String typeSkade, String beskrivelse, String vitner,
                         String takseringAvSkaden, String utbetaltErstatningsbeløp){
         this.skademeldingsDato = new SimpleObjectProperty<>(this, "skademeldingsDato", skademeldingsDato);
@@ -50,10 +54,12 @@ public class Skademelding implements Serializable, Validerbar {
         this.takseringAvSkaden = new SimpleStringProperty(this, "takseringAvSkaden", takseringAvSkaden);
         this.utbetaltErstatningsbeløp = new SimpleStringProperty(this, "utbetaltErstatningsbeløp", utbetaltErstatningsbeløp);
 
+        updateSkademeldingCounter( skadenummer );
     }
 
     /**
-     * Oppdaterer skadenummer telleren til høyeste nummeret lagt inn + 1.
+     * Dersom nåværende verdi på skadenummerCounter er lavere enn input, oppdateres skademeldingCounter til
+     * innlastetSkadenummer + 1.
      * @param innlastetSkadenummer Skadenummeret for skademeldingen som opprettes.
      */
     private void updateSkademeldingCounter(int innlastetSkadenummer){
@@ -175,6 +181,10 @@ public class Skademelding implements Serializable, Validerbar {
 
     }
 
+    /**
+     * Validerer dette objektet etter satte valideringsregler.
+     * @return Returnerer true hvis gyldig.
+     */
     @Override
     public boolean isValid() {
         return SkademeldingValidator.skademeldingIsValid(this);

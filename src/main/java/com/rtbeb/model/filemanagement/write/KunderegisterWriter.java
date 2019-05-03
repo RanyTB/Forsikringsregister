@@ -3,14 +3,18 @@ package com.rtbeb.model.filemanagement.write;
 import com.rtbeb.model.filemanagement.exception.InvalidFileTypeException;
 import javafx.concurrent.Task;
 
-public class RegisterWriter extends Task<Void> {
+/**
+ * @author Eirik Bøyum
+ * @author Rany Tarek Bouorm - s236210
+ */
+public class KunderegisterWriter extends Task<Void> {
 
     String path;
     FileSaveStrategy fileSaveStrategy;
     Runnable successAlertFunc;
     Runnable activateButtonsFunc;
 
-    public RegisterWriter(String path, Runnable successAlertFunc, Runnable activateButtonsFunc) throws InvalidFileTypeException {
+    public KunderegisterWriter(String path, Runnable successAlertFunc, Runnable activateButtonsFunc) throws InvalidFileTypeException {
         this.path = path;
         this.fileSaveStrategy = getStrategyBasedOnExtension(path);
         this.successAlertFunc = successAlertFunc;

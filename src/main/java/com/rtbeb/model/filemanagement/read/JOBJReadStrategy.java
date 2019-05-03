@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class JOBJReadStrategy implements FileReadStrategy{
 
     @Override
-    public void readFromFile(String filePath) throws ClassCastException, ClassNotFoundException, FileReadException {
+    public void readFromFile(String filePath) throws ClassCastException, FileReadException {
         try(FileInputStream fileInputStream = new FileInputStream(filePath);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)){
             Object object = objectInputStream.readObject();
@@ -23,8 +23,8 @@ public class JOBJReadStrategy implements FileReadStrategy{
 
         }catch (IOException e){
             throw new FileReadException("Feil ved innlesning av fil. Filen kan være korrupt");
-        }catch (ClassNotFoundException e){
-            throw new FileReadException("Feil med innlesning av fil. Sjekk at du har valgt riktig fil");
+        }catch (ClassNotFoundException | ClassCastException e){
+            throw new FileReadException("Feil ved innlesning av fil. Sjekk at du har valgt riktig fil");
         }
     }
 }

@@ -20,6 +20,9 @@ public class Reiseforsikring extends Forsikring implements Serializable, Valider
     private transient StringProperty forsikringsområde;
     private transient IntegerProperty forsikringssum;
 
+    /**
+     * Standard konstruktør. Setter dato opprettet til dagens dato.
+     */
     public Reiseforsikring(Integer årligForsikringspremie, Integer forsikringsbeløp,
                            String forsikringsbetingelser, String forsikringsområde, int forsikringssum) {
 
@@ -29,7 +32,7 @@ public class Reiseforsikring extends Forsikring implements Serializable, Valider
     }
 
     /**
-     * Konstruktør for innlesning av csv fil
+     * Konstruktør med muligheten for å sette dato opprettet. Brukes til innlesing fra fil.
      */
     public Reiseforsikring(Integer årligForsikringspremie, Integer forsikringsbeløp, LocalDate datoOpprettet,
                            String forsikringsbetingelser, String forsikringsområde, int forsikringssum) {
@@ -77,6 +80,10 @@ public class Reiseforsikring extends Forsikring implements Serializable, Valider
         this.forsikringssum = new SimpleIntegerProperty((Integer) objectInputStream.readObject());
     }
 
+    /**
+     * Validerer dette objektet etter satte valideringsregler.
+     * @return Returnerer true hvis gyldig.
+     */
     @Override
     public boolean isValid() {
         return ReiseforsikringValidator.reiseforsikringIsValid(this);
