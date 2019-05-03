@@ -24,6 +24,7 @@ public class JOBJReadStrategy implements FileReadStrategy{
         }catch (IOException e){
             throw new FileReadException("Feil ved innlesning av fil. Filen kan være korrupt");
         }catch (ClassNotFoundException | ClassCastException e){
+            e.printStackTrace();
             throw new FileReadException("Feil ved innlesning av fil. Sjekk at du har valgt riktig fil");
         }
     }

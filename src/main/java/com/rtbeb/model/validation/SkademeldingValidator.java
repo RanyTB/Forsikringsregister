@@ -53,7 +53,7 @@ public class SkademeldingValidator {
         String takseringAvSkaden = skademelding.getTakseringAvSkaden();
         String utbetaltErstatningsbeløp = skademelding.getUtbetaltErstatningsbeløp();
 
-        if (dateIsValid(date) && textIsValid(typeSkade) && textIsValid(beskrivelse)
+        if (dateIsValid(date) && textIsValid(typeSkade) && textOgTallIsValid(beskrivelse)
         && textOgTallIsValid(vitner) && tallIsValid(takseringAvSkaden) && tallIsValid(utbetaltErstatningsbeløp)){
             return true;
         }else {

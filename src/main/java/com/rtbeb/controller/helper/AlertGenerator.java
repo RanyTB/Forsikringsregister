@@ -21,7 +21,7 @@ public class AlertGenerator {
      */
     public static void registreringsfeilAlert(String message){
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Redigeringsfeil");
+        alert.setTitle("Registreringsfeil");
         alert.setHeaderText(message);
         alert.showAndWait();
     }
