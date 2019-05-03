@@ -6,7 +6,7 @@ I faget Programutvikling DATA1600 - Våren 2019, ble det gitt i semesteroppgave 
 
 Gruppen, bestående av Rany Tarek Bouorm (s236210) og Eirik Bøyum (s170002), valgte oppgaven om forsikring. 
 
-Problemstilling
+### Problemstilling
 
 Et registreringssystem for forsikringer skal implementeres. Oppgavens vedlegg lister opp elementer som systemet skal registrere. Elementene består av:
 
@@ -37,6 +37,7 @@ Et registreringssystem for forsikringer skal implementeres. Oppgavens vedlegg li
 | [GitHub Dekstop](https://desktop.github.com/)                | Grafisk brukergrensesnitt for bruk av git. Brukt som supplement til git kommandolinje. |
 | [Evernote](https://evernote.com/)                            | Notatprogram. Brukt til å skrive sammendrag av gruppemøter og til å dele informasjon mellom gruppemedlemmene. |
 | [Typora](https://typora.io/)                                 | Enkelt program for produksjon av Markdown dokumenter. Brukt til denne rapporten. |
+| [Trello](https://trello.com/)                                | Webapplikasjon for oppslagstavler. Brukt for å holde styr på oppgavene til hvert medlem og hva som jobbes med. |
 
 
 
@@ -70,17 +71,17 @@ Oppgaven med å implementere TableView, registrering og redigering ble tildelt R
 
 ## Resultater
 
-Arbeidet resulterte til slutt i et fungerende registreringssystem for kunder, forsikringer og skademeldinger. Systemet har **Kunde** som hovedobjekt. Med andre ord holder Kunde-objektet referanse til all relevant kundeinfo som forsikringer og skademeldinger. En singletonklasse **Kunderegister**, inneholder en **ObservableList** med alle kundene. Forsikringsklassene arver alltid fra klassen **Forsikring** og implementerer interface for validering og serialisering. Det er laget egendefinerte exception-klasser for Kunde, Forsikring og Skademelding. Disse kastes dersom en ugyldig Kunde blir lagt til via addForsikring() i kunderegisteret, eller dersom en ugyldig forsikring eller skademelding blir lagt inn i kunde via addForsikring() eller addSkademelding().
+Arbeidet resulterte til slutt i et fungerende registreringssystem for kunder, forsikringer og skademeldinger. Systemet har **Kunde** som hovedobjekt. Med andre ord holder Kunde-objektet referanse til all relevant kundeinfo som forsikringer og skademeldinger. En singletonklasse **Kunderegister**, inneholder en **ObservableList** med alle kundene. Forsikringsklassene arver alltid fra klassen **Forsikring** og implementerer interface for validering og serialisering. Det er laget egendefinerte exception-klasser for Kunde, Forsikring og Skademelding. Disse kastes dersom en ugyldig Kunde blir lagt til via `addForsikring()` i kunderegisteret, eller dersom en ugyldig forsikring eller skademelding blir lagt inn i kundeobjektet via dens `addForsikring()` eller `addSkademelding()` metoder.
 
 Relaterte elementer er abstrahert ut i egne klasser: for eksempel har en båtforsikring en båt, og båten har en eier, slik at når en båtforsikring skal opprettes, vil man i dens konstruktør kun ta imot forsikringsdetaljer og den forsikrede båten som parameter. Dette begrenser lengde på konstruktørene og minimerer sjansene for feil.
 
-Det er lagt stor vekt på lesbarheten av kode og bruk av Javadoc, som forenkler utviklingsprosessen og utvidelse av programmet senere. Vi har også forsøkt å holde oss til [SOLID-prinsippene](https://en.wikipedia.org/wiki/SOLID), spesielt "[Single responsibility principle](https://en.wikipedia.org/wiki/Single_responsibility_principle)". Dette har vist seg å være både utfordrende og lærerrikt, da det tvinger en til å tenke gjennom klassene som opprettes og variabelnavnene som brukes. 
+Det er lagt stor vekt på lesbarheten av kode og bruk av Javadoc, som forenkler utviklingsprosessen og utvidelse av programmet senere. Vi har også forsøkt å holde oss til [SOLID-prinsippene](https://en.wikipedia.org/wiki/SOLID), spesielt "[Single responsibility principle](https://en.wikipedia.org/wiki/Single_responsibility_principle)", samt prinsipper fra boken [Clean Code](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882). Dette har vist seg å være både utfordrende og lærerrikt, da det tvinger en til å tenke gjennom klassene som opprettes og variabelnavnene som brukes. 
 
 Dersom programmet i fremtiden skal utvides med flere forsikringer, er prosessen som følger: 
 
 - Opprett en ny forsikringsklasse som utvider klassen **Forsikring**. Implementer **Validerbar** og **Serializable** interfacet i klassen. **Validerbar** gjør at forsikringen kan valideres og legges til forsikringsregisteret, **Serializable** gjør at forsikringen kan lagres i serialisert format.
 
-- Utvid klassene **CSVWriteHelper** og **CSVReadHelper** under **filemanagement**-pakken slik at forsikringen kan lagres og leses fra CSV.
+- Utvid klassene **CSVFormatter** og **CSVReadHelper** under **filemanagement**-pakken slik at forsikringen kan lagres og leses fra CSV.
 
 - Opprett en valideringsklasse for forsikringstypen som innehar forsikringens lovlige verdier. 
 
@@ -173,17 +174,15 @@ Videre følger en refleksjon over arbeidet, som spesifisert i rapportbeskrivelse
 
 ##### Elementer som kunne blitt gjennomført bedre
 
-- Det er noe brukt noe repetiv kode, spesielt i views og kontrollere for registrering og redigering. Her kunne det vært implementert en superklasse for å unngå duplikatkode. 
-- Vi kunne vi lagt noe mer vekt på design og UX, spesielt når det kommer til responsivt design.
+- Det er brukt noe repetiv kode, spesielt i views og kontrollere for registrering og redigering. Her kunne det vært implementert en superklasse for kontrollerne for å unngå duplikatkode. 
+- Vi kunne vi lagt noe mer vekt på design og UX, spesielt når det kommer til responsivt design, men har valgt å fokusere på kodedelen grunnet høy arbeidsmengde.
 - Automatisert testing: Det er implementert noen få JUnit tester i prosjektet, men det er for det meste testet manuelt. Dette har vist seg å være svært upålitelig, da man ofte vil komme over feil av ren tilfeldighet. Hvis det er en ting vi ville lagt større vekt på, ville det vært mer utstrakt bruk av JUnit testing, potensielt i form av "test-driven developement" prosessen.
 
 ##### Læringsutbytte
 
-Prosjektet har vært det første større prosjektet vi har hatt iløpet av studiet. Vi føler at det har vært svært lærerrikt å jobbe med å utvikle et program over lenger tid.
-
 - Lært og erfart viktigheten av godt forarbeid.
-- Vi har lært viktigheten av navngivning, både mtp. gruppearbeid, men også det å skulle forstå sin egen kode noen dager/uker senere.
-- Vi har fått erfaring med å legge klasser med relatert funksjonalitet i egne klasser, og å abstrahere ut metoder som brukes i flere klasser.
+- Lært viktigheten av navngivning, både mtp. andre som skal lese koden, men også det å skulle forstå sin egen kode noen dager/uker senere.
+- Fått erfaring med et større prosjekt med mange elementer som henger sammen, og erfart hvordan klasser fordeles i pakker.
 - Vi har lært å bruke git til å samarbeide. Spesielt i form av Feature Branching. Vi har også hatt noen problemer og frustrasjoner med git underveis, som har gjort at vi måtte grave dypere i dokumentasjonen av git's mange funksjonaliteter. Dette har økt forståelsen av git.
 - Vi har erfart at det ikke alltid er lett å sette seg inn i andres kode, og at parprogrammering kan hjelpe på dette.
 
@@ -201,22 +200,24 @@ Til neste prosjekt ville vi lagt større vekt på planleggingsfasen, men spesiel
   - Kodestrukturen i valideringsklassene.
   - Implementasjon av singleton designmønsteret for kunderegisteret.
   - Implementasjon av Validerbar interfacet og bruken av denne.
-  - Implementert tråder i filhåndteringsklassene med egendefinert system som et alternativ til [modality](<https://docs.oracle.com/javase/8/javafx/api/javafx/stage/Modality.html>). Dette gjør at det fortsatt er mulig å navigere i og sortere kundelisten mens tråden kjører.
-  - Omgjort prosjektets mappestruktur.
+  - Implementert tråder i filhåndteringsklassene med [Runnables](https://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.html). Dette gjør at det fortsatt er mulig å navigere i og sortere kundelisten mens tråden kjører.
+  - Jobbet med å holde orden på struktur av pakker, klasser og hjelpeklasser.
   
+
 **Eirik Bøyum:**
-  
+
 - Design av menyer.
   
 - Implementasjon av Serializable interfacet for alle elementer med egendefinert serialisering.
   
-  - Implementasjon av filhåndtering med tilhørende exceptions.
+- Implementasjon av filhåndtering med tilhørende exceptions.
   
-  - View og kontrollere for registrering, redigering og validering av skademelding og ubetalt erstatning.
+- View og kontrollere for registrering, redigering og validering av skademelding og ubetalt erstatning.
   
-    
+  
 
 <div style="page-break-after: always;"></div>
 
 ## Konklusjon
 
+Et registreringssystem for forsikringer har blitt laget i henhold til problemstillingen. Forsikringssystemet har funksjonaliteter for registrering av kunder, fire typer forsikringer og skademeldinger. Applikasjonen støtter også lagring og lesing fra to filtyper. Programmet håndterer både ugyldig inntastet data, og ugyldig data fra filer som leses inn og viser relevante feilmeldinger til brukeren.
