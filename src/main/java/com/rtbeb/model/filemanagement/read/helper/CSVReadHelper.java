@@ -20,7 +20,7 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 /**
- * @author Eirik Bøyum
+ * @author Eirik Bøyum - s170002
  */
 public class CSVReadHelper {
 
@@ -76,7 +76,6 @@ public class CSVReadHelper {
             String fakturaadresse = kundeArray[2];
             String postnummer = kundeArray[3];
             int forsikringsnummer = Integer.parseInt(kundeArray[4]);
-
             LocalDate opprettelsesDato = getDatoFormat(kundeArray[5]);
 
             kunde = new Kunde(fornavn, etternavn, fakturaadresse, postnummer, forsikringsnummer, opprettelsesDato);
@@ -154,7 +153,6 @@ public class CSVReadHelper {
             String forsikringsType = splittetBåtforsikringsArray[0];
             int forsikringspremie = Integer.parseInt(splittetBåtforsikringsArray[1]);
             LocalDate datoOpprettet = getDatoFormat(splittetBåtforsikringsArray[2]);
-            //LocalDate datoOpprettet = LocalDate.now();
 
             int forsikringsbeløp = Integer.parseInt(splittetBåtforsikringsArray[3]);
             String forsikringsbetingelser = splittetBåtforsikringsArray[4];
