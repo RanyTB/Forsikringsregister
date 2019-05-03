@@ -76,7 +76,6 @@ public class KundevisningController implements Initializable {
 
     @FXML
     private void openFile() {
-        //TODO implementer FileChooser her
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(new Stage());
 
