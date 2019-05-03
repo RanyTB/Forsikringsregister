@@ -82,6 +82,10 @@ public class Eier implements Serializable, Validerbar {
         this.fødselsdato = new SimpleObjectProperty<>((LocalDate) objectInputStream.readObject());
     }
 
+    /**
+     * Validerer dette objektet etter satte valideringsregler.
+     * @return Returnerer true hvis gyldig.
+     */
     @Override
     public boolean isValid() {
         return EierValidator.EierIsValid(this);

@@ -1,5 +1,6 @@
 package com.rtbeb.controller.registrering;
 
+import com.rtbeb.controller.helper.AlertGenerator;
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.exception.InvalidSkademeldingException;
@@ -138,9 +139,7 @@ public class RegistrerSkademeldingController implements Initializable {
         try {
             valgtKunde.addSkademelding(skademelding);
         } catch (InvalidSkademeldingException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Ugyldig input");
-            alert.setTitle("Feil ved registrering");
-            alert.showAndWait();
+            AlertGenerator.registreringsfeilAlert("Feil ved registrering.\nFyll inn alle felt eller sjekk rød-markerte felt.");
         }
         Stage thisStage = (Stage) btnRegistrerSkademelding.getScene().getWindow();
         thisStage.close();

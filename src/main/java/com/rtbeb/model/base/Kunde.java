@@ -25,6 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Klassen bruker properties, som fungerer som en wrapper for feltene, med muligheten
  * for å binde listeners. Dette gjør at en TableView automatisk vil oppdatere properties
  * som får nye verdier.
+ * @author Rany Tarek Bouorm - s236210
  */
 
 public class Kunde implements Serializable, Validerbar {
@@ -41,8 +42,7 @@ public class Kunde implements Serializable, Validerbar {
 
     private transient ObservableList<Forsikring> forsikringsListe = FXCollections.observableArrayList();
 
-    /*Skademeldingsliste med extractor. Dette sørger for at update event blir trigget når utbetalt erstatningsbeløp blir endret.
-    Se her: https://stackoverflow.com/questions/31687642/callback-and-extractors-for-javafx-observablelist*/
+    /*Skademeldingsliste med extractor. Dette sørger for at update event blir trigget når utbetalt erstatningsbeløp blir endret.*/
     private transient ObservableList<Skademelding> skademeldinger = FXCollections.observableArrayList(skademelding ->
             new Observable[] {skademelding.utbetaltErstatningsbeløpProperty(), skademelding.takseringAvSkadenProperty()});
 
@@ -139,10 +139,6 @@ public class Kunde implements Serializable, Validerbar {
         return forsikringsnummer;
     }
 
-    public void setForsikringsnummer(int forsikringsnummer) {
-        this.forsikringsnummer.set(forsikringsnummer);
-    }
-
     public LocalDate getKundeOpprettelsesDato() {
         return kundeOpprettelsesDato.get();
     }
@@ -151,9 +147,6 @@ public class Kunde implements Serializable, Validerbar {
         return kundeOpprettelsesDato;
     }
 
-    public void setKundeOpprettelsesDato(LocalDate kundeOpprettelsesDato) {
-        this.kundeOpprettelsesDato.set(kundeOpprettelsesDato);
-    }
 
     //--------------------KUNDEINFO END---------------------//
 
@@ -169,10 +162,6 @@ public class Kunde implements Serializable, Validerbar {
         return new ArrayList<>(getForsikringsListe());
     }
 
-    public void setForsikringsListe(ObservableList<Forsikring> forsikringsListe) {
-
-        this.forsikringsListe = forsikringsListe;
-    }
 
     public void addForsikring(Forsikring forsikring) throws InvalidForsikringException {
 
@@ -199,17 +188,16 @@ public class Kunde implements Serializable, Validerbar {
         return new ArrayList<>(getSkademeldinger());
     }
 
-    public void setSkademeldinger(ObservableList<Skademelding> skademeldinger) {
-        this.skademeldinger = skademeldinger;
-    }
-
     public void addSkademelding(Skademelding skademelding) throws InvalidSkademeldingException {
         if(skademelding.isValid()){
             this.skademeldinger.add(skademelding);
         } else {
             throw new InvalidSkademeldingException("Ugyldige verdier i skademelding");
         }
+    }
 
+    private void addSkademeldingerFromArray(ArrayList<Skademelding> list){
+        this.skademeldinger.addAll(list);
     }
 
     public void slettSkademelding(Skademelding skademelding){
@@ -242,7 +230,10 @@ public class Kunde implements Serializable, Validerbar {
         this.forsikringsnummer = new SimpleIntegerProperty((Integer) objectInputStream.readObject());
         this.kundeOpprettelsesDato = new SimpleObjectProperty<>((LocalDate) objectInputStream.readObject());
         this.forsikringsListe = FXCollections.observableArrayList( (ArrayList<Forsikring>) objectInputStream.readObject());
-        this.skademeldinger = FXCollections.observableArrayList( (ArrayList<Skademelding>) objectInputStream.readObject());
+
+        //Setter opp skademeldingslisten med extractor for å støtte funksjonalitet for ubetalte erstatninger.
+        this.skademeldinger = FXCollections.observableList( (ArrayList<Skademelding>) objectInputStream.readObject(), skademelding ->
+                new Observable[] {skademelding.utbetaltErstatningsbeløpProperty(), skademelding.takseringAvSkadenProperty()} );
 
         //Sett counteren til høyeste forsikringsnummer + 1 når nye kunder opprettes.
         updateForsikringsNummerCounter( this.forsikringsnummer.getValue());

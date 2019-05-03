@@ -1,5 +1,6 @@
 package com.rtbeb.controller.redigering;
 
+import com.rtbeb.controller.helper.AlertGenerator;
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.forsikring.Skademelding;
@@ -81,9 +82,7 @@ public class UtbetalErstatningController implements Initializable {
             Stage thisStage = (Stage) btnUtbetalErstatning.getScene().getWindow();
             thisStage.close();
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Ugyldig input");
-            alert.setTitle("Feil ved utbetaling");
-            alert.showAndWait();
+            AlertGenerator.redigeringsfeilAlert("Beløpet er ugyldig.");
         }
     }
 

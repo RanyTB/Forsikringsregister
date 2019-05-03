@@ -1,5 +1,6 @@
 package com.rtbeb.controller.redigering;
 
+import com.rtbeb.controller.helper.AlertGenerator;
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.forsikring.Bolig.Bolig;
@@ -73,10 +74,10 @@ public class RedigerInnboforsikringController extends RedigerforsikringControlle
                 Stage stage = (Stage) btnNeste.getScene().getWindow();
                 stage.close();
             } else{
-                generateAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
+                AlertGenerator.redigeringsfeilAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
             }
         } catch (NumberFormatException e) {
-            generateAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
+            AlertGenerator.redigeringsfeilAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
         }
     }
 

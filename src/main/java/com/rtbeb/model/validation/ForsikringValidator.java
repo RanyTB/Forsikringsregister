@@ -2,6 +2,8 @@ package com.rtbeb.model.validation;
 
 import com.rtbeb.model.base.forsikring.Forsikring;
 
+import java.util.regex.Pattern;
+
 /**
  * @author Rany Tarek Bouorm - s236210
  * Validering av Forsikring-objekter. Inkluderer også validering av enkelte felt
@@ -14,6 +16,7 @@ public class ForsikringValidator {
     private static int minForsikringspremie = 500;
     private static int maxForsikringsbelop = 20000000;
     private static int minForsikringsbelop = 1000;
+    private static String textTallRegex = "[a-zøæåA-ZÆØÅ0-9\\-\\n\\t@,.+:! ]{2,100}";
 
     /**
      * Validerer felt i en generell forsikring (forsikringspremie, forsikringsbeløp og betingelser.
@@ -64,7 +67,7 @@ public class ForsikringValidator {
     }
 
     public static boolean forsikringsbetingelserIsValid(String forsikringsbetingelser){
-        return !forsikringsbetingelser.isEmpty();
+        return Pattern.matches(textTallRegex, forsikringsbetingelser);
     }
 
 

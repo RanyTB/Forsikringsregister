@@ -22,6 +22,9 @@ public class Innboforsikring extends Forsikring implements Serializable, Valider
     private transient IntegerProperty forsikringssbeløpBygning;
     private transient IntegerProperty forsikringsbeløpInnbo;
 
+    /**
+     * Standard konstruktør. Setter dato opprettet til dagens dato.
+     */
     public Innboforsikring(Brukstype brukstype, int forsikringspremie, int forsikringsbeløp, String betingelser,
                            Bolig bolig, Integer forsikringssbeløpBygning, Integer forsikringsbeløpInnbo) {
 
@@ -33,9 +36,8 @@ public class Innboforsikring extends Forsikring implements Serializable, Valider
     }
 
     /**
-     * Konstruktør for innlesning av csv fil
+     * Konstruktør med muligheten for å sette dato opprettet. Brukes til innlesing fra fil.
      */
-
     public Innboforsikring(Brukstype brukstype, int forsikringspremie, LocalDate datoOpprettet, int forsikringsbeløp, String betingelser,
                            Bolig bolig, Integer forsikringssbeløpBygning, Integer forsikringsbeløpInnbo) {
 
@@ -63,15 +65,15 @@ public class Innboforsikring extends Forsikring implements Serializable, Valider
         //Denne metoden benyttes ved innlesning fra csv fil der formatet er på "Hus og Innbo"
         //og ikke HELÅRSBOLIG. Den tarimot "Hus og Innbo" og finner HELÅRSBOLIG.
         public static Brukstype getBrukstype(String brukstypeSomTekst){
-          for (Brukstype brukstype : Brukstype.values()) {
-            if (brukstype.forsikringstype.equalsIgnoreCase(brukstypeSomTekst)) {
-              return brukstype;
-            }
+            for (Brukstype brukstype : Brukstype.values()) {
+                if (brukstype.forsikringstype.equalsIgnoreCase(brukstypeSomTekst)) {
+                    return brukstype;
+                }
             /*if (brukstype.forsikringstype.equals(brukstypeSomTekst)) {
                   return brukstype;
             }*/
-          }
-          return null;
+            }
+            return null;
         }
 
         @Override
@@ -142,6 +144,10 @@ public class Innboforsikring extends Forsikring implements Serializable, Valider
 
     }
 
+    /**
+     * Validerer dette objektet etter satte valideringsregler.
+     * @return Returnerer true hvis gyldig.
+     */
     @Override
     public boolean isValid() {
         return InnboForsikringValidator.innboForsikringIsValid(this);

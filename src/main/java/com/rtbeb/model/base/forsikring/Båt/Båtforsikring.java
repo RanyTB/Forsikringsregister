@@ -21,7 +21,9 @@ public class Båtforsikring extends Forsikring implements Serializable, Validerb
 
     private transient ObjectProperty<Båt> båt;
 
-
+    /**
+     * Standard konstruktør. Setter dato opprettet til dagens dato.
+     */
     public Båtforsikring(Integer årligForsikringspremie, Integer forsikringsbeløp, String forsikringsbetingelser, Båt båt) {
 
         super("Båtforsikring", årligForsikringspremie, forsikringsbeløp, forsikringsbetingelser);
@@ -29,7 +31,7 @@ public class Båtforsikring extends Forsikring implements Serializable, Validerb
     }
 
     /**
-     * Konstruktør for innlesning av csv fil
+     * Konstruktør med muligheten for å sette dato opprettet. Brukes til innlesing fra fil.
      */
     public Båtforsikring(Integer årligForsikringspremie, LocalDate datoOpprettet, Integer forsikringsbeløp, String forsikringsbetingelser, Båt båt) {
 

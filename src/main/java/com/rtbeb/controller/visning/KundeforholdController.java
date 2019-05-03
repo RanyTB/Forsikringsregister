@@ -34,7 +34,7 @@ import java.util.ResourceBundle;
  * Kontroller for kundeforholdsvisningen. Valgt kunde settes med kontrollerens konstruktør.
  * FXML-filen og Kontrolleren må bindes.
  * @author Rany Tarek Bouorm - s236210
- * @author Eirik Bøyum - Markerte deler med Skademelding og Ubetalteerstatniger.
+ * @author Eirik Bøyum - Markerte deler med Skademelding og Ubetalte Erstatninger.
  */
 public class KundeforholdController implements Initializable {
 
@@ -212,28 +212,27 @@ public class KundeforholdController implements Initializable {
 
     @FXML
     private void slettForsikringButtonClicked(ActionEvent event){
-       Forsikring valgtForsikring = tableForsikringer.getSelectionModel().getSelectedItem();
-       if (valgtForsikring != null){
-           //Genererer alert
-           Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-           alert.setTitle("Slett forsikring");
-           alert.setHeaderText("Er du sikker på at du vil slette forsikringen?");
+        Forsikring valgtForsikring = tableForsikringer.getSelectionModel().getSelectedItem();
+        if (valgtForsikring != null){
+            //Genererer alert
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Slett forsikring");
+            alert.setHeaderText("Er du sikker på at du vil slette forsikringen?");
 
-           //Sletter forsikringen dersom brukeren trykker OK.
-           alert.showAndWait().ifPresent(respons -> {
-               if (respons == ButtonType.OK) {
-                   valgtKunde.slettForsikring(valgtForsikring);
-               }
-           });
-       }
+            //Sletter forsikringen dersom brukeren trykker OK.
+            alert.showAndWait().ifPresent(respons -> {
+                if (respons == ButtonType.OK) {
+                    valgtKunde.slettForsikring(valgtForsikring);
+                }
+            });
+        }
 
     }
 
+    //---------------Forsikringer end-----------------//
+
 
     //---------------Skademeldinger-----------------//
-    /**
-     * @author Eirik Bøyum
-     */
 
     @FXML
     private TableView<Skademelding> tableSkademeldinger;
@@ -255,14 +254,14 @@ public class KundeforholdController implements Initializable {
 
     private void setupSkademeldingsTable(){
 
-      datoForSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("skademeldingsDato"));
-      skadennummerColumn.setCellValueFactory(new PropertyValueFactory<>("skadenummer"));
-      typeSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("typeSkade"));
-      takseringAvSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("takseringAvSkaden"));
-      utbetaltErstatningsbeløpColumn.setCellValueFactory(new PropertyValueFactory<>("utbetaltErstatningsbeløp"));
-      tableSkademeldinger.setItems(valgtKunde.getSkademeldinger());
+        datoForSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("skademeldingsDato"));
+        skadennummerColumn.setCellValueFactory(new PropertyValueFactory<>("skadenummer"));
+        typeSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("typeSkade"));
+        takseringAvSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("takseringAvSkaden"));
+        utbetaltErstatningsbeløpColumn.setCellValueFactory(new PropertyValueFactory<>("utbetaltErstatningsbeløp"));
+        tableSkademeldinger.setItems(valgtKunde.getSkademeldinger());
 
-
+        //Listener og event-handler for dobbelklikk på tabell.
         tableSkademeldinger.setOnMouseClicked((MouseEvent clickEvent) -> {
             if (clickEvent.getButton().equals(MouseButton.PRIMARY) && clickEvent.getClickCount() == 2){
                 redigerSkademeldingButtonClicked(new ActionEvent());
@@ -324,9 +323,9 @@ public class KundeforholdController implements Initializable {
                 //Loader FXML-hierarkiet
                 Parent root = loader.load();
 
-            //Oppretter ny scene og setter stylesheet
-            Scene scene = new Scene(root);
-            FXMLStyler.addDefaultStyleSheet(scene);
+                //Oppretter ny scene og setter stylesheet
+                Scene scene = new Scene(root);
+                FXMLStyler.addDefaultStyleSheet(scene);
 
                 //Oppretter ny stage
                 Stage stage = new Stage();
@@ -343,9 +342,6 @@ public class KundeforholdController implements Initializable {
 
     //---------------Ubetalt erstatning-----------------//
 
-    /**
-     * @author Eirik Bøyum
-     */
 
     @FXML
     private TableView<Skademelding> tableUbetalteErstatninger;
@@ -369,8 +365,9 @@ public class KundeforholdController implements Initializable {
 
         /*Predicate som filtrerer listen med skademeldinger basert på om det er foreligger et taksert beløp, men ikke
         utbetalt beløp. Skademeldingslisten i kundeklassen sender update events
-         når taksert beløp eller utbetalt beløp endres vha. extractor.*/
-        filteredList.setPredicate(skademelding -> Integer.parseInt(skademelding.getUtbetaltErstatningsbeløp()) == 0 && Integer.parseInt(skademelding.getTakseringAvSkaden()) > 0);
+        når taksert beløp eller utbetalt beløp endres vha. extractor.*/
+        filteredList.setPredicate(skademelding -> Integer.parseInt(skademelding.getUtbetaltErstatningsbeløp()) == 0
+                                  && Integer.parseInt(skademelding.getTakseringAvSkaden()) > 0);
 
         ubetaltDatoForSkadeColumn.setCellValueFactory(new PropertyValueFactory<>("skademeldingsDato"));
         ubetaltSkadennummerColumn.setCellValueFactory(new PropertyValueFactory<>("skadenummer"));
@@ -401,9 +398,9 @@ public class KundeforholdController implements Initializable {
                 //Loader FXML-hierarkiet
                 Parent root = loader.load();
 
-            //Oppretter ny scene og setter stylesheet
-            Scene scene = new Scene(root);
-            FXMLStyler.addDefaultStyleSheet(scene);
+                //Oppretter ny scene og setter stylesheet
+                Scene scene = new Scene(root);
+                FXMLStyler.addDefaultStyleSheet(scene);
 
                 //Oppretter ny stage
                 Stage stage = new Stage();
@@ -415,14 +412,6 @@ public class KundeforholdController implements Initializable {
         }
 
 
-    }
-
-    @FXML
-    private void slettUbetalteErstatningButtonClicked(ActionEvent event){
-        Skademelding skademelding = tableSkademeldinger.getSelectionModel().getSelectedItem();
-        if (skademelding != null){
-            valgtKunde.slettSkademelding(skademelding);
-        }
     }
 
     //---------------Ubetalt erstatning end-----------------//

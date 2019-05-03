@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  */
 public class SkademeldingValidator {
     private static String textRegex = "[a-zæøåA-ZÆØÅ\\-,-. ]{2,50}+";
-    private static String textTallRegex = "[a-zøæåA-ZÆØÅ0-9\\-\\n-@-,-. ]{2,100}+";
+    private static String textTallRegex = "[a-zøæåA-ZÆØÅ0-9\\-\\n\\t@,.+:! ]{2,100}";
     private static String tallRegex = "\\d{1,8}";
 
 
@@ -53,7 +53,7 @@ public class SkademeldingValidator {
         String takseringAvSkaden = skademelding.getTakseringAvSkaden();
         String utbetaltErstatningsbeløp = skademelding.getUtbetaltErstatningsbeløp();
 
-        if (dateIsValid(date) && textIsValid(typeSkade) && textIsValid(beskrivelse)
+        if (dateIsValid(date) && textIsValid(typeSkade) && textOgTallIsValid(beskrivelse)
         && textOgTallIsValid(vitner) && tallIsValid(takseringAvSkaden) && tallIsValid(utbetaltErstatningsbeløp)){
             return true;
         }else {

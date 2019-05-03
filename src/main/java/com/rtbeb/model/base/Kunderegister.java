@@ -17,6 +17,7 @@ import java.util.ArrayList;
 /**
  * Kunderegisteret er en Singleton-klasse som fungerer som systemets register. Registeret inneholder alle
  * kundeobjektene.
+ * @author Rany Tarek Bouorm - s236210
  */
 public class Kunderegister {
 
@@ -104,12 +105,6 @@ public class Kunderegister {
      */
     public void setKundeliste(ArrayList<Kunde> kundeliste){
 
-        //TODO Se over implementasjonen av denne setmetoden.
-        /*
-        Denne bruker vi til å sette kunderegisteret etter import fra fil.
-        Tenker derfor at vi setter alle kunder i en ArrayList når disse leses fra fil, og deretter omgjør til
-        observablelist her. */
-        //this.kundeliste = FXCollections.observableList(kundeliste);
         this.kundeliste.clear();
         this.kundeliste.addAll(kundeliste);
     }

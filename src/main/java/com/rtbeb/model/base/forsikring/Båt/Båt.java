@@ -27,11 +27,9 @@ public class Båt implements Serializable, Validerbar {
     private transient StringProperty årsmodell;
     private transient StringProperty motorinfo;
 
-    public Båt(Eier eier,
-               String registreringsnummer,
-               String merke, String modell,
-               String lengde, String årsmodell,
-               String motorinfo){
+    public Båt(Eier eier, String registreringsnummer, String merke, String modell,
+               String lengde, String årsmodell, String motorinfo){
+
         this.eier = new SimpleObjectProperty<>(eier);
         this.registreringsnummer = new SimpleStringProperty(registreringsnummer);
         this.merke = new SimpleStringProperty(merke);

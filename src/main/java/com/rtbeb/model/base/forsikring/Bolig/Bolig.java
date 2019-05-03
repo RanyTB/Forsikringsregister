@@ -222,7 +222,6 @@ public class Bolig implements Serializable, Validerbar {
         objectOutputStream.writeObject(getAdresse());
         objectOutputStream.writeObject(getByggeår());
         objectOutputStream.writeObject(getPostnummer());
-        objectOutputStream.writeObject(getByggeår());
         objectOutputStream.writeObject(getBoligtype());
         objectOutputStream.writeObject(getByggemateriale());
         objectOutputStream.writeObject(getStandard());
@@ -233,8 +232,8 @@ public class Bolig implements Serializable, Validerbar {
     private void readObject(ObjectInputStream objectInputStream) throws IOException , ClassNotFoundException{
         objectInputStream.defaultReadObject();
         this.adresse = new SimpleStringProperty( (String) objectInputStream.readObject());
-        this.postnummer = new SimpleStringProperty( (String) objectInputStream.readObject());
         this.byggeår = new SimpleStringProperty( (String) objectInputStream.readObject());
+        this.postnummer = new SimpleStringProperty( (String) objectInputStream.readObject());
         this.boligtype = new SimpleObjectProperty<>( (Boligtype) objectInputStream.readObject());
         this.byggemateriale = new SimpleObjectProperty<>( (Byggemateriale) objectInputStream.readObject());
         this.standard = new SimpleObjectProperty<>( (Standard) objectInputStream.readObject());

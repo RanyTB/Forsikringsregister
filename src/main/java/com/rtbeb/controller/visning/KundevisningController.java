@@ -3,15 +3,13 @@ package com.rtbeb.controller.visning;
 import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import com.rtbeb.controller.helper.FXMLStyler;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
 import com.rtbeb.model.filemanagement.exception.InvalidFileTypeException;
-import com.rtbeb.model.filemanagement.read.RegisterReader;
-import com.rtbeb.model.filemanagement.write.RegisterWriter;
+import com.rtbeb.model.filemanagement.read.KunderegisterReader;
+import com.rtbeb.model.filemanagement.write.KunderegisterWriter;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.concurrent.Task;
@@ -76,16 +74,8 @@ public class KundevisningController implements Initializable {
     @FXML
     private Button btnVisValgtKunde;
 
-    //Deklarerer variabel for lesetråd.
-    Thread readThread;
-
-    /**
-     * @author Eirik Bøyum
-     *
-     */
     @FXML
     private void openFile() {
-        //TODO implementer FileChooser her
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(new Stage());
 
@@ -93,7 +83,7 @@ public class KundevisningController implements Initializable {
 
             try {
                 //En ny tråd settes opp med to Runnable funksjoner som blir kalt når tråden er ferdig med å kjøre.
-                Task readTask = new RegisterReader(file.getPath(), this::generateFileLoadedAlert, this::activateButtons);
+                Task readTask = new KunderegisterReader(file.getPath(), this::generateFileLoadedAlert, this::activateButtons);
                 Thread readThread = new Thread(readTask);
 
                 //Dersom tråden feiler, hentes exception-meldingen fra tråden og genererer en feilmelding.
@@ -144,9 +134,7 @@ public class KundevisningController implements Initializable {
         alert.showAndWait();
     }
 
-    /**
-     * @author Eirik Bøyum
-     */
+
     @FXML
     private void saveFile(ActionEvent event) {
 
@@ -163,7 +151,7 @@ public class KundevisningController implements Initializable {
         if (file != null) {
             try {
 
-                Thread saveThread = new Thread(new RegisterWriter(file.getPath(), this::generateFileSavedAlert, this::activateButtons));
+                Thread saveThread = new Thread(new KunderegisterWriter(file.getPath(), this::generateFileSavedAlert, this::activateButtons));
                 deactivateButtons();
                 saveThread.start();
 

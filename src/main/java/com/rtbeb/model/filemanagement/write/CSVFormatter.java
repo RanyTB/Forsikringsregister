@@ -9,10 +9,11 @@ import com.rtbeb.model.base.forsikring.Skademelding;
 import javafx.collections.ObservableList;
 
 /**
- *  @author Eirik Bøyum
  *  Denne klassen formaterer kundeobjektet til csv format for skriving til fil.
  *  håndterkundeobjekt tar imot et kunde objekt for så systematisk hente ut tilhørende informasjon.
  *  Metoden returnerer så en komplett String av kunde som i CSVSaveStrategy skrives til fil.
+ *
+ *  @author Eirik Bøyum
  */
 public class CSVFormatter {
     public static String toCSVStringKunde(Kunde kunde){

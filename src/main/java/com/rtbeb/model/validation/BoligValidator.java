@@ -28,8 +28,13 @@ public class BoligValidator {
         String byggeår = bolig.getByggeår();
         String antallkvadratmeter = bolig.getStørrelse();
 
-        return adresseIsValid(adresse) && postnummerIsValid(postnummer)
-                && byggeårIsValid(byggeår) && størrelseIsValid(antallkvadratmeter);
+        Bolig.Boligtype boligtype = bolig.getBoligtype();
+        Bolig.Byggemateriale byggemateriale = bolig.getByggemateriale();
+        Bolig.Standard standard = bolig.getStandard();
+
+        return adresseIsValid(adresse) && postnummerIsValid(postnummer) && byggeårIsValid(byggeår)
+                && størrelseIsValid(antallkvadratmeter) && boligtypeIsValid(boligtype)
+                && byggematerialeIsValid(byggemateriale) && standardIsValid(standard);
     }
 
     public static boolean adresseIsValid(String adresse){
@@ -69,5 +74,17 @@ public class BoligValidator {
 
     private static boolean størrelseIsValid(int størrelse){
         return størrelse > minKvadratmeter && størrelse < maxKvadratmeter;
+    }
+
+    private static boolean boligtypeIsValid(Bolig.Boligtype boligtype){
+        return boligtype instanceof Bolig.Boligtype;
+    }
+
+    private static boolean byggematerialeIsValid(Bolig.Byggemateriale byggemateriale){
+        return byggemateriale instanceof Bolig.Byggemateriale;
+    }
+
+    private static boolean standardIsValid(Bolig.Standard standard){
+        return standard instanceof Bolig.Standard;
     }
 }

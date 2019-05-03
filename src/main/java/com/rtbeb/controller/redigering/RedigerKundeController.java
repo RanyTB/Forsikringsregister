@@ -1,5 +1,6 @@
 package com.rtbeb.controller.redigering;
 
+import com.rtbeb.controller.helper.AlertGenerator;
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.controller.redigering.helper.RedigerforsikringHelper;
 import com.rtbeb.model.base.Kunde;
@@ -65,7 +66,7 @@ public class RedigerKundeController implements Initializable {
             thisStage.close();
 
         } else {
-            generateAlert("Kunne ikke redigere kunde:\nFyll inn alle felt eller sjekk rød-markerte felt.");
+            AlertGenerator.redigeringsfeilAlert("Kunne ikke redigere kunde:\nFyll inn alle felt eller sjekk rød-markerte felt.");
         }
     }
 
@@ -83,13 +84,6 @@ public class RedigerKundeController implements Initializable {
         opprinneligKunde.setEtternavn( txtEtternavn.getText() );
         opprinneligKunde.setFakturaadresse( txtAdresse.getText() );
         opprinneligKunde.setPostnummer( txtPostnummer.getText() );
-    }
-
-    private void generateAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Redigeringsfeil");
-        alert.setHeaderText(message);
-        alert.showAndWait();
     }
 
     @FXML

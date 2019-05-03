@@ -1,5 +1,6 @@
 package com.rtbeb.controller.redigering;
 
+import com.rtbeb.controller.helper.AlertGenerator;
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.forsikring.Skademelding;
@@ -149,9 +150,7 @@ public class RedigerSkademeldingController implements Initializable {
             Stage thisStage = (Stage) btnRedigerSkademelding.getScene().getWindow();
             thisStage.close();
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Ugyldig input");
-            alert.setTitle("Feil ved registrering");
-            alert.showAndWait();
+            AlertGenerator.redigeringsfeilAlert("Kunne ikke redigere skademelding. Sjekk tomme eller rød-markerte felt.");
         }
     }
 

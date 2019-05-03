@@ -1,5 +1,6 @@
 package com.rtbeb.controller.registrering;
 
+import com.rtbeb.controller.helper.AlertGenerator;
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.exception.InvalidForsikringException;
@@ -71,16 +72,10 @@ public class RegistrerInnboForsikringController extends RegistrerForsikringContr
             Stage stage = (Stage) btnNeste.getScene().getWindow();
             stage.close();
         } catch (InvalidForsikringException|NumberFormatException e) {
-            generateAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
+            AlertGenerator.registreringsfeilAlert("Kunne ikke registrere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
         }
     }
 
-    private void generateAlert(String message){
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Registreringsfeil");
-        alert.setHeaderText(message);
-        alert.showAndWait();
-    }
 
     private Innboforsikring generateInnboforsikring() throws NumberFormatException{
 
