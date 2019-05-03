@@ -28,43 +28,41 @@ public class CSVReadHelper {
 
     Kunde kunde;
 
-    public void håndterArray(String[] linje) throws InvalidFileContentException, InvalidForsikringException, InvalidFileStructureException, InvalidSkademeldingException {
+    public void håndterArray(String[] linje) throws InvalidFileContentException, InvalidFileStructureException {
 
-        //Tester om kunde har forsikringer
-        System.out.println("lengde på kunde : " + linje[1].split(";").length);
-        if (linje[1].split(";").length == 6){
+        if (linje[1].split(";").length == 6) {
             String[] kundeArray = linje[1].split(";");
             håndterKunde(kundeArray);
-        } else{
+        } else {
             throw new InvalidFileStructureException("Ugyldig struktur på kunde");
         }
 
-        if(linje[3].split("\\|").length > 1){
+        if (linje[3].split("\\|").length > 1) {
             String[] skademeldingsArray = linje[3].split("\\|");
             splitSkademeldinger(skademeldingsArray);
         }
 
-        if (linje[5].split("\\|").length > 1){
+        if (linje[5].split("\\|").length > 1) {
             String[] båtforsikringArray = linje[5].split("\\|");
             splitBåtforsikring(båtforsikringArray);
         }
 
-        if(linje[7].split("\\|").length >1){
+        if (linje[7].split("\\|").length > 1) {
             String[] innboforsikringArray = linje[7].split("\\|");
             splitInnboforsikring(innboforsikringArray);
         }
 
         //Ved første split i selve metoden for innlesning fra til faller den siste plassen bort hvis kunde ikke har noen
         // reiseforsikringer. Sjekker for dette tilfellet her.
-        if (linje.length == 10){
-            if (linje[9].split("\\|").length > 1){
+        if (linje.length == 10) {
+            if (linje[9].split("\\|").length > 1) {
                 String[] reiseforsikringsArray = linje[9].split("\\|");
                 splitReiseforsikring(reiseforsikringsArray);
             }
         }
     }
 
-    private LocalDate getDatoFormat(String dato){
+    private LocalDate getDatoFormat(String dato) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate localDate = LocalDate.parse(dato, dateTimeFormatter);
 
@@ -83,34 +81,35 @@ public class CSVReadHelper {
 
             kunde = new Kunde(fornavn, etternavn, fakturaadresse, postnummer, forsikringsnummer, opprettelsesDato);
 
-            if (kunde.isValid()){
+            if (kunde.isValid()) {
                 importertKundeliste.add(kunde);
-            }else {
+            } else {
                 throw new InvalidFileContentException("Ugyldig kunde");
             }
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new InvalidFileContentException("Feil format på tall i kunde");
-        } catch(DateTimeParseException e){
+        } catch (DateTimeParseException e) {
             throw new InvalidFileContentException("Feil datoformat på kundes opprettelsesdato");
         }
     }
 
-    private void splitSkademeldinger(String[] skademeldingsArray) throws InvalidFileContentException, InvalidFileStructureException, InvalidSkademeldingException {
+    private void splitSkademeldinger(String[] skademeldingsArray) throws InvalidFileContentException, InvalidFileStructureException {
 
         //Splitter opp chunken med skademeldinger til enkelte skademeldinger
         for (String skademelding : skademeldingsArray) {
-            if (!skademelding.equals("")){
+            if (!skademelding.equals("")) {
                 String[] splittetSkademelding = skademelding.split(";");
-                if (splittetSkademelding.length == 7){
+                if (splittetSkademelding.length == 7) {
                     håndterSkademelding(splittetSkademelding);
-                }else {
+                } else {
                     throw new InvalidFileStructureException("Feil struktur på skademelding");
                 }
             }
         }
 
     }
-    private void håndterSkademelding(String[] splittetSkademelding) throws InvalidFileContentException, InvalidSkademeldingException {
+
+    private void håndterSkademelding(String[] splittetSkademelding) throws InvalidFileContentException {
         try {
             //Skademeldings info
             LocalDate skademeldingsDato = getDatoFormat(splittetSkademelding[0]);
@@ -124,35 +123,32 @@ public class CSVReadHelper {
             Skademelding skademelding = new Skademelding(skademeldingsDato, skadenummer, typeSkade, beskrivelse, vitner,
                     takseringAvSkaden, utbetaltErstatningsbeløp);
 
-            if (skademelding.isValid()){
-                System.out.println("Ritkig format på skademelding");
-                kunde.addSkademelding(skademelding);
+            //Legger til skademelding i kundeobjektet.
+            kunde.addSkademelding(skademelding);
 
-            }else {
-                System.out.println("Feil ved format på skademelding");
-            }
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new InvalidFileContentException("Feil format på tall i skademelding");
-        } catch(DateTimeParseException e){
+        } catch (DateTimeParseException e) {
             throw new InvalidFileContentException("Feil format på dato i skademelding");
+        } catch (InvalidSkademeldingException e) {
+            throw new InvalidFileContentException("Ugyldig skademelding");
         }
-
     }
 
-    private void splitBåtforsikring(String[] båtforsikringsArray) throws InvalidForsikringException, InvalidFileContentException, InvalidFileStructureException {
+    private void splitBåtforsikring(String[] båtforsikringsArray) throws InvalidFileContentException, InvalidFileStructureException {
         for (String båtforsikring : båtforsikringsArray) {
-            if (!båtforsikring.equals("")){
+            if (!båtforsikring.equals("")) {
                 String[] splittetBåtforsikringsArray = båtforsikring.split(";");
-                if (splittetBåtforsikringsArray.length == 14){
+                if (splittetBåtforsikringsArray.length == 14) {
                     håndterBåtforsikring(splittetBåtforsikringsArray);
-                }else {
+                } else {
                     throw new InvalidFileStructureException("Feil struktur på båtforsikring");
                 }
             }
         }
     }
 
-    private void håndterBåtforsikring(String[] splittetBåtforsikringsArray) throws InvalidForsikringException, InvalidFileContentException{
+    private void håndterBåtforsikring(String[] splittetBåtforsikringsArray) throws InvalidFileContentException {
         try {
             //Forsikrings info
             String forsikringsType = splittetBåtforsikringsArray[0];
@@ -178,38 +174,36 @@ public class CSVReadHelper {
             //LocalDate fødselsdato = LocalDate.now();
 
             Eier eier = new Eier(fornavn, etternavn, fødselsdato);
-            Båt båt = new Båt(eier,registreringsnummer, merke, modell,lengde,årsmodell,motorinfo);
+            Båt båt = new Båt(eier, registreringsnummer, merke, modell, lengde, årsmodell, motorinfo);
             Båtforsikring båtforsikring = new Båtforsikring(forsikringspremie, datoOpprettet, forsikringsbeløp, forsikringsbetingelser, båt);
 
-            if (båtforsikring.isValid()){
-                System.out.println("Riktig format på båtforsikring");
-                kunde.addForsikring(båtforsikring);
+            //Legger til forsikring i kundeobjektet.
+            kunde.addForsikring(båtforsikring);
 
-            }else {
-                System.out.println("Feil ved format på båtforsikring");
-            }
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new InvalidFileContentException("Feil format på tall i båtforsikring");
-        } catch(DateTimeParseException e){
+        } catch (DateTimeParseException e) {
             throw new InvalidFileContentException("Feil format på dato tilknyttet båtforsikring");
+        } catch (InvalidForsikringException e) {
+            throw new InvalidFileContentException("Ugyldig båtforsikring");
         }
 
     }
 
-    private void splitInnboforsikring(String[] innboforsikringArray) throws InvalidFileContentException, InvalidFileStructureException, InvalidForsikringException {
+    private void splitInnboforsikring(String[] innboforsikringArray) throws InvalidFileContentException, InvalidFileStructureException {
         for (String innboforsikring : innboforsikringArray) {
-            if (!innboforsikring.equals("")){
+            if (!innboforsikring.equals("")) {
                 String[] splittetInnboforsikringssArray = innboforsikring.split(";");
-                if (splittetInnboforsikringssArray.length == 14){
+                if (splittetInnboforsikringssArray.length == 14) {
                     håndterInnboforsikring(splittetInnboforsikringssArray);
-                }else {
+                } else {
                     throw new InvalidFileStructureException("Feil struktur på innboforsikring");
                 }
             }
         }
     }
 
-    private void håndterInnboforsikring(String[] splittetInnboforsikringssArray) throws InvalidFileContentException, InvalidForsikringException {
+    private void håndterInnboforsikring(String[] splittetInnboforsikringssArray) throws InvalidFileContentException {
         try {
             //Forsikrings info
             Innboforsikring.Brukstype brukstype = Innboforsikring.Brukstype.getBrukstype(splittetInnboforsikringssArray[0]);
@@ -236,32 +230,29 @@ public class CSVReadHelper {
             Innboforsikring innboforsikring = new Innboforsikring(brukstype, forsikringspremie, datoOpprettet, forsikringsbeløp,
                     forsikringsbetingelser, bolig, forsikringssbeløpBygning, forsikringsbeløpInnbo);
 
-            if (innboforsikring.isValid()){
-                System.out.println("Riktig format på innboforsikring");
-                kunde.addForsikring(innboforsikring);
+            kunde.addForsikring(innboforsikring);
 
-            }else {
-                System.out.println("Feil ved format på innboforsikring");
-            }
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new InvalidFileContentException("Feil format på tall i innboforsikring");
+        } catch (InvalidForsikringException e){
+            throw new InvalidFileContentException("Ugyldig innboforsikring");
         }
     }
 
-    private void splitReiseforsikring(String[] reiseforsikringsArray) throws InvalidForsikringException, InvalidFileContentException, InvalidFileStructureException {
+    private void splitReiseforsikring(String[] reiseforsikringsArray) throws InvalidFileContentException, InvalidFileStructureException {
         for (String reiseforsikring : reiseforsikringsArray) {
-            if (!reiseforsikring.equals("")){
+            if (!reiseforsikring.equals("")) {
                 String[] splittetReiseforsikringssArray = reiseforsikring.split(";");
-                if (splittetReiseforsikringssArray.length == 7){
+                if (splittetReiseforsikringssArray.length == 7) {
                     håndterReiseforsikring(splittetReiseforsikringssArray);
-                }else {
+                } else {
                     throw new InvalidFileStructureException("Feil struktur på reiseforsikring");
                 }
             }
         }
     }
 
-    private void håndterReiseforsikring(String[] splittetReiseforsikringssArray) throws InvalidFileContentException, InvalidForsikringException {
+    private void håndterReiseforsikring(String[] splittetReiseforsikringssArray) throws InvalidFileContentException {
         try {
             //Forsikrings info
             String forsikringsType = splittetReiseforsikringssArray[0];
@@ -277,20 +268,18 @@ public class CSVReadHelper {
             Reiseforsikring reiseforsikring = new Reiseforsikring(forsikringspremie, forsikringsbeløp, datoOpprettet,
                     forsikringsbetingelser, forsikringsområde, forsikringssum);
 
-            if (reiseforsikring.isValid()){
-                System.out.println("Riktig format på reiseforsikring");
-                kunde.addForsikring(reiseforsikring);
-            }else {
-                System.out.println("Feil ved format på reiseforsikring");
-            }
-        }catch (NumberFormatException e){
+            kunde.addForsikring(reiseforsikring);
+
+        } catch (NumberFormatException e) {
             throw new InvalidFileContentException("Feil format på tall i reiseforsikring");
-        }catch(DateTimeParseException e){
+        } catch (DateTimeParseException e) {
             throw new InvalidFileContentException("Feil i dato tilknyttet reiseforsikring");
+        } catch (InvalidForsikringException e){
+            throw new InvalidFileContentException("Ugyldig reiseforsikring");
         }
     }
 
-    public void addToRegistry(){
+    public void addToRegistry() {
         Kunderegister kunderegister = Kunderegister.getInstance();
         kunderegister.setKundeliste(importertKundeliste);
     }
