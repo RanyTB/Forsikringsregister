@@ -1,7 +1,7 @@
 package com.rtbeb.controller.registrering;
 
+import com.rtbeb.controller.helper.AlertGenerator;
 import com.rtbeb.controller.helper.FieldStyler;
-import com.rtbeb.controller.registrering.helper.AlertGenerator;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.Kunderegister;
 import com.rtbeb.model.base.exception.InvalidKundeException;
@@ -48,7 +48,7 @@ public class RegistrerKundeController implements Initializable {
             try {
                 kunderegister.insertKunde(kunde);
             } catch (InvalidKundeException e) {
-                AlertGenerator.showAlert("Kunne ikke registrere kunden:\nSjekk kundedata.");
+                AlertGenerator.registreringsfeilAlert("Kunne ikke registrere kunden:\nSjekk kundedata.");
             }
     }
 

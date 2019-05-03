@@ -1,5 +1,6 @@
 package com.rtbeb.controller.redigering;
 
+import com.rtbeb.controller.helper.AlertGenerator;
 import com.rtbeb.controller.helper.FieldStyler;
 import com.rtbeb.model.base.Kunde;
 import com.rtbeb.model.base.forsikring.Reise.Reiseforsikring;
@@ -86,12 +87,12 @@ public class RedigerReiseforsikringController extends RedigerforsikringControlle
                 Stage stage = (Stage) btnNeste.getScene().getWindow();
                 stage.close();
             } else {
-                generateAlert("Kunne ikke redigere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
+                AlertGenerator.redigeringsfeilAlert("Kunne ikke redigere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
             }
         } catch (NumberFormatException e) {
 
             //Fanger NumberFormatException som oppstår dersom numeriske felt står tomme.
-            generateAlert("Kunne ikke redigere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
+            AlertGenerator.redigeringsfeilAlert("Kunne ikke redigere forsikring:\nFyll inn alle felt eller sjekk rød-markerte felt.");
 
         }
     }

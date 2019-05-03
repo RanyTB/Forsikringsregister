@@ -34,11 +34,4 @@ abstract class RedigerforsikringController implements Initializable {
         }
     }
 
-    void generateAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Redigeringsfeil");
-        alert.setHeaderText(message);
-        alert.showAndWait();
-    }
-
 }
